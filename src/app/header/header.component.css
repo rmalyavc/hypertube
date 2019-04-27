@@ -1,0 +1,18 @@
+.header	{
+	position: absolute;
+	width: 100vw;
+	height: 6vh;
+	top: 0vh;
+	left: 0%;
+	background: linear-gradient(#222222, #666666);
+}
+.logo {
+	position: absolute;
+	height: 80%;
+	top: 10%;
+	left: 1.5%;
+	border-radius: 50%;
+}
+.logo:hover {
+	background: rgba(0,0,0,0.2);
+}
