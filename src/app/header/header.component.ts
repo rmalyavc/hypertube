@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ToolsComponent } from '../tools/tools.component';
+
+declare var require: any
 
 @Component({
   selector: 'app-header',
@@ -7,15 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 	private logo = require('./assets/logo.png');
-	public test = 'This is test';
-	public background = 'none';
-
+	public buttons = ['login', 'logout'];
 	constructor() { }
 
 	ngOnInit() {
 	}
 
-	update_text() {
-		this.background = this.background == 'white' ? 'black' : 'white';
-	}
+	// update_text() {
+	// 	this.background = this.background == 'white' ? 'black' : 'white';
+	// }
 }

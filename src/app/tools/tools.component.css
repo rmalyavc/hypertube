@@ -1,0 +1,10 @@
+.app-tool {
+	position: relative;
+	/*margin: 5%;*/
+	height: 100%;
+	border-radius: 50%;
+}
+
+.app-tool:hover {
+	background: rgba(0,0,0,0.2);
+}

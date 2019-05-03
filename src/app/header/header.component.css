@@ -16,3 +16,26 @@
 .logo:hover {
 	background: rgba(0,0,0,0.2);
 }
+
+.app-tools {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.header .app-tools{
+	height:	80%;
+	top: 10%;
+	float: right;
+	right: 1%;
+	/*background-color: white;*/
+	justify-content: flex-end; 
+}
+
+.app-tool {
+	border-radius: 50%;
+}
+
+.app-tool:hover {
+	background: rgba(0,0,0,0.2);
+}
