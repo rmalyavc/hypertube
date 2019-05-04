@@ -8,10 +8,15 @@ import { ToolComponent } from '../tool/tool.component';
 })
 export class ToolsComponent implements OnInit {
 	@Input() tool_ids : string[];
+	@Input() current_user : any;
+
 	public name = 'test';
 	constructor() {
 	}
 
 	ngOnInit() {
+		console.log('Current User Is');
+		console.log(this.current_user);
+		console.log(this.tool_ids);
 	}
 }

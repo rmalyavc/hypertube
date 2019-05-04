@@ -3,3 +3,10 @@
 	height: 100%;
 }
 
+.profile_link {
+	color: #eeeeee;
+}
+
+.profile_link:hover {
+	color: #ff2222;
+}

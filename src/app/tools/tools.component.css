@@ -1,10 +1,16 @@
 .app-tool {
 	position: relative;
-	/*margin: 5%;*/
+	margin-left: 5px;
 	height: 100%;
 	border-radius: 50%;
 }
 
-.app-tool:hover {
+#logout:hover, #login:hover {
 	background: rgba(0,0,0,0.2);
+}
+
+#profile {
+	border-radius: unset;
+	display: flex;
+	align-items: center;
 }

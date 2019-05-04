@@ -1,1 +1,2 @@
-<img src={{icon}} class="tool_icon">
+<img *ngIf="tool_map[id].is_icon" src={{tool_map[id].icon}} class="tool_icon" [id]="id">
+<a *ngIf="!tool_map[id].is_icon" href="/{{current_user.id}}" class="profile_link">{{current_user.login}}</a>

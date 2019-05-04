@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { UserService } from '../user.service';
 
 declare var require: any
 
@@ -9,29 +10,32 @@ declare var require: any
 })
 export class ToolComponent implements OnInit {
 	@Input() public tool_id: string;
+	@Input() current_user : any;
 
 	public icon;
+
 	private tool_map = {
 		login: {
+			is_icon: true,
 			icon: require('./assets/login.png'),
 		},
 		logout: {
+			is_icon: true,
 			icon: require('./assets/logout.png'),
 		},
+		profile: {
+			is_icon: false,
+		}
 	}
 	public test;
 	public id;
 
 	constructor() {
-		// console.log(parentData);
-		// this.id = this.tool_id;
-		// if (this.tool_id)
 	}
 
 	ngOnInit() {
 		this.id = this.tool_id;
-		this.icon = this.tool_map[this.tool_id].icon;
-		// console.log(this.id + '42');
+		this.icon = this.id != 'profile' ? this.tool_map[this.id].icon : false;
 	}
 
 }

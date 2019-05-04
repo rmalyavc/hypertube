@@ -9,6 +9,7 @@ import { MainSectionComponent } from './main-section/main-section.component';
 import { HeaderComponent } from './header/header.component';
 import { ToolsComponent } from './tools/tools.component';
 import { ToolComponent } from './tool/tool.component';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ToolComponent } from './tool/tool.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
