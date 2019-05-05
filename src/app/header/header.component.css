@@ -1,9 +1,9 @@
 .header	{
 	position: absolute;
 	width: 100vw;
-	height: 6vh;
-	max-height: 60px;
-	top: 0vh;
+	/*height: 6vh;*/
+	height: 60px;
+	top: 0;
 	left: 0%;
 	background: linear-gradient(#222222, #666666);
 }
@@ -34,7 +34,6 @@
 }
 
 .app-tool {
-	/*border-radius: 50%;*/
 	margin: 5px;
 }
 

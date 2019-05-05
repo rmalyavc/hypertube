@@ -1,0 +1,15 @@
+<h2 class="text_header gray_text">Login</h2>
+<form #login_form="ngForm">
+	<div class="field_container">
+		<input type="text" #name="ngModel" [class.invalid_field]="name.invalid && name.touched" name="login" class="form_field" placeholder="Login" [(ngModel)]="form_data.login" required>
+		<span class="error_text" [class.hidden]="!name.touched || name.valid">Should not be empty</span>
+	</div>
+	<div class="field_container">
+		<input type="password" #password="ngModel" name="password" class="form_field" placeholder="Password" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password" minlength="8" required>
+		<span class="error_text" [class.hidden]="!password.touched || password.valid">Should not be empty</span>
+	</div>
+	<div class="field_container">
+		<p class="text_header"><a routerLink="">Forgot your password?</a></p>
+	</div>
+	<button class="main_button" type="button" [disabled]="name.invalid || password.invalid" (click)="login()"><strong class="button_text white">Submit</strong></button>
+</form>
