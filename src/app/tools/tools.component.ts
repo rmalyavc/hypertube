@@ -15,8 +15,5 @@ export class ToolsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		console.log('Current User Is');
-		console.log(this.current_user);
-		console.log(this.tool_ids);
 	}
 }

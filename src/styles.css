@@ -12,7 +12,7 @@ body {
 	overflow: hidden;
 }
 
-.app-login {
+.app-login, .app-register {
 	position: relative;
 	width: 30%;
 	max-width: 400px;
@@ -48,7 +48,11 @@ body {
 	border: 1px solid rgba(200,200,200,1);
 }
 
-.app-login .main_button {
+.button_disabled {
+	opacity: 0.3;
+}
+
+.app-login .main_button, .app-register .main_button {
 	width: 50%;
 	height: 30px;
 	left: 25%;
