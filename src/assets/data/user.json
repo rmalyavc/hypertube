@@ -1,7 +1,37 @@
 {
-	"id": "42",
-	"login": "rmalyavc",
-	"email": "roman@beakon.com.au",
-	"firt_name": "Roman",
-	"last_name": "Malyavchik"
+	"42": {
+		"id": "42",
+		"login": "rmalyavc",
+		"email": "roman@beakon.com.au",
+		"first_name": "Roman",
+		"last_name": "Malyavchik"
+	},
+	"1": {
+		"id": "1",
+		"login": "first",
+		"email": "first@beakon.com.au",
+		"first_name": "First",
+		"last_name": "Last"
+	},
+	"2": {
+		"id": "2",
+		"login": "Eminem",
+		"email": "eminem@eminem.com",
+		"first_name": "Marshall",
+		"last_name": "Mathers"
+	},
+	"3": {
+		"id": "3",
+		"login": "Dexter",
+		"email": "dexter@offspring.com",
+		"first_name": "Brayan",
+		"last_name": "Holland"
+	},
+	"4": {
+		"id": "4",
+		"login": "Test_User",
+		"email": "test@test.com",
+		"first_name": "",
+		"last_name": ""
+	}
 }
