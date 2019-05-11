@@ -1,10 +1,12 @@
 <h2 class="text_header gray_text">Login</h2>
 <form #login_form="ngForm">
 	<div class="field_container">
-		<input type="text" #name="ngModel" [class.invalid_field]="name.invalid && name.touched" name="login" class="form_field" placeholder="Login" [(ngModel)]="form_data.login">
+		<input type="text" #name="ngModel" [class.invalid_field]="name.invalid && name.touched" name="login" class="form_field" placeholder="Login" [(ngModel)]="form_data.login" required>
+		<span class="error_text" *ngIf="name.invalid && name.touched">Should not be empty</span>
 	</div>
 	<div class="field_container">
-		<input type="password" #password="ngModel" name="password" class="form_field" placeholder="Password" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password">
+		<input type="password" #password="ngModel" name="password" class="form_field" placeholder="Password" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password" required>
+		<span class="error_text" *ngIf="password.invalid && password.touched">Should not be empty</span>
 	</div>
 	<div class="field_container">
 		<p class="text_header"><a routerLink="">Forgot your password?</a></p>
@@ -12,5 +14,5 @@
 	<div class="field_container">
 		<p class="text_header"><a routerLink="/register">Join us</a></p>
 	</div>
-	<button class="main_button" type="button" (click)="login()"><strong class="button_text white">Login</strong></button>
+	<button class="main_button" type="button" (click)="login()" [disabled]="password.invalid || name.invalid" [class.button_disabled]="name.invalid || password.invalid"><strong class="button_text white">Login</strong></button>
 </form>
