@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { LangService } from '../lang.service';
 import { Router, ActivatedRoute } from '@angular/router';
+
+
 
 @Component({
 	selector: 'app-base',
@@ -11,9 +14,14 @@ export class BaseComponent implements OnInit {
 	public project_name = 'Hypertube';
 	public creators = ['rmalyavc,', 'dkliukin'];
 	public current_user: any;
+	public app_strings: any;
 
-	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute) {
+	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
+		this.app_strings = this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
+			console.log(data);
+			this.app_strings = data;
+		});
 	}
 
 	ngOnInit() {

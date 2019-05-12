@@ -1,28 +1,28 @@
-<h2 class="text_header gray_text">Registration</h2>
+<h2 class="text_header gray_text">{{ app_strings.LBL_REGISTRATION }}</h2>
 <form #login_form="ngForm">
 	<div class="field_container">
-		<input type="text" #name="ngModel" [class.invalid_field]="name.invalid && name.touched" name="login" class="form_field" placeholder="Login" [(ngModel)]="form_data.login" minlength="4" required>
-		<span class="error_text" *ngIf="name.errors && name.errors.required && name.touched">Should not be empty</span>
-		<span class="error_text" *ngIf="name.errors && name.errors.minlength && name.touched">Should be at least 4 characters length</span>
+		<input type="text" #name="ngModel" [class.invalid_field]="name.invalid && name.touched" name="login" class="form_field" placeholder="{{ app_strings.LBL_LOGIN }}" [(ngModel)]="form_data.login" minlength="4" required>
+		<span class="error_text" *ngIf="name.errors && name.errors.required && name.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
+		<span class="error_text" *ngIf="name.errors && name.errors.minlength && name.touched">{{ app_strings.LBL_4_MIN_LENGTH }}</span>
 	</div>
 	<div class="field_container">
-		<input type="password" #password="ngModel" name="password" class="form_field" placeholder="Password" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password" minlength="8" required>
-		<span class="error_text" *ngIf="password.errors && password.errors.required && password.touched">Should not be empty</span>
-		<span class="error_text" *ngIf="password.errors && password.errors.minlength && password.touched">Should be at least 8 characters length</span>
+		<input type="password" #password="ngModel" name="password" class="form_field" placeholder="{{ app_strings.LBL_PASSWORD }}" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password" minlength="8" required>
+		<span class="error_text" *ngIf="password.errors && password.errors.required && password.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
+		<span class="error_text" *ngIf="password.errors && password.errors.minlength && password.touched">{{ app_strings.LBL_8_MIN_LENGTH }}</span>
 	</div>
 	<div class="field_container">
-		<input type="password" #password_again="ngModel" name="password_again" class="form_field" placeholder="Password again" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password_again" minlength="8" required>
-		<span class="error_text" *ngIf="password_again.errors && password_again.errors.required && password_again.touched">Should not be empty</span>
-		<span class="error_text" *ngIf="password_again.errors && password_again.errors.minlength && password_again.touched">Should be at least 8 characters length</span>
-		<span class="error_text" *ngIf="password.valid && password_again.valid && form_data.password != form_data.password_again">Passwords should match</span>
+		<input type="password" #password_again="ngModel" name="password_again" class="form_field" placeholder="{{ app_strings.LBL_PASSWORD_AGAIN }}" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password_again" minlength="8" required>
+		<span class="error_text" *ngIf="password_again.errors && password_again.errors.required && password_again.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
+		<span class="error_text" *ngIf="password_again.errors && password_again.errors.minlength && password_again.touched">{{ app_strings.LBL_8_MIN_LENGTH }}</span>
+		<span class="error_text" *ngIf="password.valid && password_again.valid && form_data.password != form_data.password_again">{{ app_strings.LBL_ERROR_PASSWORDS_NOT_MATCH }}</span>
 	</div>
 	<div class="field_container">
 		<input type="email" pattern='^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$' #e_mail="ngModel" [class.invalid_field]="e_mail.invalid && e_mail.touched" name="email" class="form_field" placeholder="Email" [(ngModel)]="form_data.email" required>
-		<span class="error_text" *ngIf="e_mail.errors && e_mail.errors.required && e_mail.touched">Should not be empty</span>
-		<span class="error_text" *ngIf="e_mail.errors && e_mail.errors.pattern && e_mail.touched">Invalid email</span>
+		<span class="error_text" *ngIf="e_mail.errors && e_mail.errors.required && e_mail.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
+		<span class="error_text" *ngIf="e_mail.errors && e_mail.errors.pattern && e_mail.touched">{{ app_strings.LBL_INVALID_EMAIL }}</span>
 	</div>
 	<div class="field_container">
-		<p class="text_header"><a routerLink="/login">Login</a></p>
+		<p class="text_header"><a routerLink="/login">{{ app_strings.LBL_LOGIN }}</a></p>
 	</div>
-	<button class="main_button" type="button" [class.button_disabled]="name.invalid || password.invalid || password_again.invalid || e_mail.invalid" [disabled]="name.invalid || password.invalid || password_again.invalid || e_mail.invalid" (click)="register()"><strong class="button_text white">Register</strong></button>
+	<button class="main_button" type="button" [class.button_disabled]="name.invalid || password.invalid || password_again.invalid || e_mail.invalid" [disabled]="name.invalid || password.invalid || password_again.invalid || e_mail.invalid" (click)="register()"><strong class="button_text white">{{ app_strings.LBL_REGISTER }}</strong></button>
 </form>

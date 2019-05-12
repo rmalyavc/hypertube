@@ -52,7 +52,7 @@ body {
 	opacity: 0.3;
 }
 
-.app-login .main_button, .app-register .main_button {
+.app-login .main_button, .app-register .main_button, .app-profile .main_button {
 	width: 50%;
 	height: 30px;
 	left: 25%;
@@ -64,7 +64,7 @@ body {
 }
 
 .error_text {
-	color: red;
+	color: #bb0000;
 }
 
 .hidden {
@@ -81,4 +81,23 @@ body {
 
 .field_container .error_text {
 	font-size: 80%;
+}
+
+.field_container small {
+	margin-left: 3px;
+}
+
+.align_center {
+	text-align: center;
+}
+
+.form_field:disabled {
+	border: none;
+	background: none;
+	text-align: center;
+}
+
+select.form_field {
+	height: 35px;
+	width: 101%;
 }

@@ -9,6 +9,13 @@ import { BaseComponent } from '../base/base.component';
 export class ProfileComponent extends BaseComponent implements OnInit {
 	private user_id: string;
 	private page_user: any;
+	private form_data = {
+		login: '',
+		first_name: '',
+		last_name: '',
+		email: '',
+		lang: '',
+	};
 
 	ngOnInit() {
 		if (!this.current_user)
@@ -18,6 +25,13 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 				this.user_id = params['id'];
 				this.user_service.get_current_user().subscribe(data => {
 					this.page_user = data[this.user_id] || false;
+					this.form_data = {
+						login: this.page_user.login,
+						first_name: this.page_user.first_name,
+						last_name: this.page_user.last_name,
+						email: this.page_user.email,
+						lang: this.page_user.lang,
+					};
 				});
 			});
 		}

@@ -1,2 +1,39 @@
 <!-- {{ page_user | json }} -->
-<h2 class="text_header">Test</h2>
+<h2 *ngIf="!page_user" class="text_header error_text">{{ app_strings.LBL_USER_NOT_FOUND }}</h2>
+<h2 *ngIf="page_user" class="text_header gray_text">{{ page_user.login }}'s {{ app_strings.LBL_PROFILE }}</h2>
+<form *ngIf="page_user" #login_form="ngForm">
+	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
+		<small><strong>{{ app_strings.LBL_LOGIN }}:</strong></small>
+		<input type="text" #login="ngModel" [class.invalid_field]="login.invalid && login.touched" name="login" class="form_field" [(ngModel)]="form_data.login" required [disabled]="page_user.id != current_user.id">
+		<span class="error_text" *ngIf="login.invalid && login.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
+	</div>
+	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
+		<small><strong>{{ app_strings.LBL_FIRST_NAME }}:</strong></small>
+		<input type="text" #first_name="ngModel" [class.invalid_field]="first_name.invalid && first_name.touched" name="first_name" class="form_field" [(ngModel)]="form_data.first_name" [disabled]="page_user.id != current_user.id">
+	</div>
+	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
+		<small><strong>{{ app_strings.LBL_LAST_NAME }}:</strong></small>
+		<input type="text" #last_name="ngModel" [class.invalid_field]="last_name.invalid && last_name.touched" name="last_name" class="form_field" [(ngModel)]="form_data.last_name" [disabled]="page_user.id != current_user.id">
+	</div>
+	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
+		<small><strong>{{ app_strings.LBL_EMAIL }}:</strong></small>
+		<input type="text" #email="ngModel" [class.invalid_field]="email.invalid && email.touched" name="email" class="form_field" [(ngModel)]="form_data.email" [disabled]="page_user.id != current_user.id">
+		<!-- <span class="error_text" *ngIf="first_name.invalid && first_name.touched">Should not be empty</span> -->
+	</div>
+	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
+		<small><strong>{{ app_strings.LBL_LANGUAGE }}:</strong></small>
+		<select *ngIf="page_user.id == current_user.id" #lang="ngModel" [class.invalid_field]="lang.invalid && lang.touched" name="lang" class="form_field" [(ngModel)]="form_data.lang">
+			<option [selected]="page_user.lang == 'EN'" value="EN">{{ app_strings.LBL_EN }}</option>
+			<option [selected]="page_user.lang == 'RU'" value="RU">{{ app_strings.LBL_RU }}</option>
+			<option [selected]="page_user.lang == 'FR'" value="FR">{{ app_strings.LBL_FR }}</option>
+		</select>
+		<input type="text" *ngIf="page_user.id != current_user.id" #lang="ngModel" name="lang" class="form_field" [(ngModel)]="form_data.lang" disabled>
+	</div>
+	<div *ngIf="page_user.id == current_user.id">
+		<div class="field_container">
+			<small><strong>{{ app_strings.LBL_SEND_NOTIFICATIONS }}:</strong></small><br>
+			<input type="checkbox" name="notify" [checked]="page_user.notify">
+		</div>
+		<button class="main_button" type="button" (click)="update()"><strong class="button_text white">{{ app_strings.LBL_UPDATE }}</strong></button>
+	</div>
+</form>

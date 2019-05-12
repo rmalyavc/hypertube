@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from './User';
+import { IToken } from './Token';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,15 +14,16 @@ export class UserService {
 
 	get_current_user(logged_out = false): Observable<IUser> {
 		this._url = '/assets/data/user.json';
-		// if (logged_out)
-		// 	return false;
-		// return {
-		// 	id: '42',
-		// 	login: 'rmalyavc',
-		// 	first_name: 'Roman',
-		// 	last_name: 'Malyavchik',
-		// 	age: '30',
-		// }
 		return this.http.get<IUser>(this._url);
+	}
+
+	login_user(user_data) {
+		this._url = 'http://84087a29.ngrok.io/test';
+		return this.http.post<IUser>(this._url, user_data);
+	}
+
+	get_csrf() {
+		this._url = 'http://84087a29.ngrok.io/app/token';
+		return this.http.get<IToken>(this._url);
 	}
 }
