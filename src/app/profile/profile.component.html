@@ -2,6 +2,7 @@
 <h2 *ngIf="!page_user" class="text_header error_text">{{ app_strings.LBL_USER_NOT_FOUND }}</h2>
 <h2 *ngIf="page_user" class="text_header gray_text">{{ page_user.login }}'s {{ app_strings.LBL_PROFILE }}</h2>
 <form *ngIf="page_user" #login_form="ngForm">
+	<img class="avatar" [src]="avatar">
 	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
 		<small><strong>{{ app_strings.LBL_LOGIN }}:</strong></small>
 		<input type="text" #login="ngModel" [class.invalid_field]="login.invalid && login.touched" name="login" class="form_field" [(ngModel)]="form_data.login" required [disabled]="page_user.id != current_user.id">

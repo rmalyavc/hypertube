@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 
+declare var require: any
+
 @Component({
 	selector: '.app-profile',
 	templateUrl: './profile.component.html',
@@ -9,6 +11,7 @@ import { BaseComponent } from '../base/base.component';
 export class ProfileComponent extends BaseComponent implements OnInit {
 	private user_id: string;
 	private page_user: any;
+	public avatar: string = require('./assets/default/avatar.png');
 	private form_data = {
 		login: '',
 		first_name: '',
@@ -32,6 +35,11 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 						email: this.page_user.email,
 						lang: this.page_user.lang,
 					};
+					if (this.page_user.avatar != '') {
+						console.log(data);
+						this.avatar = data[this.user_id].avatar;
+						console.log(this.avatar);
+					}
 				});
 			});
 		}

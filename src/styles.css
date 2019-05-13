@@ -101,3 +101,9 @@ select.form_field {
 	height: 35px;
 	width: 101%;
 }
+
+.avatar {
+	position: relative;
+	width: 30%;
+	left: 35%;
+}

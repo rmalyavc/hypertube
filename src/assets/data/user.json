@@ -2,6 +2,7 @@
 	"42": {
 		"id": "42",
 		"login": "rmalyavc",
+		"avatar": "/assets/rmalyavc/rmalyavc.jpg",
 		"email": "roman@beakon.com.au",
 		"first_name": "Roman",
 		"last_name": "Malyavchik",
@@ -12,6 +13,7 @@
 		"id": "1",
 		"login": "first",
 		"email": "first@beakon.com.au",
+		"avatar": "",
 		"first_name": "First",
 		"last_name": "Last",
 		"lang": "EN",
@@ -20,6 +22,7 @@
 	"2": {
 		"id": "2",
 		"login": "Eminem",
+		"avatar": "/assets/eminem/eminem.jpg",
 		"email": "eminem@eminem.com",
 		"first_name": "Marshall",
 		"last_name": "Mathers",
@@ -29,6 +32,7 @@
 	"3": {
 		"id": "3",
 		"login": "Dexter",
+		"avatar": "/assets/dexter/dexter.jpg",
 		"email": "dexter@offspring.com",
 		"first_name": "Brayan",
 		"last_name": "Holland",
@@ -38,6 +42,7 @@
 	"4": {
 		"id": "4",
 		"login": "Test_User",
+		"avatar": "",
 		"email": "test@test.com",
 		"first_name": "",
 		"last_name": "",
