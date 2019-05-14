@@ -1,0 +1,25 @@
+<div class="field_container">
+	<input type="text" name="search" class="form_field" placeholder="{{ app_strings.LBL_SEARCH_PLACEHOLDER }}">
+	<button class="main_button" type="button"><strong class="button_text white">{{ app_strings.LBL_SEARCH }}</strong></button>
+</div>
+<div class="field_container">
+	<a href="#" (click)="show_advanced()" style="width: 83%">
+		<small>Advanced Search&nbsp;<small *ngIf="!advanced">&#10147;</small><small *ngIf="advanced">&#11163;</small></small>
+	</a>
+</div>
+<div *ngIf="advanced" class="field_container">
+	<div class="advaced_cont">
+		<input type="checkbox" name="video" checked>
+		<small>&nbsp;Videos</small><br>
+		<input type="checkbox" name="users" checked>
+		<small>&nbsp;People</small><br>
+		<input type="checkbox" name="news" checked>
+		<small>&nbsp;News</small>
+	</div>
+	<div class="advaced_cont">
+		
+	</div>
+	<div class="advaced_cont">
+		
+	</div>
+</div>

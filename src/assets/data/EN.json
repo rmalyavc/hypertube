@@ -24,5 +24,7 @@
 	"LBL_PROFILE": "profile",
 	"LBL_INVALID_LOGIN_PASSWORD": "Invalid login or password",
 	"LBL_4_MIN_LENGTH": "Should be at least 4 characters length",
-	"LBL_8_MIN_LENGTH": "Should be at least 8 characters length"
+	"LBL_8_MIN_LENGTH": "Should be at least 8 characters length",
+	"LBL_SEARCH": "Search",
+	"LBL_SEARCH_PLACEHOLDER": "Search videos, people, news..."
 }

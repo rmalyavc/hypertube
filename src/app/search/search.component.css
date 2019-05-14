@@ -1,0 +1,25 @@
+.form_field {
+	width: 70%;
+	border-color: #dddddd;
+}
+
+.field_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.main_button {
+	height: 32px;
+	width: 12%;
+	max-width: 170px;
+	margin-left: 1%;
+}
+
+.advaced_cont {
+	position: relative;
+	width: 27%;
+	margin-left: 0.5%;
+	margin-right: 0.5%;
+	border: 1px solid red;
+}
