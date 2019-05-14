@@ -107,3 +107,7 @@ select.form_field {
 	width: 30%;
 	left: 35%;
 }
+
+.app-search {
+	margin-top: 20px;
+}

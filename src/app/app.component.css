@@ -3,8 +3,9 @@
 	top: 65px;
 	left: 2%;
 	width: 96%;
-	height: 80vh;
+	height: 75vh;
 	border-top: 2px solid rgba(200, 200, 200, 0.1);
+	overflow-y: auto;
 	/*border: 1px solid red;*/
 }
 

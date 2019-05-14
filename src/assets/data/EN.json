@@ -26,5 +26,9 @@
 	"LBL_4_MIN_LENGTH": "Should be at least 4 characters length",
 	"LBL_8_MIN_LENGTH": "Should be at least 8 characters length",
 	"LBL_SEARCH": "Search",
-	"LBL_SEARCH_PLACEHOLDER": "Search videos, people, news..."
+	"LBL_SEARCH_PLACEHOLDER": "Search videos, people, news...",
+	"LBL_ADVANCED_SEARCH": "Advanced Search",
+	"LBL_SEARCH_VIDEOS": "Videos",
+	"LBL_SEARCH_PEOPLE": "People",
+	"LBL_SEARCH_NEWS": "News"
 }

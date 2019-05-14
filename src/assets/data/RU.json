@@ -26,5 +26,9 @@
 	"LBL_4_MIN_LENGTH": "Должен быть не меньше 4х симловов",
 	"LBL_8_MIN_LENGTH": "Должен быть не меньше 8ми симловов",
 	"LBL_SEARCH": "Поиск",
-	"LBL_SEARCH_PLACEHOLDER": "Ищите видео, людей, новости..."
+	"LBL_SEARCH_PLACEHOLDER": "Ищите видео, людей, новости...",
+	"LBL_ADVANCED_SEARCH": "Расширенный Поиск",
+	"LBL_SEARCH_VIDEOS": "Видео",
+	"LBL_SEARCH_PEOPLE": "Люди",
+	"LBL_SEARCH_NEWS": "Новости"
 }
