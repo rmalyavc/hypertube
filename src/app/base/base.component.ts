@@ -19,7 +19,6 @@ export class BaseComponent implements OnInit {
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
 		this.app_strings = this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
-			console.log(data);
 			this.app_strings = data;
 		});
 	}

@@ -30,5 +30,7 @@
 	"LBL_ADVANCED_SEARCH": "Расширенный Поиск",
 	"LBL_SEARCH_VIDEOS": "Видео",
 	"LBL_SEARCH_PEOPLE": "Люди",
-	"LBL_SEARCH_NEWS": "Новости"
+	"LBL_SEARCH_NEWS": "Новости",
+	"LBL_SEARCH_ACTORS": "Актёры",
+	"LBL_SEARCH_USERS": "Пользователи"
 }

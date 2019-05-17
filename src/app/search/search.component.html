@@ -7,17 +7,17 @@
 		<small>{{ app_strings.LBL_ADVANCED_SEARCH }}&nbsp;<small *ngIf="!advanced">&#10147;</small><small *ngIf="advanced">&#11163;</small></small>
 	</a>
 </div>
-<div *ngIf="advanced" class="field_container">
-	<div class="advaced_cont">
-		<input type="checkbox" name="video" checked>
-		<small>&nbsp;{{ app_strings.LBL_SEARCH_VIDEOS }}</small>
+<form #login_form="ngForm">
+	<div *ngIf="advanced" class="field_container">
+		<div *ngFor="let key of keys;" class="advaced_cont">
+			<input type="checkbox" [name]="key" [checked]="filters[key]" [(ngModel)]="groups_visible[key]">
+			<small>&nbsp;{{ key }}</small>
+			<div *ngIf="groups_visible[key]">
+				<div *ngFor="let filt of groups[key]" style="margin-left: 10px;">
+					<input type="checkbox" [name]="filt" [checked]="filters[key][filt]" [(ngModel)]="filters[key][filt]">
+					<small>&nbsp;{{ filt }}</small>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="advaced_cont">
-		<input type="checkbox" name="users" checked>
-		<small>&nbsp;{{ app_strings.LBL_SEARCH_PEOPLE }}</small>
-	</div>
-	<div class="advaced_cont">
-		<input type="checkbox" name="news" checked>
-		<small>&nbsp;{{ app_strings.LBL_SEARCH_NEWS }}</small>
-	</div>
-</div>
+</form>

@@ -6,7 +6,7 @@
 .field_container {
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: flex-start;
 }
 
 .main_button {

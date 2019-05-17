@@ -1,0 +1,18 @@
+{
+	"video": [
+		"Horror",
+		"Comedy",
+		"Drama",
+		"Action",
+		"Adventure",
+		"Documental",
+		"Historical",
+		"Cartoons",
+		"Other"
+	],
+	"people": [
+		"Actors",
+		"Users"
+	],
+	"news": []
+}
