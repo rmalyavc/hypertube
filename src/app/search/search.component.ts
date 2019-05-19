@@ -14,12 +14,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 	styleUrls: ['./search.component.css']
 })
 export class SearchComponent extends BaseComponent implements OnInit {
-	private advanced: boolean = false;
-	private filters = {};
-	private groups = {};
+	public advanced: boolean = false;
+	public filters = {};
+	public groups = {};
 	private groups_visible = {};
 	private keys: string[];
 	private _url: string;
+	public search_string: string;
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		super(user_service, router, route, lang_service);
@@ -29,7 +30,6 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		this.groups = this.get_filters().subscribe(data => {
 			this.groups = data;
 			this.keys = Object.keys(this.groups);
-			console.log(this.groups);
 			for (var i = 0; i < this.keys.length; i++) {
 				var group = this.keys[i];
 				this.groups_visible[group] = true;
@@ -39,8 +39,6 @@ export class SearchComponent extends BaseComponent implements OnInit {
 					this.filters[group][cats[j]] = true;
 				}
 			}
-			console.log(this.groups_visible);
-			console.log(this.filters);
 		});
 	}
 
@@ -53,6 +51,10 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		this.advanced = this.advanced ? false : true;
 	}
 
+	do_search() {
+		console.log(this.router);
+		this.router.navigate(['login']);
+	}
 	// change_filters() {
 	// 	this.filters.people = !this.filters.people ? true : false;
 	// 	this.filters.actors = this.filters.people;

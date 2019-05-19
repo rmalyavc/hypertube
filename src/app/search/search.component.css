@@ -1,19 +1,25 @@
 .form_field {
-	width: 70%;
+	width: 87%;
+	margin-right: 1%;
 	border-color: #dddddd;
 }
 
 .field_container {
-	display: flex;
+	position: relative;
+	width: 70%;
+	left: 15%;
+	/*float: right;*/
+	/*display: flex;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: flex-start;*/
 }
 
 .main_button {
 	height: 32px;
-	width: 12%;
-	max-width: 170px;
-	margin-left: 1%;
+	width: 10%;
+	min-width: 70px;
+	/*max-width: 170px;*/
+	/*margin-left: 1%;*/
 }
 
 .advaced_cont {

@@ -17,6 +17,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './search/search.component';
+import { SliderComponent } from './slider/slider.component';
+import { SearhResultsComponent } from './searh-results/searh-results.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { SearchComponent } from './search/search.component';
     BaseComponent,
     LoginComponent,
     RegisterComponent,
-    SearchComponent
+    SearchComponent,
+    SliderComponent,
+    SearhResultsComponent
   ],
   imports: [
     BrowserModule,

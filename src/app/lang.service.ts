@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ILang } from './lang';
+import { ILang } from './Lang';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
