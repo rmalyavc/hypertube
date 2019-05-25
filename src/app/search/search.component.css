@@ -28,3 +28,14 @@
 	margin-left: 0.5%;
 	margin-right: 0.5%;
 }
+
+.advanced_button > small {
+	text-decoration: none;
+	color: rgba(80,80,255,0.8);
+}
+
+.advanced_button {
+	border: none;
+	background: none;
+	font-size: 100%;
+}

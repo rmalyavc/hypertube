@@ -1,7 +1,10 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
-var HomeComponent = /** @class */ (function () {
+import { BaseComponent } from '../base/base.component';
+var HomeComponent = /** @class */ (function (_super) {
+    tslib_1.__extends(HomeComponent, _super);
     function HomeComponent() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     HomeComponent.prototype.ngOnInit = function () {
     };
@@ -10,10 +13,9 @@ var HomeComponent = /** @class */ (function () {
             selector: 'app-home',
             templateUrl: './home.component.html',
             styleUrls: ['./home.component.css']
-        }),
-        tslib_1.__metadata("design:paramtypes", [])
+        })
     ], HomeComponent);
     return HomeComponent;
-}());
+}(BaseComponent));
 export { HomeComponent };
 //# sourceMappingURL=home.component.js.map

@@ -5,9 +5,6 @@ var ToolsComponent = /** @class */ (function () {
         this.name = 'test';
     }
     ToolsComponent.prototype.ngOnInit = function () {
-        console.log('Current User Is');
-        console.log(this.current_user);
-        console.log(this.tool_ids);
     };
     tslib_1.__decorate([
         Input(),

@@ -8,19 +8,23 @@ import { BaseComponent } from '../base/base.component';
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
 	private form_data;
-  // constructor() { }
+	private result: any;
 
-	ngOnInit() {
+	ngOnInit(res: any = false) {
 		this.form_data = {
 			login: '',
 			password: '',
-			password_again: '',
+			password_confirmation: '',
 			email: '',
 		}
+		this.result = res;
 	}
 
 	register() {
-		this.router.navigate(['']);	
+		this.result = this.user_service.register_user(this.form_data).subscribe(data => {
+			console.log(data);
+			this.ngOnInit(data);
+		});
 	}
 
 }

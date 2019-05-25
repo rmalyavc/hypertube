@@ -13,6 +13,12 @@ import { UserService } from './user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { HomeComponent } from './home/home.component';
 import { BaseComponent } from './base/base.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SearchComponent } from './search/search.component';
+import { SliderComponent } from './slider/slider.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -27,12 +33,18 @@ var AppModule = /** @class */ (function () {
                 ToolComponent,
                 ProfileComponent,
                 HomeComponent,
-                BaseComponent
+                BaseComponent,
+                LoginComponent,
+                RegisterComponent,
+                SearchComponent,
+                SliderComponent,
+                SearchResultsComponent
             ],
             imports: [
                 BrowserModule,
                 AppRoutingModule,
-                FormsModule
+                FormsModule,
+                HttpClientModule
             ],
             providers: [UserService],
             bootstrap: [AppComponent]

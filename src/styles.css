@@ -111,3 +111,7 @@ select.form_field {
 .app-search {
 	margin-top: 20px;
 }
+
+.green {
+	color: #77cc77;
+}

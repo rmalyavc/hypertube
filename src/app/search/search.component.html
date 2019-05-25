@@ -4,13 +4,13 @@
 		<button class="main_button" type="button" [disabled]="search.invalid" [class.button_disabled]="search.invalid" (click)="do_search()"><strong class="button_text white">{{ app_strings.LBL_SEARCH }}</strong></button>
 	</div>
 	<div class="field_container">
-		<a href="#" (click)="show_advanced()" style="width: 83%">
+		<button  (click)="show_advanced()" class="advanced_button">
 			<small>{{ app_strings.LBL_ADVANCED_SEARCH }}&nbsp;<small *ngIf="!advanced">&#10147;</small><small *ngIf="advanced">&#11163;</small></small>
-		</a>
+		</button>
 	</div>
 	<div *ngIf="advanced" class="field_container" style="width: 100%;display: flex;">
 		<div *ngFor="let key of keys;" class="advaced_cont">
-			<input type="checkbox" [name]="key" [checked]="filters[key]" [(ngModel)]="groups_visible[key]">
+			<input type="checkbox" [name]="key" [checked]="groups_visible[key]" [(ngModel)]="groups_visible[key]" id="{{ key }}">
 			<small>&nbsp;{{ key }}</small>
 			<div *ngIf="groups_visible[key]">
 				<div *ngFor="let filt of groups[key]" style="margin-left: 10px;">

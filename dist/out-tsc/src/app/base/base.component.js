@@ -1,9 +1,37 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+import { LangService } from '../lang.service';
+import { Router, ActivatedRoute } from '@angular/router';
 var BaseComponent = /** @class */ (function () {
-    function BaseComponent() {
+    function BaseComponent(user_service, router, route, lang_service) {
+        var _this = this;
+        this.user_service = user_service;
+        this.router = router;
+        this.route = route;
+        this.lang_service = lang_service;
+        this.project_name = 'Hypertube';
+        this.creators = ['rmalyavc,', 'dkliukin'];
+        this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
+        this.app_strings = this.lang_service.get_labels(this.current_user.lang).subscribe(function (data) {
+            _this.app_strings = data;
+        });
     }
     BaseComponent.prototype.ngOnInit = function () {
+    };
+    BaseComponent.prototype.redirect_to_login = function () {
+        this.router.navigate(['login']);
+    };
+    BaseComponent.prototype.redirect_to_home = function (reload) {
+        if (reload === void 0) { reload = false; }
+        this.router.navigate(['']);
+        if (reload)
+            window.location.href = '/';
+    };
+    BaseComponent.prototype.logout = function () {
+        localStorage.removeItem('current_user');
+        this.current_user = false;
+        window.location.href = '/login';
     };
     BaseComponent = tslib_1.__decorate([
         Component({
@@ -11,7 +39,7 @@ var BaseComponent = /** @class */ (function () {
             template: "",
             styleUrls: ['./base.component.css']
         }),
-        tslib_1.__metadata("design:paramtypes", [])
+        tslib_1.__metadata("design:paramtypes", [UserService, Router, ActivatedRoute, LangService])
     ], BaseComponent);
     return BaseComponent;
 }());

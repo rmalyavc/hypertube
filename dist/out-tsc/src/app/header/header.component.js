@@ -1,13 +1,14 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
-import { UserService } from '../user.service';
-var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent(user_service) {
-        this.user_service = user_service;
-        this.logo = require('./assets/logo.png');
+import { BaseComponent } from '../base/base.component';
+var HeaderComponent = /** @class */ (function (_super) {
+    tslib_1.__extends(HeaderComponent, _super);
+    function HeaderComponent() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.logo = require('./assets/logo.png');
+        return _this;
     }
     HeaderComponent.prototype.ngOnInit = function () {
-        this.current_user = this.user_service.get_current_user();
         this.buttons = this.current_user ? ['logout', 'profile'] : ['login'];
     };
     HeaderComponent = tslib_1.__decorate([
@@ -15,10 +16,9 @@ var HeaderComponent = /** @class */ (function () {
             selector: 'app-header',
             templateUrl: './header.component.html',
             styleUrls: ['./header.component.css']
-        }),
-        tslib_1.__metadata("design:paramtypes", [UserService])
+        })
     ], HeaderComponent);
     return HeaderComponent;
-}());
+}(BaseComponent));
 export { HeaderComponent };
 //# sourceMappingURL=header.component.js.map

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { HttpClient } from '@angular/common/http';
 import { IFilter } from '../Filter';
 import { Observable } from 'rxjs';
 import { UserService } from '../user.service';
 import { LangService } from '../lang.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 
 @Component({
@@ -14,12 +14,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 	styleUrls: ['./search.component.css']
 })
 export class SearchComponent extends BaseComponent implements OnInit {
+	@Input() private parent_data: any = false;
+
 	public advanced: boolean = false;
 	public filters = {};
 	public groups = {};
-	private groups_visible = {};
-	private keys: string[];
-	private _url: string;
+	public groups_visible = {};
+	public keys: string[];
+	public _url: string;
 	public search_string: string;
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
@@ -27,19 +29,30 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.groups = this.get_filters().subscribe(data => {
-			this.groups = data;
-			this.keys = Object.keys(this.groups);
-			for (var i = 0; i < this.keys.length; i++) {
-				var group = this.keys[i];
-				this.groups_visible[group] = true;
-				var cats = this.groups[group];
-				this.filters[group] = {};
-				for (var j = 0; j < cats.length; j++) {
-					this.filters[group][cats[j]] = true;
-				}
+			if (this.parent_data != false) {
+				this.keys = this.parent_data.keys;
+				this.advanced = this.parent_data.advanced;
+				this.filters = this.parent_data.filters;
+				this.groups = this.parent_data.groups;
+				this.groups_visible = this.parent_data.groups_visible;
+				this.search_string = this.parent_data.search_string;
 			}
-		});
+			else {
+				this.groups = this.get_filters().subscribe(data => {
+					this.groups = data;
+					this.keys = Object.keys(this.groups);
+					for (var i = 0; i < this.keys.length; i++) {
+						var group = this.keys[i];
+						this.groups_visible[group] = true;
+						var cats = this.groups[group];
+						this.filters[group] = {};
+						for (var j = 0; j < cats.length; j++) {
+							this.filters[group][cats[j]] = true;
+						}
+					}
+				});
+			}
+			
 	}
 
 	get_filters() {
@@ -51,13 +64,25 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		this.advanced = this.advanced ? false : true;
 	}
 
-	do_search() {
-		console.log(this.router);
-		this.router.navigate(['login']);
-	}
-	// change_filters() {
-	// 	this.filters.people = !this.filters.people ? true : false;
-	// 	this.filters.actors = this.filters.people;
-	// 	this.filters.users = this.filters.people;
+	// change_filters(key) {
+	// 	this.filter_groups[key] = !this.filter_groups[key];
+	// 	var keys = Object.keys(this.filters[key]);
+
+	// 	for (var i = 0; i < keys.length; i++) {
+	// 		this.filters[key][keys[i]] = !this.filters[key][keys[i]];
+	// 	}
 	// }
+
+	do_search() {
+		let navigationExtras: NavigationExtras = {
+            queryParams: {
+                filters: JSON.stringify(this.filters),
+                search_string: this.search_string,
+                groups: JSON.stringify(this.groups),
+                groups_visible: JSON.stringify(this.groups_visible),
+                advanced: this.advanced,
+            }
+        }
+		this.router.navigate(['/search/results'], navigationExtras);
+	}
 }
