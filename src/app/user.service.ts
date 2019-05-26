@@ -6,7 +6,7 @@ import { IToken } from './Token';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  	providedIn: 'root'
 })
 export class UserService {
 	private _url: string;
@@ -19,7 +19,7 @@ export class UserService {
 	}
 
 	register_user(form_data) {
-		this._url = 'http://26f97791.ngrok.io/register';
+		this._url = 'http://a02903ec.ngrok.io/register';
 		return this.http.post<IResult>(this._url, form_data);
 	}
 

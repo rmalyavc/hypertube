@@ -23,34 +23,26 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 	}
 
 	get_results() {
+		var filters = this.get_final_filters();
+		console.log(filters);
+	}
+
+	get_final_filters() {
 		var groups = Object.keys(this.search_data.groups_visible);
-		var filts = this.search_data.filters;
-		// for (var i = 0; i < groups.length; i++) {
-		// 	if (!this.search_data.groups_visible[groups[i]])
-		// 		delete filts[groups[i]];
-		// 	else {
-		// 		var keys = Object.keys(this.search_data.filters[groups[i]]);
-		// 		var count = 0;
-		// 		var to_del = [];
-		// 		for (var j = 0; j < keys.length; j++) {
-		// 			if (!this.search_data.filters[groups[i]][keys[j]])
-		// 				to_del.push(keys[j]);
-		// 			else
-		// 				count++;
-		// 		}
-		// 		// if (to_del.length == 0)
-		// 		// 	continue ;
-		// 		// else if (count == 0)
-		// 		// 	delete filts[groups[i]];
-		// 		// else {
-		// 		// 	for (var j = 0; j < to_del.length; j++) {
-		// 		// 		delete filts[groups[i]][to_del[j]];
-		// 		// 	}
-		// 		// }
-		// 		// if (count == 0 && keys.length > 0)
-		// 		// 	delete this.filters[groups[i]];
-		// 	}
-		// }
-		console.log(filts);
+		var filters = Object.assign({}, this.search_data.filters);
+		for (var i = 0; i < groups.length; i++) {
+			if (!this.search_data.groups_visible[groups[i]])
+				delete filters[groups[i]];
+			else {
+				var keys = Object.keys(filters[groups[i]]);
+				for (var j = 0; j < keys.length; j++) {
+					if (!filters[groups[i]][keys[j]])
+						delete filters[groups[i]][keys[j]];
+				}
+				if (keys.length > 0 && Object.keys(filters[groups[i]]).length == 0)
+					delete filters[groups[i]];
+			}
+		}
+		return filters;
 	}
 }

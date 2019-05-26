@@ -14,5 +14,7 @@
 		"Actors",
 		"Users"
 	],
-	"news": []
+	"news": [
+		"Articles"
+	]
 }

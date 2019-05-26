@@ -19,6 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchComponent } from './search/search.component';
 import { SliderComponent } from './slider/slider.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { WatchComponent } from './watch/watch.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { FilmDetailsComponent } from './film-details/film-details.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { SearchResultsComponent } from './search-results/search-results.componen
     RegisterComponent,
     SearchComponent,
     SliderComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    WatchComponent,
+    NotFoundComponent,
+    FilmDetailsComponent
   ],
   imports: [
     BrowserModule,

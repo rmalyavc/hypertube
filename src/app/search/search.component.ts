@@ -61,19 +61,11 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	}
 
 	show_advanced() {
-		this.advanced = this.advanced ? false : true;
+		this.advanced = !this.advanced;
 	}
 
-	// change_filters(key) {
-	// 	this.filter_groups[key] = !this.filter_groups[key];
-	// 	var keys = Object.keys(this.filters[key]);
-
-	// 	for (var i = 0; i < keys.length; i++) {
-	// 		this.filters[key][keys[i]] = !this.filters[key][keys[i]];
-	// 	}
-	// }
-
 	do_search() {
+		console.log(this.filters);
 		let navigationExtras: NavigationExtras = {
             queryParams: {
                 filters: JSON.stringify(this.filters),
