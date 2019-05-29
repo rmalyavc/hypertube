@@ -22,6 +22,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { WatchComponent } from './watch/watch.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FilmDetailsComponent } from './film-details/film-details.component';
+import { PlayerComponent } from './player/player.component';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { FilmDetailsComponent } from './film-details/film-details.component';
     SearchResultsComponent,
     WatchComponent,
     NotFoundComponent,
-    FilmDetailsComponent
+    FilmDetailsComponent,
+    PlayerComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

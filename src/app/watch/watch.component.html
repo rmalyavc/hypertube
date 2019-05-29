@@ -1,2 +1,6 @@
 <div class="app-search"></div>
-<div *ngIf="film_data" class="app-film-details" [film_data]="film_data" ></div>
+<div *ngIf="film_data">
+	<div class="app-film-details" [film_data]="film_data" ></div>
+	<div class="app-player" [film_data]="film_data"></div>
+	<div class="app-comments" [film_data]="film_data"></div>
+</div>
