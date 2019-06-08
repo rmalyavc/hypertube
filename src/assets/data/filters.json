@@ -1,14 +1,18 @@
 {
 	"video": [
-		"Horror",
-		"Comedy",
-		"Drama",
-		"Action",
-		"Adventure",
-		"Documental",
-		"Historical",
-		"Cartoons",
-		"Other"
+		"comedy",
+		"sci-fi",
+		"horror",
+		"romance",
+		"action",
+		"thriller",
+		"drama",
+		"mystery",
+		"crime",
+		"animation",
+		"adventure",
+		"fantasy",
+		"superhero"
 	],
 	"people": [
 		"Actors",

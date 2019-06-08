@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IFilm } from './Film';
+import { ISearchResult } from './SearchResult';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -12,7 +12,8 @@ export class FilmService {
   	constructor(private http: HttpClient) { }
 
   	get_film(film_id) {
-  		this._url = '/assets/data/films/' + film_id + ".json";
-  		return this.http.get<IFilm>(this._url);
+  		this._url = 'https://yts.lt/api/v2/movie_details.json?movie_id=' + film_id;
+  		console.log(this._url);
+  		return this.http.get<ISearchResult>(this._url);
   	}
 }
