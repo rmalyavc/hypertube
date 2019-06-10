@@ -13,7 +13,11 @@ export class FilmService {
 
   	get_film(film_id) {
   		this._url = 'https://yts.lt/api/v2/movie_details.json?movie_id=' + film_id;
-  		console.log(this._url);
+  		return this.http.get<ISearchResult>(this._url);
+  	}
+
+  	get_comments(film_id) {
+  		this._url = 'https://yts.lt/api/v2/movie_comments.json?movie_id=' + film_id;
   		return this.http.get<ISearchResult>(this._url);
   	}
 }

@@ -22,9 +22,7 @@ export class WatchComponent extends BaseComponent implements OnInit {
 	ngOnInit() {
 		this.route.params.subscribe(params => {
 			this.page_id = params['id'];
-			console.log(this.page_id);
 			this.film_service.get_film(this.page_id).subscribe(res => {
-				console.log(res);
 				this.film_data.id = res.data.movie.id;
 				this.film_data.name = res.data.movie.title_long;
 				this.film_data.lang = res.data.movie.language;
@@ -33,6 +31,9 @@ export class WatchComponent extends BaseComponent implements OnInit {
 				this.film_data.description = res.data.movie.description_intro;
 				this.film_data.genres = res.data.movie.genres;
 				this.film_data.year = res.data.movie.year;
+				this.film_service.get_comments(this.page_id).subscribe(result => {
+					console.log(result);
+				});
 			});
 		});	
 	}
