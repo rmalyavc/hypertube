@@ -16,11 +16,11 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 export class SearchResultsComponent extends BaseComponent implements OnInit {
 	private search_data: any = {};
 	private filts: any = {};
-	private results: any = {};
-	private _url: string = '';
-	private show_description: any = {};
+	public results: any = {};
+	public _url: string = '';
+	public show_description: any = {};
 
-	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
+	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public search_service: SearchService) {
 		super(user_service, router, route, lang_service);
 	}
 
@@ -57,9 +57,7 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 			}
 		}
 		this._url = 'https://yts.lt/api/v2/list_movies.json' + query_part;
-		console.log(this._url);
 		return this.http.get<ISearchResult>(this._url);
-		console.log(filters);
 	}
 
 	get_final_filters() {

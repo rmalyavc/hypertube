@@ -24,6 +24,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FilmDetailsComponent } from './film-details/film-details.component';
 import { PlayerComponent } from './player/player.component';
 import { CommentsComponent } from './comments/comments.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CommentsComponent } from './comments/comments.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule
