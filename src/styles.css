@@ -12,6 +12,25 @@ body {
 	overflow: hidden;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #dddddd;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cc2222;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aa1111; 
+}
+
 .app-login, .app-register, .app-profile {
 	position: relative;
 	width: 30%;

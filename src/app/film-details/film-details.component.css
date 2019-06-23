@@ -27,4 +27,5 @@
 
 .info_cont > img {
 	width: 100%;
+	box-shadow: 2px rgba(0,0,0,0.2);
 }

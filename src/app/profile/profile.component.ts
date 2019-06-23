@@ -1,5 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { UserService } from '../user.service';
+import { LangService } from '../lang.service';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { FilmService } from '../film.service';
+
 
 declare var require: any
 
@@ -19,6 +26,11 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		email: '',
 		lang: '',
 	};
+	private history: any = [];
+
+	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
+		super(user_service, router, route, lang_service);
+	}
 
 	ngOnInit() {
 		if (!this.current_user)
@@ -36,13 +48,23 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 						lang: this.page_user.lang,
 					};
 					if (this.page_user.avatar != '') {
-						console.log(data);
 						this.avatar = data[this.user_id].avatar;
-						console.log(this.avatar);
 					}
+					// var history = this.history;
+					// this.history = this.film_service.get_history(this.current_user.id, 5).subscribe(data => {
+						
+					// 	for (var i = 0; i < data.length; i++) {
+					// 		history.push(data[i]);
+					// 	}
+					// 	// console.log(history);
+					// });
+					// console.log(this.history);
 				});
 			});
 		}
+		// setTimeout(() => {
+		// 	console.log(this.history);
+		// }, 3000);
 	}
 
 }

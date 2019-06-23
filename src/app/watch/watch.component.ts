@@ -31,8 +31,11 @@ export class WatchComponent extends BaseComponent implements OnInit {
 				this.film_data.description = res.data.movie.description_intro;
 				this.film_data.genres = res.data.movie.genres;
 				this.film_data.year = res.data.movie.year;
-				this.film_service.get_comments(this.page_id).subscribe(result => {
-					console.log(result);
+				// this.film_service.get_comments(this.page_id).subscribe(result => {
+				// 	console.log(result);
+				// });
+				this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
+					console.log(res);
 				});
 			});
 		});	
