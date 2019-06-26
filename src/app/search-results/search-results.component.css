@@ -10,7 +10,7 @@
 	display: inline-block;
 	margin-left: 4%;
 	margin-bottom: 1%;
-	vertical-align: top;
+	vertical-align: bottom;
 	border-radius: 5px;
 	box-shadow: 0px 0px 0px 0px #cccccc;
 	transition: box-shadow 0.3s linear;

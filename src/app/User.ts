@@ -7,5 +7,6 @@ export interface IUser {
 	last_name: string,
 	lang: string,
 	notify: boolean,
+	token: string,
 	success: boolean,
 }

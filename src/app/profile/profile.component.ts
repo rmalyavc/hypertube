@@ -36,6 +36,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		if (!this.current_user)
 			this.router.navigate(['']);
 		else {
+			this.check_login();
 			this.route.params.subscribe(params => {
 				this.user_id = params['id'];
 				this.user_service.get_current_user().subscribe(data => {

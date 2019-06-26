@@ -24,7 +24,7 @@ export class BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		
+		// console.log(this.current_user);
 	}
 
 	public redirect_to_login() {
@@ -37,9 +37,28 @@ export class BaseComponent implements OnInit {
 			window.location.href = '/';
 	}
 
+	public check_login() {
+		console.log(this.current_user);
+		if (!this.current_user)
+			this.redirect_to_home(true);
+		else {
+			this.user_service.is_logged_in(this.current_user).subscribe(data => {
+				// console.log(data);
+				if (!data.status)
+					this.logout();
+			});
+		}
+	}
+
 	public logout() {
-		localStorage.removeItem('current_user');
-		this.current_user = false;
-		window.location.href = '/login';
+		this.user_service.logout_user(this.current_user).subscribe(data => {
+			// console.log(data);
+			localStorage.removeItem('current_user');
+			this.current_user = false;
+			window.location.href = '/login';	
+		});
+		// localStorage.removeItem('current_user');
+		// this.current_user = false;
+		// window.location.href = '/login';
 	}
 }
