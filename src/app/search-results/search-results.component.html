@@ -4,7 +4,7 @@
 	<h3 *ngIf="results.status != 'ok'" class="text_header error_text">Query failed. Please contact system administrator</h3>
 	<h3 *ngIf="results.data.movie_count == 0" class="text_header error_text">No results found on "{{ search_data.search_string }}"</h3>
 	<div *ngIf="results.data.movie_count > 0">
-		<div *ngFor="let res of results.data.movies; let i = index" class="search_result" (mouseenter)="description_visible(i, true);" (mouseleave)="description_visible(i, false);" (click)="watch_movie(res.id)">
+		<div *ngFor="let res of results.data.movies; let i = index" class="search_result" (click)="watch_movie(res.id)">
 			<p class="text_header gray_text movie_name">{{ res.title }}</p>
 			<img class="result_img" src="{{ res.medium_cover_image }}">
 			<div class="result_description">

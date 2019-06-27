@@ -1,10 +1,10 @@
 <div *ngIf="results.data" class="slider_image">
 	<div *ngIf="curr_set.length > 0" [@prev_slide]="state_name" class="slider_cont">
-		<div *ngFor="let res of curr_set; let i = index" class="search_result" (mouseenter)="description_visible(i, true);" (mouseleave)="description_visible(i, false);" (click)="watch_movie(res.id)">
+		<div *ngFor="let res of curr_set; let i = index" class="search_result"  (click)="watch_movie(res.id)">
 			<p class="text_header gray_text movie_name">{{ res.title }}</p>
 			<img class="result_img" src="{{ res.medium_cover_image }}">
 			<div class="result_description">
-				<textarea class="description_text" value="{{ res.synopsis.substring(0,200) }}..." id="result_description_{{i}}" disabled [@animate_description]="description_show_status"> 
+				<textarea class="description_text" value="{{ res.synopsis.substring(0,200) }}..." id="result_description_{{i}}" disabled> 
 				</textarea>
 			</div>
 		</div>

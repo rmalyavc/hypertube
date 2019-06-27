@@ -47,29 +47,38 @@
 
 .search_result {
 	position: relative;
-	/*margin-top: 10%;*/
 	width: 20%;
-	max-width: 300px;
-	max-height: 100%;
+	max-width: 250px;
 	display: inline-block;
-	/*margin-left: 4%;*/
-	/*margin-bottom: 1%;*/
 	vertical-align: bottom;
 	border-radius: 5px;
 	box-shadow: 0px 0px 0px 0px #cccccc;
 	transition: box-shadow 0.3s linear;
 }
 
+
 .result_img {
 	position: relative;
 	width: 80%;
 	left: 10%;
+	max-height: 80%;
 	margin-bottom: 20px;
 }
 
 .search_result:hover {
 	box-shadow: 0px 0px 3px 3px #cccccc;
 	transition: box-shadow 0.3s linear;
+	cursor: pointer;
+}
+
+.search_result:hover .description_text {
+	opacity: 1;
+	transition: opacity 0.5s linear;
+}
+
+.movie_name:hover {
+	color: #555555;
+	transition: color 0.3s linear;
 }
 
 .description_text {
@@ -92,4 +101,10 @@
 	position: relative;
 	width: 80%;
 	left: 10%;
+}
+
+@media (max-height: 800px) {
+	.search_result {
+		max-width: 230px;
+	}
 }

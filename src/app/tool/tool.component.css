@@ -9,4 +9,6 @@
 
 .profile_link:hover {
 	color: #ff2222;
+	transition: color 0.3s linear;
+	cursor: pointer;
 }

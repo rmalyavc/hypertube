@@ -22,15 +22,7 @@ import { trigger, state, transition, style, animate, group, query } from '@angul
 			transition('next => void', [
 				animate('0.2s ease-out', style({transform: 'translateX(100%)'}))
 			]),
-		]),
-		trigger('animate_description', [
-			transition('show => hide', [
-				animate('1s ease-out', style({opacity: '0'}))
-			]),
-			transition('hide => show', [
-				animate('1s ease-out', style({opacity: '1'}))
-			]),
-		]),
+		])
 	]
 })
 export class SliderComponent extends SearchResultsComponent implements OnInit {
@@ -47,7 +39,6 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 			this.results = res;
 
 			this.start_slider();
-			console.log(this.results);
 		});
 	}
 
@@ -56,13 +47,7 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 		this.curr_set = this.results.data.movies.slice(this.count, this.count + 4);
 		this.interval_id = setInterval(function() {
 			obj.change_slide(4);
-		}, 3000);
-	}
-
-	get description_show_status() {
-		var val = this.show_description[this.curr_index] ? 'show' : 'hide';
-		// console.log(val);
-		return 'val';
+		}, 5000);
 	}
 
 	private change_slide(nb, manual = false) {
@@ -86,12 +71,4 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 				this.start_slider();
 		}, 250);
 	}
-
-	// description_visible(i, show) {
-	// 	this.curr_index = i;
-
-	// 	document.getElementById('result_description_' + i).style.opacity = show ? '1' : '0';
-	// 	// console.log(document.getElementById('result_description_' + i));
-	// 	this.show_description[i] = show;
-	// }
 }

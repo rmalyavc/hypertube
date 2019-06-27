@@ -18,7 +18,6 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 	private filts: any = {};
 	public results: any = {};
 	public _url: string = '';
-	public show_description: any = {};
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public search_service: SearchService) {
 		super(user_service, router, route, lang_service);
@@ -34,11 +33,6 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 			this.search_data.keys = Object.keys(this.search_data.groups);
 			this.get_results().subscribe(results => {
 				this.results = results;
-				this.show_description = {};
-				for (var i = 0; i < this.results.data.movie_count; i++) {
-					this.show_description[i] = false;
-				}
-				console.log(this.results);
 			});
 		});
 	}
@@ -77,19 +71,6 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 			}
 		}
 		return filters;
-	}
-
-	description_visible(i, show) {
-		this.show_description[i] = show;
-		var to_add = show ? 0.1 : -0.1;
-		var current_val = show ? 0 : 1;
-		var elem = document.getElementById('result_description_' + i);
-		var interval_id = setInterval(function() {
-			current_val += to_add;
-			elem.style.opacity = String(current_val);
-			if ((!show && current_val <= 0) || (show && current_val >= 1))
-				clearInterval(interval_id);
-		}, 50);	
 	}
 
 	watch_movie(id) {
