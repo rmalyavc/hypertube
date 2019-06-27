@@ -39,8 +39,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 			this.check_login();
 			this.route.params.subscribe(params => {
 				this.user_id = params['id'];
-				this.user_service.get_current_user().subscribe(data => {
-					this.page_user = data[this.user_id] || false;
+				this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
+					this.page_user = res.data || false;
 					this.form_data = {
 						login: this.page_user.login,
 						first_name: this.page_user.first_name,
@@ -49,7 +49,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 						lang: this.page_user.lang,
 					};
 					if (this.page_user.avatar != '') {
-						this.avatar = data[this.user_id].avatar;
+						this.avatar = this.page_user.avatar;
 					}
 					// var history = this.history;
 					// this.history = this.film_service.get_history(this.current_user.id, 5).subscribe(data => {

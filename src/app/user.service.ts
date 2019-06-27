@@ -14,7 +14,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	get_base_url() {
-		return 'https://e9ee2aa0.ngrok.io';
+		return 'https://ea58dcbf.ngrok.io';
 	}
 
 	get_current_user(logged_out = false): Observable<IUser> {
@@ -29,18 +29,23 @@ export class UserService {
 
 	login_user(user_data) {
 		this._url = this.get_base_url() + '/login';
-		return this.http.post<IUser>(this._url, user_data);
+		return this.http.post<IResult>(this._url, user_data);
 	}
 
 	logout_user(current_user) {
 		this._url = this.get_base_url() + '/logout?token=' + current_user.token;
 		console.log(this._url);
-		return this.http.get<IUser>(this._url);
+		return this.http.get<IResult>(this._url);
+	}
+
+	get_user_profile(user_id, current_user) {
+		this._url = this.get_base_url() + '/user/profile' + '?uid=' + user_id + '&token=' + current_user.token;
+		return this.http.get<IResult>(this._url);
 	}
 
 	is_logged_in(current_user) {
 		this._url = this.get_base_url() + '/getUserStatus?' + 'uid=' + current_user.id + '&token=' + current_user.token;		
-		return this.http.get<IUser>(this._url);
+		return this.http.get<IResult>(this._url);
 	}
 
 	// get_csrf() {

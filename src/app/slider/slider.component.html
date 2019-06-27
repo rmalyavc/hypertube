@@ -4,7 +4,7 @@
 			<p class="text_header gray_text movie_name">{{ res.title }}</p>
 			<img class="result_img" src="{{ res.medium_cover_image }}">
 			<div class="result_description">
-				<textarea class="description_text" value="{{ res.synopsis.substring(0,200) }}..." id="result_description_{{i}}" disabled> 
+				<textarea class="description_text" value="{{ res.synopsis.substring(0,200) }}..." id="result_description_{{i}}" disabled [@animate_description]="description_show_status"> 
 				</textarea>
 			</div>
 		</div>

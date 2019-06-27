@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 
+
 @Component({
   selector: '.app-login',
   templateUrl: './login.component.html',
@@ -24,13 +25,13 @@ export class LoginComponent extends BaseComponent implements OnInit {
 			// 	localStorage.setItem('current_user', JSON.stringify(data["42"]));
 			// });
 			// this.redirect_to_home(true);
-			this.user_service.login_user(this.form_data).subscribe(data => {
-				console.log(data);
-				if (data.status === true) {
+			this.user_service.login_user(this.form_data).subscribe(res => {
+				console.log(res);
+				if (res.status === true) {
 					// delete data['success'];
-					data.user.token = data.token;
-					data.user.id = data.user.uid;
-					localStorage.setItem('current_user', JSON.stringify(data.user));
+					res.data.token = res.token;
+					res.data.id = res.data.uid;
+					localStorage.setItem('current_user', JSON.stringify(res.data));
 					this.redirect_to_home(true);
 				}
 				else {

@@ -80,6 +80,7 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 	}
 
 	description_visible(i, show) {
+		this.show_description[i] = show;
 		var to_add = show ? 0.1 : -0.1;
 		var current_val = show ? 0 : 1;
 		var elem = document.getElementById('result_description_' + i);

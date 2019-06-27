@@ -84,6 +84,10 @@
 	opacity: 0;
 }
 
+.result_description {
+	/*display: none;*/
+}
+
 .movie_name {
 	position: relative;
 	width: 80%;
