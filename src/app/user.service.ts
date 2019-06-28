@@ -14,7 +14,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	get_base_url() {
-		return 'https://ea58dcbf.ngrok.io';
+		return 'https://7fecca09.ngrok.io';
 	}
 
 	get_current_user(logged_out = false): Observable<IUser> {

@@ -22,6 +22,7 @@
 	width: 80%;
 	left: 10%;
 	margin-bottom: 20px;
+	border-radius: 3px;
 }
 
 .search_result:hover {
@@ -40,6 +41,11 @@
 .search_result:hover .description_text {
 	opacity: 1;
 	transition: opacity 0.7s linear;
+}
+
+.search_result:hover .result_img {
+	box-shadow: 0px 0px 3px 3px #cccccc;
+	transition: box-shadow 0.7s linear;
 }
 
 .description_text {

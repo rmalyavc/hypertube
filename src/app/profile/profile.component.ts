@@ -27,6 +27,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		lang: '',
 	};
 	private history: any = [];
+	private file: any = null;
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
@@ -40,7 +41,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 			this.route.params.subscribe(params => {
 				this.user_id = params['id'];
 				this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
+					console.log(res);
 					this.page_user = res.data || false;
+					if (this.page_user)
+						this.page_user.id = this.page_user.uid;
 					this.form_data = {
 						login: this.page_user.login,
 						first_name: this.page_user.first_name,
@@ -48,7 +52,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 						email: this.page_user.email,
 						lang: this.page_user.lang,
 					};
-					if (this.page_user.avatar != '') {
+					if (this.page_user.avatar && this.page_user.avatar != '') {
 						this.avatar = this.page_user.avatar;
 					}
 					// var history = this.history;
@@ -68,4 +72,17 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		// }, 3000);
 	}
 
+	file_selected(event) {
+		this.file = event.target.files[0];
+		// console.log(event);
+	}
+
+	upload_file() {
+		var fd = new FormData();
+		var _url = 'https://7fecca09.ngrok.io/user/update/image';
+		fd.append('image', this.file, this.file.name);
+		this.http.post(_url, fd).subscribe(res => {
+			console.log(res);
+		});
+	}
 }

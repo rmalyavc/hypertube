@@ -48,7 +48,7 @@
 .search_result {
 	position: relative;
 	width: 20%;
-	max-width: 250px;
+	max-width: 300px;
 	display: inline-block;
 	vertical-align: bottom;
 	border-radius: 5px;
