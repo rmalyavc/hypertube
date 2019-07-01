@@ -53,7 +53,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 						lang: this.page_user.lang,
 					};
 					if (this.page_user.avatar && this.page_user.avatar != '') {
-						this.avatar = this.page_user.avatar;
+						this.avatar = this.user_service.get_base_url() + '/' + this.page_user.avatar;
 					}
 					// var history = this.history;
 					// this.history = this.film_service.get_history(this.current_user.id, 5).subscribe(data => {
@@ -79,10 +79,19 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	upload_file() {
 		var fd = new FormData();
-		var _url = 'https://7fecca09.ngrok.io/user/update/image';
+		var _url = 'https://f6f9be12.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
+		fd.append('token', this.current_user.token);
 		this.http.post(_url, fd).subscribe(res => {
 			console.log(res);
+			if (res.status == true) {
+				// this.page_user = {};
+				// this.avatar = '';
+				this.ngOnInit();
+			}
 		});
+	}
+	trigger_file() {
+		document.getElementById('avatar_input').click();
 	}
 }

@@ -3,11 +3,19 @@
 <h2 *ngIf="page_user" class="text_header gray_text">{{ page_user.login }}'s {{ app_strings.LBL_PROFILE }}</h2>
 <form *ngIf="page_user" #login_form="ngForm">
 	<img class="avatar" [src]="avatar">
-	<div class="field_container">
-		<input type="file" (change)="file_selected($event)">
-		<button class="main_button" type="button" (click)="upload_file()">
-			<strong class="button_text white">{{ app_strings.LBL_UPDATE }}</strong>
-		</button>
+	<div *ngIf="page_user.uid == current_user.uid">
+		<div class="field_container">
+			<div class="file_upload_cstm form_field" (click)="trigger_file()">
+				<input type="file" (change)="file_selected($event)" class="hidden" id="avatar_input">
+				<button type="button" class="main_button"><strong class="button_text white">Browse</strong></button>
+			</div>
+			
+		</div>
+		<!-- <div class="field_container">
+			<button class="main_button" type="button" (click)="upload_file()">
+				<strong class="button_text white">{{ app_strings.LBL_UPDATE }}</strong>
+			</button>
+		</div> -->
 	</div>
 	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
 		<small><strong>{{ app_strings.LBL_LOGIN }}:</strong></small>

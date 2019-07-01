@@ -1,0 +1,13 @@
+.file_upload_cstm {
+	background-color: white;
+}
+
+.file_upload_cstm > .main_button {
+	position: absolute;
+	left: unset;
+	right: 0;
+	top: 0;
+	margin: none;
+	border: none;
+	width: 20%;
+}
