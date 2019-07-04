@@ -14,7 +14,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	get_base_url() {
-		return 'https://f6f9be12.ngrok.io';
+		return 'https://bc875342.ngrok.io';
 	}
 
 	get_current_user(logged_out = false): Observable<IUser> {
@@ -48,6 +48,10 @@ export class UserService {
 		return this.http.get<IResult>(this._url);
 	}
 
+	update_user(form_data) {
+		this._url = this.get_base_url() + '/user/update?';
+		return this.http.post<IResult>(this._url, form_data);
+	}
 	// get_csrf() {
 	// 	this._url = 'http://84087a29.ngrok.io/app/token';
 	// 	return this.http.get<IToken>(this._url);

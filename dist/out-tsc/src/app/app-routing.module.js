@@ -7,6 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchComponent } from './search/search.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { WatchComponent } from './watch/watch.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 var routes = [
     {
         path: 'profile/:id',
@@ -31,6 +33,14 @@ var routes = [
     {
         path: 'search/results',
         component: SearchResultsComponent,
+    },
+    {
+        path: 'watch/:id',
+        component: WatchComponent,
+    },
+    {
+        path: '**',
+        component: NotFoundComponent,
     }
 ];
 var AppRoutingModule = /** @class */ (function () {

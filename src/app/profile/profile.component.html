@@ -19,7 +19,7 @@
 	</div>
 	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
 		<small><strong>{{ app_strings.LBL_LOGIN }}:</strong></small>
-		<input type="text" #login="ngModel" [class.invalid_field]="login.invalid && login.touched" name="login" class="form_field" [(ngModel)]="form_data.login" required [disabled]="page_user.id != current_user.id">
+		<input type="text" #login="ngModel" [class.invalid_field]="login.invalid && login.touched" name="login" class="form_field" [(ngModel)]="form_data.login" required [disabled]="page_user.id != current_user.id" readonly>
 		<span class="error_text" *ngIf="login.invalid && login.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
 	</div>
 	<div class="field_container" [class.align_center]="page_user.id != current_user.id">
@@ -47,7 +47,15 @@
 	<div *ngIf="page_user.id == current_user.id">
 		<div class="field_container">
 			<small><strong>{{ app_strings.LBL_SEND_NOTIFICATIONS }}:</strong></small><br>
-			<input type="checkbox" name="notify" [checked]="page_user.notify">
+			<input type="checkbox" #notify="ngModel" [(ngModel)]="form_data.notify" name="notify" [checked]="page_user.notify">
+		</div>
+		<div class="field_container" *ngIf="!update_status">
+			<strong class="error_text text_header">Update is failed:</strong><br>
+			<p *ngFor="let error of errors;">
+				<small>
+					<strong class="error_text text_header">{{ error }}</strong>
+				</small>
+			</p>
 		</div>
 		<button class="main_button" type="button" (click)="update()"><strong class="button_text white">{{ app_strings.LBL_UPDATE }}</strong></button>
 	</div>

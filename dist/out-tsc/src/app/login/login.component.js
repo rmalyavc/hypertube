@@ -13,27 +13,30 @@ var LoginComponent = /** @class */ (function (_super) {
         };
     };
     LoginComponent.prototype.login = function () {
+        var _this = this;
         console.log(this.form_data);
         if (this.form_data['login'] && this.form_data['password']) {
-            this.user_service.get_current_user().subscribe(function (data) {
-                localStorage.setItem('current_user', JSON.stringify(data["42"]));
-            });
-            this.redirect_to_home(true);
-            // this.user_service.login_user(this.form_data).subscribe(data => {
-            // 	console.log(data);
-            // 	if (data.success === true) {
-            // 		delete data['success'];
-            // 		localStorage.setItem('current_user', JSON.stringify(data));
-            // 		this.redirect_to_home(true);
-            // 	}
-            // 	else {
-            // 		this.form_data = {
-            // 			login: '',
-            // 			password: ''
-            // 		}
-            // 		this.success = false;
-            // 	}
+            // this.user_service.get_current_user().subscribe(function(data) {
+            // 	localStorage.setItem('current_user', JSON.stringify(data["42"]));
             // });
+            // this.redirect_to_home(true);
+            this.user_service.login_user(this.form_data).subscribe(function (res) {
+                console.log(res);
+                if (res.status === true) {
+                    // delete data['success'];
+                    res.data.token = res.token;
+                    res.data.id = res.data.uid;
+                    localStorage.setItem('current_user', JSON.stringify(res.data));
+                    _this.redirect_to_home(true);
+                }
+                else {
+                    _this.form_data = {
+                        login: '',
+                        password: ''
+                    };
+                    _this.success = false;
+                }
+            });
         }
     };
     LoginComponent = tslib_1.__decorate([
