@@ -17,9 +17,11 @@ declare var require: any
 	styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent extends BaseComponent implements OnInit {
-	private user_id: string;
-	private page_user: any;
-	public avatar: string = require('./assets/default/avatar.png');
+	public user_id: string;
+	public page_user: any;
+	private avatar: string = require('./assets/default/avatar.png');
+	private edit_icon: string = require('./assets/default/edit_icon.png');
+	private browse_icon: string = require('./assets/default/browse_icon.png');
 	private form_data = {
 		uid: '',
 		login: '',
@@ -30,11 +32,15 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		notify: false,
 		token: '',
 	};
-	private history: any = [];
+	public history: string[] = [];
 	private file: any = null;
 	private update_status: boolean = true;
 	private errors: string[] = [];
+	private file_error: string = '';
 	private tmp: string = '';
+	private edit: boolean = false;
+	private owner: boolean = false;
+	private input_text: string = 'Choose your avatar';
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
@@ -45,10 +51,15 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 			this.router.navigate(['']);
 		else {
 			this.check_login();
+			this.file = null;
+			this.file_error = '';
 			this.route.params.subscribe(params => {
 				this.user_id = params['id'];
 				this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
 					this.page_user = res.data || false;
+					console.log(res);
+					// this.page_user = res['42'];
+					this.owner = this.page_user.uid == this.current_user.uid;
 					if (this.page_user)
 						this.page_user.id = this.page_user.uid;
 					this.form_data = {
@@ -63,46 +74,46 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 					};
 					if (this.page_user.avatar && this.page_user.avatar != '') {
 						this.avatar = this.user_service.get_base_url() + '/' + this.page_user.avatar;
+						// this.avatar = this.page_user.avatar;
 					}
-					// var history = this.history;
-					// this.history = this.film_service.get_history(this.current_user.id, 5).subscribe(data => {
-						
-					// 	for (var i = 0; i < data.length; i++) {
-					// 		history.push(data[i]);
-					// 	}
-					// 	// console.log(history);
-					// });
-					// console.log(this.history);
+					if (this.history.length == 0)
+						this.get_brawsing_history(5);
 				});
 			});
 		}
-		// setTimeout(() => {
-		// 	console.log(this.history);
-		// }, 3000);
 	}
 
-	file_selected(event) {
-		this.file = event.target.files[0];
-		this.upload_file();
+	private file_selected(event) {
+		console.log(event);
+		if (event.target.files.length > 0) {
+			this.file = event.target.files[0];
+			this.input_text = this.file.name && this.file.name != '' ? this.file.name : 'Choose your avatar';
+		}
 	}
 
-	upload_file() {
+	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://bc875342.ngrok.io/user/update/image';
+		var _url = 'https://12ad6265.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {
 			console.log(res);
 			if (res.status == true) {
+				this.file = null;
+				(<HTMLInputElement>document.getElementById('avatar_input')).value = '';
+				this.edit = false;
 				this.ngOnInit();
+			}
+			else {
+				this.file_error = res.error;
 			}
 		});
 	}
-	trigger_file() {
+	private trigger_file() {
 		document.getElementById('avatar_input').click();
 	}
 
-	update() {
+	private update() {
 		var form_data = Object.assign({}, this.form_data);
 		delete form_data.login;
 		this.user_service.update_user(form_data).subscribe(res => {
@@ -117,8 +128,33 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 					}
 				}
 			}
-			this.ngOnInit();
+			else {
+				this.change_editable();
+				this.ngOnInit();	
+			}
+			
 		});
 
+	}
+
+	private change_editable() {
+		if (this.owner)
+			this.edit = !this.edit;
+		else
+			this.edit = false;
+	}
+
+	public watch_movie(movie_id) {
+		this.router.navigate(['/watch/' + movie_id]);
+	}
+
+	public get_brawsing_history(limit = 20, skip = 0) {
+		this.film_service.get_history(this.page_user, this.current_user, limit).subscribe(res => {
+			if (res.status) {
+				for (var i = 0; i < res.data.length; i++) {
+					this.history.push(res.data[i]);
+				}
+			}
+		});
 	}
 }

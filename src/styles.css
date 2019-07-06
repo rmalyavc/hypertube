@@ -32,7 +32,7 @@ body {
   transition: background 0.3s linear;
 }
 
-.app-login, .app-register, .app-profile {
+.app-login, .app-register {
 	position: relative;
 	width: 30%;
 	max-width: 400px;
@@ -127,6 +127,7 @@ select.form_field {
 	position: relative;
 	width: 50%;
 	left: 25%;
+	margin-bottom: 15px; 
 }
 
 .app-search {

@@ -8,11 +8,16 @@ import { SearchComponent } from './search/search.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { WatchComponent } from './watch/watch.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HistoryComponent } from './history/history.component';
 
 const routes: Routes = [
 	{
 		path: 'profile/:id',
 		component: ProfileComponent
+	},
+	{
+		path: 'history/:id',
+		component: HistoryComponent
 	},
 	{
 		path: '',

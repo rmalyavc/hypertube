@@ -25,6 +25,7 @@ import { FilmDetailsComponent } from './film-details/film-details.component';
 import { PlayerComponent } from './player/player.component';
 import { CommentsComponent } from './comments/comments.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NotFoundComponent,
     FilmDetailsComponent,
     PlayerComponent,
-    CommentsComponent
+    CommentsComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
