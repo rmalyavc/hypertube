@@ -4,7 +4,7 @@ import { ProfileComponent } from '../profile/profile.component';
 @Component({
   selector: '.app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  styleUrls: ['../profile/profile.component.css', './history.component.css']
 })
 export class HistoryComponent extends ProfileComponent implements OnInit {
 	private limit: number = 20;
@@ -26,5 +26,14 @@ export class HistoryComponent extends ProfileComponent implements OnInit {
 				console.log(this);
 			});
 		}
+	}
+	handle_scroll(event) {
+		let tracker = event.target;
+		let limit = tracker.scrollHeight - tracker.clientHeight;
+
+	    if (event.target.scrollTop >= limit - 1) {
+			this.skip += 20;
+			this.get_brawsing_history(this.limit, this.skip);
+	    }
 	}
 }

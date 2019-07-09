@@ -26,6 +26,7 @@ import { PlayerComponent } from './player/player.component';
 import { CommentsComponent } from './comments/comments.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HistoryComponent } from './history/history.component';
+import { ScrollTracker } from './scroll-tracker.directive';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { HistoryComponent } from './history/history.component';
     FilmDetailsComponent,
     PlayerComponent,
     CommentsComponent,
-    HistoryComponent
+    HistoryComponent,
+    ScrollTracker
   ],
   imports: [
     BrowserModule,

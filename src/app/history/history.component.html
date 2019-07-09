@@ -1,4 +1,9 @@
-<p *ngFor="let item of history">
-  {{ item.name }}
-
-</p>
+<div class="history_scroll_container" (scroll)="handle_scroll($event)">
+	<div *ngIf="history.length > 0" class="history_cont">
+		<h3 class="text_header gray_text">Brawsing History</h3>
+			<div *ngFor="let item of history;" class="search_result" (click)="watch_movie(item.movie_id)">
+				<p class="text_header gray_text movie_name">{{ item.name }}</p>
+				<img class="result_img" src="{{ item.img }}">
+			</div>
+	</div>
+</div>

@@ -13,7 +13,7 @@ export class FilmService {
   	constructor(private http: HttpClient) { }
 
     get_base_url() {
-      return 'https://12ad6265.ngrok.io';
+      return 'https://a2901702.ngrok.io';
     }
 
   	get_film(film_id) {
