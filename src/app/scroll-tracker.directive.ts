@@ -8,19 +8,11 @@ export class ScrollTracker {
 
   @HostListener('scroll', ['$event'])
   onScroll(event) {
-    // do tracking
-    console.log('scrolled', event.target.scrollTop);
-    // Listen to click events in the component
     let tracker = event.target;
     let endReached = false;
     let limit = tracker.scrollHeight - tracker.clientHeight;
-    console.log('LIMIT = ' + limit);
-    
-    console.log(event.target.scrollTop, limit);
     if (event.target.scrollTop > limit - 1) {
-    	console.log(event.target);
-      alert('end reached');
-      endReached = true;
+    	endReached = true;
     }
 
     this.scrolled.emit({
