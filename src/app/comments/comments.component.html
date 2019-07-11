@@ -1,4 +1,15 @@
 <div class="comments_cont">
 	<h3 class="gray_text">Comments</h3>
-	<p>Comments are coming soon =)</p>
+	<div *ngIf="comments.length > 0">
+		<div *ngFor="let item of comments;" class="single_comment">
+			<div class="comment_avatar_cont">
+				<img *ngIf="item.avatar && item.avatar != ''" [src]="base_url + item.avatar" class="comment_avatar">
+				<img *ngIf="!item.avatar" [src]="avatar" class="comment_avatar">
+			</div>
+			<div class="comment_wrapper">
+				<a routerLink="/profile/{{item.uid}}"><strong>{{ item.login }}</strong></a><br>
+				<span class="gray_text">{{ item.comment }}</span>
+			</div>
+		</div>
+	</div>
 </div>

@@ -93,7 +93,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://a2901702.ngrok.io/user/update/image';
+		var _url = 'https://861ac300.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {
@@ -148,8 +148,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		this.router.navigate(['/watch/' + movie_id]);
 	}
 
-	public get_brawsing_history(limit = 20, skip = 0) {
-		this.film_service.get_history(this.page_user, this.current_user, limit).subscribe(res => {
+	public get_brawsing_history(limit: number = 20, skip: number = 0, order_by: string = 'updated_at', sort_order: string = 'ASC') {
+		this.film_service.get_history(this.page_user, this.current_user, limit, skip, order_by, sort_order).subscribe(res => {
 			if (res.status) {
 				for (var i = 0; i < res.data.length; i++) {
 					this.history.push(res.data[i]);

@@ -15,7 +15,7 @@ export class WatchComponent extends BaseComponent implements OnInit {
 	private page_id: string;
 	private film_data: any = {};
 
-	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, private film_service: FilmService) {
+	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
 	}
 

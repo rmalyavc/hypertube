@@ -9,8 +9,16 @@ import { ProfileComponent } from '../profile/profile.component';
 export class HistoryComponent extends ProfileComponent implements OnInit {
 	private limit: number = 20;
 	private skip: number = 0;
+	private filters = {
+		sort_order: 'DESC',
+		order_by: 'updated_at'
+	};
+	private sort_order: string = 'DESC';
+	private order_by: string = 'updated_at';
 
   	ngOnInit() {
+  		this.history = [];
+  		this.skip = 0;
 	  	if (!this.current_user)
 			this.router.navigate(['']);
 		else {
@@ -21,7 +29,7 @@ export class HistoryComponent extends ProfileComponent implements OnInit {
 					this.page_user = res.data || false;
 					if (this.page_user)
 						this.page_user.id = this.page_user.uid;
-					this.get_brawsing_history(this.limit, this.skip);
+					this.get_brawsing_history(this.limit, this.skip, this.filters.order_by, this.filters.sort_order);
 				});
 				console.log(this);
 			});
@@ -33,7 +41,7 @@ export class HistoryComponent extends ProfileComponent implements OnInit {
 
 	    if (event.target.scrollTop >= limit - 1) {
 			this.skip += 20;
-			this.get_brawsing_history(this.limit, this.skip);
+			this.get_brawsing_history(this.limit, this.skip, this.filters.order_by, this.filters.sort_order);
 	    }
 	}
 }

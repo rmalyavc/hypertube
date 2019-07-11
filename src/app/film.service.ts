@@ -13,7 +13,7 @@ export class FilmService {
   	constructor(private http: HttpClient) { }
 
     get_base_url() {
-      return 'https://a2901702.ngrok.io';
+      return 'https://861ac300.ngrok.io';
     }
 
   	get_film(film_id) {
@@ -21,9 +21,11 @@ export class FilmService {
   		return this.http.get<ISearchResult>(this._url);
   	}
 
-  	get_comments(film_id) {
-  		this._url = 'https://yts.lt/api/v2/movie_comments.json?movie_id=' + film_id;
-  		return this.http.get<ISearchResult>(this._url);
+  	get_comments(current_user, movie_id: string, limit: number = 20, skip: number = 0) {
+  		this._url = this.get_base_url() + '/movie/get/comments';
+      this._url += '?token=' + current_user.token + '&record_id=' + movie_id + '&limit=' + limit + '&skip=' + skip;
+      console.log(this._url);
+  		return this.http.get<IResult>(this._url);
   	}
 
     save_visit(movie, current_user) {
@@ -39,9 +41,10 @@ export class FilmService {
       return this.http.post<IResult>(this._url, query_part);
     }
 
-    get_history(page_user, current_user, limit: number = 20, skip: number = 0) {
-      this._url = this.get_base_url() + '/user/history/movies/' + limit + '?uid=' + page_user.uid + '&token=' + current_user.token + '&skip=' + skip;
-
+    get_history(page_user, current_user, limit: number = 20, skip: number = 0, order_by: string = 'updated_at', sort_order: string = 'DESC') {
+       
+      this._url = this.get_base_url() + '/user/history/movies?limit=' + limit + '&uid=' + page_user.uid + '&token=' + current_user.token + '&skip=' + skip + '&order_by=' + order_by + '&sort_order=' + sort_order;
+      console.log(this._url);
       return this.http.get<IResult>(this._url);
     }
 }

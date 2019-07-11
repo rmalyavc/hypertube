@@ -5,3 +5,40 @@
 	/*border: 1px solid red;*/
 	margin-top: 20px;
 }
+
+.single_comment {
+	position: relative;
+	height: 15vh;
+	min-height: 60px;
+	/*border: 2px solid black; */
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.comment_wrapper {
+	position: relative;
+	height: 100%;
+	padding-left: 10px;
+	overflow-y: auto;
+	overflow-x: hidden; 
+	/*border: 1px solid green;*/
+}
+
+.comment_avatar {
+	position: relative;
+	height: 60%;
+	
+}
+
+.comment_avatar_cont {
+	position: relative;
+	height: 100%;
+	/*max-width: 30%;*/
+	/*padding: 10px;*/
+	left: 0;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	/*border: 1px solid blue;*/
+}

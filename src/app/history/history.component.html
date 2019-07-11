@@ -1,9 +1,21 @@
 <div class="history_scroll_container" (scroll)="handle_scroll($event)">
+	<h3 class="text_header gray_text">Brawsing History</h3>
+	<form *ngIf="page_user" #login_form="ngForm" class="filters_cont">
+		<strong>Order by</strong>
+		<select class="form_field" #order_by="ngModel" [(ngModel)]="filters.order_by" name="order_by" (change)="ngOnInit()">
+			<option value="updated_at">Date</option>
+			<option value="name">Name</option>
+		</select>
+		<strong>Sort order</strong>
+		<select class="form_field" #sort_order="ngModel" [(ngModel)]="filters.sort_order" name="sort_order" (change)="ngOnInit()">
+			<option value="DESC">Descending</option>
+			<option value="ASC">Ascending</option>
+		</select>
+	</form>
 	<div *ngIf="history.length > 0" class="history_cont">
-		<h3 class="text_header gray_text">Brawsing History</h3>
-			<div *ngFor="let item of history;" class="search_result" (click)="watch_movie(item.movie_id)">
-				<p class="text_header gray_text movie_name">{{ item.name }}</p>
-				<img class="result_img" src="{{ item.img }}">
-			</div>
+		<div *ngFor="let item of history;" class="search_result" (click)="watch_movie(item.movie_id)">
+			<p class="text_header gray_text movie_name">{{ item.name }}</p>
+			<img class="result_img" src="{{ item.img }}">
+		</div>
 	</div>
 </div>
