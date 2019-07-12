@@ -1,5 +1,5 @@
 <div class="comments_cont">
-	<h3 class="gray_text">Comments</h3>
+	<h3 class="gray_text">Comments({{ comments.length }})</h3>
 	<div *ngIf="comments.length > 0">
 		<div *ngFor="let item of comments;" class="single_comment">
 			<div class="comment_avatar_cont">
@@ -12,4 +12,11 @@
 			</div>
 		</div>
 	</div>
+	<form class="add_comment_form" #comment_form="ngForm">
+		<div class="field_container">
+			<textarea class="form_field" name="comment_text" #comment_text="ngModel" [(ngModel)]="comment_value" placeholder="Start type your comment here..." required></textarea>
+			<button *ngIf="comment_text.valid" type="button" class="main_button" (click)="send_comment()"><strong class="button_text white">Send</strong></button>
+		</div>
+	</form>
 </div>
+<!-- <select class="form_field" #sort_order="ngModel" [(ngModel)]="filters.sort_order" name="sort_order" (change)="ngOnInit()"> -->
