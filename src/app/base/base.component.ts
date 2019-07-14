@@ -15,6 +15,9 @@ export class BaseComponent implements OnInit {
 	public creators = ['rmalyavc,', 'dkliukin'];
 	public current_user: any;
 	public app_strings: any;
+	public show_fog: boolean = false;
+	public show_loader: boolean = false;
+	public confirm_question: string = '';
 
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');

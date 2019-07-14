@@ -13,7 +13,7 @@ export class FilmService {
   	constructor(private http: HttpClient) { }
 
     get_base_url() {
-      return 'https://3658d9c4.ngrok.io';
+      return 'https://a0b6f8b5.ngrok.io';
     }
 
   	get_film(film_id) {
@@ -55,6 +55,27 @@ export class FilmService {
         token: current_user.token,
         record_id: movie_id,
         comment: value,
+      };
+      return this.http.post<IResult>(this._url, params);
+    }
+
+    update_comment(current_user, current_comment) {
+      this._url = this.get_base_url() + '/movie/edit/comment';
+      var params = {
+        uid: current_user.uid,
+        token: current_user.token,
+        id: current_comment.id,
+        comment: current_comment.comment
+      };
+      return this.http.post<IResult>(this._url, params);
+    }
+
+    delete_comment(current_user, current_comment) {
+      this._url = this.get_base_url() + '/movie/delete/comment';
+      var params = {
+        uid: current_user.uid,
+        token: current_user.token,
+        id: current_comment.id
       };
       return this.http.post<IResult>(this._url, params);
     }

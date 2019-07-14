@@ -29,7 +29,7 @@ export class ToolComponent extends BaseComponent implements OnInit {
 		},
 		profile: {
 			is_icon: false,
-		}
+		},
 	}
 	// constructor() {
 	// }

@@ -27,6 +27,8 @@ import { CommentsComponent } from './comments/comments.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HistoryComponent } from './history/history.component';
 import { ScrollTracker } from './scroll-tracker.directive';
+import { FogComponent } from './fog/fog.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { ScrollTracker } from './scroll-tracker.directive';
     PlayerComponent,
     CommentsComponent,
     HistoryComponent,
-    ScrollTracker
+    ScrollTracker,
+    FogComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

@@ -11,10 +11,17 @@ declare var require: any
 	styleUrls: ['./comments.component.css']
 })
 export class CommentsComponent extends WatchComponent implements OnInit {
-	private comments: string[] = [];
+	private comments: any = [];
 	private avatar: string = require('./assets/avatar.png');
 	private base_url: string = ''; 
 	private comment_value: string = '';
+	private edit_icon: string = require('./assets/edit_icon.png');
+	private delete_icon: string = require('./assets/delete_icon.png');
+	private confirmation_info: any = {
+		question: '',
+		action: '',
+		nb: 0
+	};
 	@Input() private movie_data: any;
 
 	// constructor(private film_service: FilmService, public lang_service: LangService) { }
@@ -23,15 +30,18 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 		this.base_url = this.user_service.get_base_url() + '/';
 		// if (this.comments.length == 0)
 		this.get_comments();
+		console.log(this.comments);
 	}
 
 	send_comment() {
+		this.show_loader = true;
 		this.film_service.post_comment(this.current_user, this.movie_data.id, this.comment_value).subscribe(res => {
 			if (res.status) {
 				this.get_comments(1, true);
 				// this.ngOnInit();
 			}
 			this.comment_value = '';
+			this.show_loader = false;
 		});
 	}
 
@@ -40,6 +50,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 			if (res.status) {
 				console.log(res);
 				for (var i = 0; i < res.data.length; i++) {
+					res.data[i].editable = false;
 					if (!append)
 						this.comments.push(res.data[i]);
 					else
@@ -47,5 +58,53 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 				}
 			}
 		});
+	}
+
+	enable_edit(nb) {
+		this.comments[nb].editable = !this.comments[nb].editable;
+	}
+
+	get_confirmation(action, nb) {
+		var params = {
+			'delete_comment': {
+				confirm_question: 'Do you really want to remove this comment?',
+			},
+			'update_comment': {
+				confirm_question: 'Do you really want to update this comment?',
+			}
+		}
+		this.confirmation_info.action = action;
+		this.confirmation_info.nb = nb;
+		this.confirmation_info.question = params[action].confirm_question;
+		this.show_fog = !this.show_fog;
+	}
+
+	update_comment(nb) {
+		this.show_loader = true;
+		this.film_service.update_comment(this.current_user, this.comments[nb]).subscribe(res => {
+			this.comments[nb].editable = false;
+			this.show_loader = false;
+		});
+	}
+
+	delete_comment(nb) {
+		this.show_loader = true;
+		this.film_service.delete_comment(this.current_user, this.comments[nb]).subscribe(res => {
+			this.comments[nb].editable = false;
+			if (res.status) {
+				this.comments.splice(nb, 1);
+			}
+			this.show_loader = false;
+		});
+	}
+
+	on_confirm(event) {
+		this.show_fog = false;
+		if (!event)
+			return ;
+		else if (this.confirmation_info.action == 'delete_comment')
+			this.delete_comment(this.confirmation_info.nb);
+		else if (this.confirmation_info.action == 'update_comment')
+			this.update_comment(this.confirmation_info.nb);
 	}
 }
