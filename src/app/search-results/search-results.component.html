@@ -1,6 +1,6 @@
-<div class="app-search" [parent_data]="search_data"></div>
+<div class="app-search" [parent_data]="search_data" (refresh_search)="refresh_search($event)"></div>
 <div *ngIf="results.data" class="results_cont">
-	<h2 class="text_header gray_text">Search Results on "{{ search_data.search_string }}":</h2>
+	<h2 *ngIf="search_data.search_string != ''" class="text_header gray_text">Search Results on "{{ search_data.search_string }}":</h2>
 	<h3 *ngIf="results.status != 'ok'" class="text_header error_text">Query failed. Please contact system administrator</h3>
 	<h3 *ngIf="results.data.movie_count == 0" class="text_header error_text">No results found on "{{ search_data.search_string }}"</h3>
 	<div *ngIf="results.data.movie_count > 0">

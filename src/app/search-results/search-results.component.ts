@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { SearchService } from '../search.service';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +7,7 @@ import { UserService } from '../user.service';
 import { LangService } from '../lang.service';
 import { ISearchResult } from '../SearchResult';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-search-results',
@@ -14,23 +15,37 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
   styleUrls: ['./search-results.component.css']
 })
 export class SearchResultsComponent extends BaseComponent implements OnInit {
+	@Input() load_more: Subject<boolean>;
 	private search_data: any = {};
 	private filts: any = {};
-	public results: any = {};
+	public results: any = false;
 	public _url: string = '';
+	private page: number = 1;
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public search_service: SearchService) {
 		super(user_service, router, route, lang_service);
 	}
 
 	ngOnInit() {
+		this.load_more.subscribe(v => {
+			this.get_results().subscribe(results => {
+				if (results.data.movies) {
+					this.results.data.movie_count += results.data.movies.length;
+					for (var i = 0; i < results.data.movies.length; i++) {
+						this.results.data.movies.push(results.data.movies[i]);
+					}
+				}
+			});
+		});
 		this.route.queryParams.subscribe(params => {
-			this.search_data.advanced = params.advanced == "true" ? true : false;
-			this.search_data.filters = JSON.parse(params.filters);
-			this.search_data.groups = JSON.parse(params.groups);
-			this.search_data.groups_visible = JSON.parse(params.groups_visible);
-			this.search_data.search_string = params.search_string;
-			this.search_data.keys = Object.keys(this.search_data.groups);
+			if (params != {}) {
+				this.search_data.advanced = params.advanced == "true" ? true : false;
+				this.search_data.filters = params.filters ? JSON.parse(params.filters) : {};
+				this.search_data.groups = params.groups ? JSON.parse(params.groups) : {};
+				this.search_data.groups_visible = params.groups_visible ? JSON.parse(params.groups_visible) : {};
+				this.search_data.search_string = params.search_string ? params.search_string : '';
+				this.search_data.keys = Object.keys(this.search_data.groups);
+			}
 			this.get_results().subscribe(results => {
 				this.results = results;
 			});
@@ -50,6 +65,7 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 					query_part += ',';
 			}
 		}
+		query_part += '&page=' + this.page++;
 		this._url = 'https://yts.lt/api/v2/list_movies.json' + query_part;
 		return this.http.get<ISearchResult>(this._url);
 	}
@@ -75,5 +91,15 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 
 	watch_movie(id) {
 		this.router.navigate(['/watch/' + id]);
+	}
+
+	refresh_search() {
+		// console.log(this.search_data);
+		this.results = false;
+		this.page = 1;
+		this.ngOnInit();
+		// this.get_results().subscribe(results => {
+		// 	this.results = results;
+		// });
 	}
 }

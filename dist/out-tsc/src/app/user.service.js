@@ -6,7 +6,7 @@ var UserService = /** @class */ (function () {
         this.http = http;
     }
     UserService.prototype.get_base_url = function () {
-        return 'https://bc875342.ngrok.io';
+        return 'https://e973ac68.ngrok.io/';
     };
     UserService.prototype.get_current_user = function (logged_out) {
         if (logged_out === void 0) { logged_out = false; }
@@ -35,8 +35,7 @@ var UserService = /** @class */ (function () {
         return this.http.get(this._url);
     };
     UserService.prototype.update_user = function (form_data) {
-        this._url = this.get_base_url() + '/user/update';
-        console.log(form_data);
+        this._url = this.get_base_url() + '/user/update?';
         return this.http.post(this._url, form_data);
     };
     UserService = tslib_1.__decorate([

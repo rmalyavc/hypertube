@@ -1,5 +1,5 @@
 import * as tslib_1 from "tslib";
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../user.service';
@@ -14,6 +14,7 @@ var SearchComponent = /** @class */ (function (_super) {
         _this.router = router;
         _this.route = route;
         _this.lang_service = lang_service;
+        _this.refresh_search = new EventEmitter();
         _this.parent_data = false;
         _this.advanced = false;
         _this.filters = {};
@@ -23,29 +24,43 @@ var SearchComponent = /** @class */ (function (_super) {
     }
     SearchComponent.prototype.ngOnInit = function () {
         var _this = this;
-        if (this.parent_data != false) {
-            this.keys = this.parent_data.keys;
-            this.advanced = this.parent_data.advanced;
-            this.filters = this.parent_data.filters;
-            this.groups = this.parent_data.groups;
-            this.groups_visible = this.parent_data.groups_visible;
-            this.search_string = this.parent_data.search_string;
-        }
-        else {
-            this.groups = this.get_filters().subscribe(function (data) {
-                _this.groups = data;
-                _this.keys = Object.keys(_this.groups);
-                for (var i = 0; i < _this.keys.length; i++) {
-                    var group = _this.keys[i];
-                    _this.groups_visible[group] = true;
-                    var cats = _this.groups[group];
-                    _this.filters[group] = {};
-                    for (var j = 0; j < cats.length; j++) {
-                        _this.filters[group][cats[j]] = true;
-                    }
+        this.groups = this.get_filters().subscribe(function (data) {
+            _this.groups = data;
+            _this.keys = Object.keys(_this.groups);
+            for (var i = 0; i < _this.keys.length; i++) {
+                var group = _this.keys[i];
+                _this.groups_visible[group] = true;
+                var cats = _this.groups[group];
+                _this.filters[group] = {};
+                for (var j = 0; j < cats.length; j++) {
+                    _this.filters[group][cats[j]] = true;
                 }
-            });
+            }
+        });
+        console.log(this.parent_data);
+        if (this.parent_data != false && this.parent_data != {}) {
+            this.keys = this.parent_data.keys ? this.parent_data.keys : this.keys;
+            this.advanced = this.parent_data.advanced ? this.parent_data.advanced : this.advanced;
+            this.filters = this.parent_data.filters ? this.parent_data.filters : this.filters;
+            this.groups = this.parent_data.groups ? this.parent_data.groups : this.groups;
+            this.groups_visible = this.parent_data.groups_visible ? this.parent_data.groups_visible : this.groups_visible;
+            this.search_string = this.parent_data.search_string ? this.parent_data.search_string : this.search_string;
         }
+        // else {
+        // 	this.groups = this.get_filters().subscribe(data => {
+        // 		this.groups = data;
+        // 		this.keys = Object.keys(this.groups);
+        // 		for (var i = 0; i < this.keys.length; i++) {
+        // 			var group = this.keys[i];
+        // 			this.groups_visible[group] = true;
+        // 			var cats = this.groups[group];
+        // 			this.filters[group] = {};
+        // 			for (var j = 0; j < cats.length; j++) {
+        // 				this.filters[group][cats[j]] = true;
+        // 			}
+        // 		}
+        // 	});
+        // }
     };
     SearchComponent.prototype.get_filters = function () {
         this._url = '/assets/data/filters.json';
@@ -55,7 +70,6 @@ var SearchComponent = /** @class */ (function (_super) {
         this.advanced = !this.advanced;
     };
     SearchComponent.prototype.do_search = function () {
-        console.log(this.filters);
         var navigationExtras = {
             queryParams: {
                 filters: JSON.stringify(this.filters),
@@ -65,8 +79,16 @@ var SearchComponent = /** @class */ (function (_super) {
                 advanced: this.advanced,
             }
         };
-        this.router.navigate(['/search/results'], navigationExtras);
+        this.router.navigate(['/'], navigationExtras);
+        var that = this;
+        setTimeout(function () {
+            that.refresh_search.emit(true);
+        }, 300);
     };
+    tslib_1.__decorate([
+        Output(),
+        tslib_1.__metadata("design:type", EventEmitter)
+    ], SearchComponent.prototype, "refresh_search", void 0);
     tslib_1.__decorate([
         Input(),
         tslib_1.__metadata("design:type", Object)

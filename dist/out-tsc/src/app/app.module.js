@@ -25,6 +25,10 @@ import { FilmDetailsComponent } from './film-details/film-details.component';
 import { PlayerComponent } from './player/player.component';
 import { CommentsComponent } from './comments/comments.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HistoryComponent } from './history/history.component';
+import { ScrollTracker } from './scroll-tracker.directive';
+import { FogComponent } from './fog/fog.component';
+import { LoaderComponent } from './loader/loader.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -49,7 +53,11 @@ var AppModule = /** @class */ (function () {
                 NotFoundComponent,
                 FilmDetailsComponent,
                 PlayerComponent,
-                CommentsComponent
+                CommentsComponent,
+                HistoryComponent,
+                ScrollTracker,
+                FogComponent,
+                LoaderComponent
             ],
             imports: [
                 BrowserModule,

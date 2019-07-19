@@ -73,7 +73,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 						token: this.current_user.token
 					};
 					if (this.page_user.avatar && this.page_user.avatar != '') {
-						this.avatar = this.user_service.get_base_url() + '/' + this.page_user.avatar;
+						this.avatar = this.user_service.get_base_url() + this.page_user.avatar;
 						// this.avatar = this.page_user.avatar;
 					}
 					if (this.history.length == 0)
@@ -93,7 +93,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://a0b6f8b5.ngrok.io/user/update/image';
+		var _url = 'https://e973ac68.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {

@@ -17,6 +17,8 @@ var ProfileComponent = /** @class */ (function (_super) {
         _this.lang_service = lang_service;
         _this.film_service = film_service;
         _this.avatar = require('./assets/default/avatar.png');
+        _this.edit_icon = require('./assets/default/edit_icon.png');
+        _this.browse_icon = require('./assets/default/browse_icon.png');
         _this.form_data = {
             uid: '',
             login: '',
@@ -29,10 +31,13 @@ var ProfileComponent = /** @class */ (function (_super) {
         };
         _this.history = [];
         _this.file = null;
-        _this.update_status = {
-            status: true,
-            errors: [''],
-        };
+        _this.update_status = true;
+        _this.errors = [];
+        _this.file_error = '';
+        _this.tmp = '';
+        _this.edit = false;
+        _this.owner = false;
+        _this.input_text = 'Choose your avatar';
         return _this;
     }
     ProfileComponent.prototype.ngOnInit = function () {
@@ -41,11 +46,15 @@ var ProfileComponent = /** @class */ (function (_super) {
             this.router.navigate(['']);
         else {
             this.check_login();
+            this.file = null;
+            this.file_error = '';
             this.route.params.subscribe(function (params) {
                 _this.user_id = params['id'];
                 _this.user_service.get_user_profile(_this.user_id, _this.current_user).subscribe(function (res) {
-                    console.log(res);
                     _this.page_user = res.data || false;
+                    console.log(res);
+                    // this.page_user = res['42'];
+                    _this.owner = _this.page_user.uid == _this.current_user.uid;
                     if (_this.page_user)
                         _this.page_user.id = _this.page_user.uid;
                     _this.form_data = {
@@ -59,40 +68,38 @@ var ProfileComponent = /** @class */ (function (_super) {
                         token: _this.current_user.token
                     };
                     if (_this.page_user.avatar && _this.page_user.avatar != '') {
-                        _this.avatar = _this.user_service.get_base_url() + '/' + _this.page_user.avatar;
+                        _this.avatar = _this.user_service.get_base_url() + _this.page_user.avatar;
+                        // this.avatar = this.page_user.avatar;
                     }
-                    // var history = this.history;
-                    // this.history = this.film_service.get_history(this.current_user.id, 5).subscribe(data => {
-                    // 	for (var i = 0; i < data.length; i++) {
-                    // 		history.push(data[i]);
-                    // 	}
-                    // 	// console.log(history);
-                    // });
-                    // console.log(this.history);
+                    if (_this.history.length == 0)
+                        _this.get_brawsing_history(5);
                 });
             });
         }
-        // setTimeout(() => {
-        // 	console.log(this.history);
-        // }, 3000);
     };
     ProfileComponent.prototype.file_selected = function (event) {
-        this.file = event.target.files[0];
-        this.upload_file();
-        // console.log(event);
+        console.log(event);
+        if (event.target.files.length > 0) {
+            this.file = event.target.files[0];
+            this.input_text = this.file.name && this.file.name != '' ? this.file.name : 'Choose your avatar';
+        }
     };
     ProfileComponent.prototype.upload_file = function () {
         var _this = this;
         var fd = new FormData();
-        var _url = 'https://bc875342.ngrok.io/user/update/image';
+        var _url = 'https://e973ac68.ngrok.io/user/update/image';
         fd.append('image', this.file, this.file.name);
         fd.append('token', this.current_user.token);
         this.http.post(_url, fd).subscribe(function (res) {
             console.log(res);
             if (res.status == true) {
-                // this.page_user = {};
-                // this.avatar = '';
+                _this.file = null;
+                document.getElementById('avatar_input').value = '';
+                _this.edit = false;
                 _this.ngOnInit();
+            }
+            else {
+                _this.file_error = res.error;
             }
         });
     };
@@ -103,25 +110,45 @@ var ProfileComponent = /** @class */ (function (_super) {
         var _this = this;
         var form_data = Object.assign({}, this.form_data);
         delete form_data.login;
-        // delete form_data.email;
         this.user_service.update_user(form_data).subscribe(function (res) {
-            console.log(res);
-            _this.update_status.status = res.status;
-            _this.update_status.errors = [];
+            _this.update_status = res.status;
+            _this.errors = [];
             if (res.errors) {
                 var keys = Object.keys(res.errors);
                 for (var i = 0; i < keys.length; i++) {
                     for (var j = 0; j < res.errors[keys[i]].length; j++) {
-                        console.log(_this.update_status);
-                        console.log(res.errors[keys[i]][j]);
-                        _this.update_status.errors.push(res.errors[keys[i]][j]);
+                        _this.tmp = res.errors[keys[i]][j];
+                        _this.errors.push(_this.tmp);
                     }
                 }
             }
-            else
-                _this.update_status.errors = [];
-            _this.update_status.errors = res.errors;
-            _this.ngOnInit();
+            else {
+                _this.change_editable();
+                _this.ngOnInit();
+            }
+        });
+    };
+    ProfileComponent.prototype.change_editable = function () {
+        if (this.owner)
+            this.edit = !this.edit;
+        else
+            this.edit = false;
+    };
+    ProfileComponent.prototype.watch_movie = function (movie_id) {
+        this.router.navigate(['/watch/' + movie_id]);
+    };
+    ProfileComponent.prototype.get_brawsing_history = function (limit, skip, order_by, sort_order) {
+        var _this = this;
+        if (limit === void 0) { limit = 20; }
+        if (skip === void 0) { skip = 0; }
+        if (order_by === void 0) { order_by = 'updated_at'; }
+        if (sort_order === void 0) { sort_order = 'ASC'; }
+        this.film_service.get_history(this.page_user, this.current_user, limit, skip, order_by, sort_order).subscribe(function (res) {
+            if (res.status) {
+                for (var i = 0; i < res.data.length; i++) {
+                    _this.history.push(res.data[i]);
+                }
+            }
         });
     };
     ProfileComponent = tslib_1.__decorate([

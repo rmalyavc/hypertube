@@ -18,7 +18,7 @@ var ToolComponent = /** @class */ (function (_super) {
             },
             profile: {
                 is_icon: false,
-            }
+            },
         };
         return _this;
     }
