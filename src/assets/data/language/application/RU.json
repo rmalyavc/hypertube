@@ -32,5 +32,10 @@
 	"LBL_SEARCH_PEOPLE": "Люди",
 	"LBL_SEARCH_NEWS": "Новости",
 	"LBL_SEARCH_ACTORS": "Актёры",
-	"LBL_SEARCH_USERS": "Пользователи"
+	"LBL_SEARCH_USERS": "Пользователи",
+	"LBL_QUERY_FAILED": "Запрос не выполнен. Пожалуйста, обратитесь к системному администратору",
+	"LBL_LOADING": "Загрузка",
+	"LBL_YES": "Да",
+	"LBL_NO": "Нет",
+	"LBL_HOME": "Домой"
 }

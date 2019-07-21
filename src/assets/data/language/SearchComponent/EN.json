@@ -1,0 +1,51 @@
+{
+	"labels": {
+		"genre": "Genre",
+		"quality": "Quality",
+		"sort_by": "Sort By",
+		"order_by": "Sort Order",
+		"LBL_SEARCH_PLACEHOLDER": "Search Videos",
+		"LBL_SEARCH_BUTTON": "Search",
+		"LBL_ADVANCED_SEARCH": "Advanced Search",
+		"LBL_SEARCH_RESULTS_ON": "Search Results on",
+		"LBL_NO_RESULTS": "No results found on"
+	},
+	"lists": {
+		"genre": {
+			"": "All",
+			"comedy": "Comedy",
+			"sci-fi": "Sci-Fi",
+			"horror": "Horror",
+			"romance": "Romance",
+			"action": "Action",
+			"thriller": "Thriller",
+			"drama": "Drama",
+			"mystery": "Mystery",
+			"crime": "Crime",
+			"animation": "Animation",
+			"adventure": "Adventure",
+			"fantasy": "Fantasy",
+			"superhero": "Superhero",
+			"other": "Other"
+		},
+		"quality": {
+			"": "All",
+			"360p": "360p",
+			"480p": "480p",
+			"720p": "720p",
+			"1080p": "1080p"
+		},
+		"sort_by": {
+			"date_added": "Date Added",
+			"title": "Name",
+			"year": "Year",
+			"rating": "Rating",
+			"download_count": "Download Count",
+			"like_count": "Like Count"
+		},
+		"order_by": {
+			"desc": "Descending",
+			"asc": "Ascending"
+		}
+	}
+}

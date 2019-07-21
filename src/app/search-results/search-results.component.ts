@@ -21,12 +21,14 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 	public results: any = false;
 	public _url: string = '';
 	private page: number = 1;
+	private limit: number = 20;
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public search_service: SearchService) {
 		super(user_service, router, route, lang_service);
 	}
 
 	ngOnInit() {
+		this.get_mod_strings('SearchComponent');
 		this.load_more.subscribe(v => {
 			this.get_results().subscribe(results => {
 				if (results.data.movies) {
@@ -42,52 +44,51 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 				this.search_data.advanced = params.advanced == "true" ? true : false;
 				this.search_data.filters = params.filters ? JSON.parse(params.filters) : {};
 				this.search_data.groups = params.groups ? JSON.parse(params.groups) : {};
-				this.search_data.groups_visible = params.groups_visible ? JSON.parse(params.groups_visible) : {};
+				// this.search_data.groups_visible = params.groups_visible ? JSON.parse(params.groups_visible) : {};
 				this.search_data.search_string = params.search_string ? params.search_string : '';
 				this.search_data.keys = Object.keys(this.search_data.groups);
 			}
+			this.show_loader = true;
 			this.get_results().subscribe(results => {
 				this.results = results;
+				this.show_loader = false;
 			});
 		});
 	}
 
 	get_results() {
-		var filters = this.get_final_filters();
 		var query_part = '?query_term=' + this.search_data.search_string;
-		if (filters.video) {
-			query_part += '&genre[]='
-			var keys = Object.keys(filters.video);
-			for (var i = 0; i < keys.length; i++) {
-				if (filters.video[keys[i]] == true)
-					query_part += keys[i];
-				if (i < keys.length - 1 && filters.video[keys[i + 1]] == true)
-					query_part += ',';
-			}
+		for (var i = 0; i < this.search_data.keys.length; i++) {
+			var key = this.search_data.keys[i];
+			if (this.search_data.filters[key] && this.search_data.filters[key] != '')
+				query_part += '&' + key + '=' + this.search_data.filters[key];
 		}
+		query_part += '&limit=' + this.limit;
 		query_part += '&page=' + this.page++;
 		this._url = 'https://yts.lt/api/v2/list_movies.json' + query_part;
+		console.log(this._url);
 		return this.http.get<ISearchResult>(this._url);
+		
 	}
 
-	get_final_filters() {
-		var groups = Object.keys(this.search_data.groups_visible);
-		var filters = Object.assign({}, this.search_data.filters);
-		for (var i = 0; i < groups.length; i++) {
-			if (!this.search_data.groups_visible[groups[i]])
-				delete filters[groups[i]];
-			else {
-				var keys = Object.keys(filters[groups[i]]);
-				for (var j = 0; j < keys.length; j++) {
-					if (!filters[groups[i]][keys[j]])
-						delete filters[groups[i]][keys[j]];
-				}
-				if (keys.length > 0 && Object.keys(filters[groups[i]]).length == 0)
-					delete filters[groups[i]];
-			}
-		}
-		return filters;
-	}
+	// get_final_filters() {
+	// 	var groups = Object.keys(this.search_data.groups_visible);
+	// 	var filters = Object.assign({}, this.search_data.filters);
+	// 	for (var i = 0; i < groups.length; i++) {
+	// 		if (!this.search_data.groups_visible[groups[i]])
+	// 			delete filters[groups[i]];
+	// 		else {
+	// 			var keys = Object.keys(filters[groups[i]]);
+	// 			for (var j = 0; j < keys.length; j++) {
+	// 				if (!filters[groups[i]][keys[j]])
+	// 					delete filters[groups[i]][keys[j]];
+	// 			}
+	// 			if (keys.length > 0 && Object.keys(filters[groups[i]]).length == 0)
+	// 				delete filters[groups[i]];
+	// 		}
+	// 	}
+	// 	return filters;
+	// }
 
 	watch_movie(id) {
 		this.router.navigate(['/watch/' + id]);
@@ -95,6 +96,7 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 
 	refresh_search() {
 		// console.log(this.search_data);
+		this.show_loader;
 		this.results = false;
 		this.page = 1;
 		this.ngOnInit();
@@ -103,3 +105,4 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 		// });
 	}
 }
+// https://yts.lt/api/v2/list_movies.json?query_term=terminator&genre=All&quality=All&sort_by=date_added&order_by=desc&page=1

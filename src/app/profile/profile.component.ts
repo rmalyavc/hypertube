@@ -57,7 +57,6 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 				this.user_id = params['id'];
 				this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
 					this.page_user = res.data || false;
-					console.log(res);
 					// this.page_user = res['42'];
 					this.owner = this.page_user.uid == this.current_user.uid;
 					if (this.page_user)
@@ -93,11 +92,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://e973ac68.ngrok.io/user/update/image';
+		var _url = 'https://8ce86995.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {
-			console.log(res);
 			if (res.status == true) {
 				this.file = null;
 				(<HTMLInputElement>document.getElementById('avatar_input')).value = '';

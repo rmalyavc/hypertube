@@ -20,7 +20,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	public advanced: boolean = false;
 	public filters = {};
 	public groups = {};
-	public groups_visible = {};
+	// public groups_visible = {};
 	public keys: string[];
 	public _url: string;
 	public search_string: string;
@@ -30,44 +30,23 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.get_mod_strings();
 		this.groups = this.get_filters().subscribe(data => {
 			this.groups = data;
 			this.keys = Object.keys(this.groups);
 			for (var i = 0; i < this.keys.length; i++) {
-				var group = this.keys[i];
-				this.groups_visible[group] = true;
-				var cats = this.groups[group];
-				this.filters[group] = {};
-				for (var j = 0; j < cats.length; j++) {
-					this.filters[group][cats[j]] = true;
-				}
+				var key = this.keys[i];
+				if (this.groups[key].length > 0)
+					this.filters[key] = this.groups[key][0];
 			}
 		});
-		console.log(this.parent_data);
 		if (this.parent_data != false && this.parent_data != {}) {
 			this.keys = this.parent_data.keys ? this.parent_data.keys : this.keys;
 			this.advanced = this.parent_data.advanced ? this.parent_data.advanced : this.advanced;
 			this.filters = this.parent_data.filters ? this.parent_data.filters : this.filters;
 			this.groups = this.parent_data.groups ? this.parent_data.groups : this.groups;
-			this.groups_visible = this.parent_data.groups_visible ? this.parent_data.groups_visible : this.groups_visible;
 			this.search_string = this.parent_data.search_string ? this.parent_data.search_string : this.search_string;
 		}
-		// else {
-		// 	this.groups = this.get_filters().subscribe(data => {
-		// 		this.groups = data;
-		// 		this.keys = Object.keys(this.groups);
-		// 		for (var i = 0; i < this.keys.length; i++) {
-		// 			var group = this.keys[i];
-		// 			this.groups_visible[group] = true;
-		// 			var cats = this.groups[group];
-		// 			this.filters[group] = {};
-		// 			for (var j = 0; j < cats.length; j++) {
-		// 				this.filters[group][cats[j]] = true;
-		// 			}
-		// 		}
-		// 	});
-		// }
-			
 	}
 
 	get_filters() {
@@ -85,7 +64,6 @@ export class SearchComponent extends BaseComponent implements OnInit {
                 filters: JSON.stringify(this.filters),
                 search_string: this.search_string,
                 groups: JSON.stringify(this.groups),
-                groups_visible: JSON.stringify(this.groups_visible),
                 advanced: this.advanced,
             }
         }

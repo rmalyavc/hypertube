@@ -11,19 +11,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 	styleUrls: ['./base.component.css']
 })
 export class BaseComponent implements OnInit {
+	public component_name: string = 'BaseComponent';
 	public project_name = 'Hypertube';
 	public creators = ['rmalyavc,', 'dkliukin'];
 	public current_user: any;
-	public app_strings: any;
+	public app_strings: any = {};
+	public mod_strings: any = {};
 	public show_fog: boolean = false;
 	public show_loader: boolean = false;
 	public confirm_question: string = '';
 
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
+		// this.current_user.lang = 'RU';
 		this.app_strings = this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
 			this.app_strings = data;
 		});
+		this.component_name = this.constructor.name;
 	}
 
 	ngOnInit() {
@@ -63,5 +67,11 @@ export class BaseComponent implements OnInit {
 		// localStorage.removeItem('current_user');
 		// this.current_user = false;
 		// window.location.href = '/login';
+	}
+
+	public get_mod_strings(component = this.component_name, lang = this.current_user.lang) {
+		this.mod_strings = this.lang_service.get_labels(lang, component).subscribe(data => {
+			this.mod_strings = data;
+		});
 	}
 }

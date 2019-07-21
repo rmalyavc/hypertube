@@ -1,5 +1,6 @@
 {
-	"video": [
+	"genre": [
+		"",
 		"comedy",
 		"sci-fi",
 		"horror",
@@ -11,14 +12,26 @@
 		"crime",
 		"animation",
 		"adventure",
-		"fantasy",
-		"superhero"
+		"fantasy"
 	],
-	"people": [
-		"Actors",
-		"Users"
+	"quality": [
+		"",
+		"360p",
+		"480p",
+		"720p",
+		"1080p",
+		"3D"
 	],
-	"news": [
-		"Articles"
+	"sort_by": [
+		"date_added",
+		"title",
+		"year",
+		"rating",
+		"download_count",
+		"like_count"
+	],
+	"order_by": [
+		"desc",
+		"asc"
 	]
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../base/base.component';
 
 declare var require: any;
 
@@ -7,10 +8,10 @@ declare var require: any;
 	templateUrl: './not-found.component.html',
 	styleUrls: ['./not-found.component.css']
 })
-export class NotFoundComponent implements OnInit {
+export class NotFoundComponent extends BaseComponent implements OnInit {
 	private img = require('./assets/404.png');
 	
-	constructor() { }
+	// constructor() { }
 
 	ngOnInit() {
 	}

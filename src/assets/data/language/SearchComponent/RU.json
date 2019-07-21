@@ -1,0 +1,51 @@
+{
+	"labels": {
+		"genre": "Жанр",
+		"quality": "Качество",
+		"sort_by": "Сортировать по",
+		"order_by": "Порядок Сортировки",
+		"LBL_SEARCH_PLACEHOLDER": "Поиск видео",
+		"LBL_SEARCH_BUTTON": "Поиск",
+		"LBL_ADVANCED_SEARCH": "Расширенный поиск",
+		"LBL_SEARCH_RESULTS_ON": "Результаты Поиска по",
+		"LBL_NO_RESULTS": "Ничего не найдено по"
+	},
+	"lists": {
+		"genre": {
+			"": "Все",
+			"comedy": "Комедия",
+			"sci-fi": "Научная фантастика",
+			"horror": "Ужасы",
+			"romance": "Романтический",
+			"action": "Боевик",
+			"thriller": "Триллер",
+			"drama": "Драма",
+			"mystery": "Мистика",
+			"crime": "Криминал",
+			"animation": "Мультфильмы",
+			"adventure": "Приключения",
+			"fantasy": "Фентези",
+			"superhero": "Супергерои",
+			"other": "Другие"
+		},		
+		"quality": {
+			"": "Все",
+			"360p": "360p",
+			"480p": "480p",
+			"720p": "720p",
+			"1080p": "1080p"
+		},		
+		"sort_by": {
+			"date_added": "Дата добавления",
+			"title": "Имя",
+			"year": "Год",
+			"rating": "Рейтинг",
+			"download_count": "Количество загрузок",
+			"like_count": "Количество лайков"
+		},		
+		"order_by": {
+			"desc": "По убыванию",
+			"asc": "По возрастанию"
+		}	
+	}
+}

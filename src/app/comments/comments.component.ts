@@ -27,6 +27,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	// constructor(private film_service: FilmService, public lang_service: LangService) { }
 
 	ngOnInit() {
+		this.get_mod_strings();
 		this.base_url = this.user_service.get_base_url() + '/';
 		// if (this.comments.length == 0)
 		this.get_comments();
@@ -67,10 +68,10 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	get_confirmation(action, nb) {
 		var params = {
 			'delete_comment': {
-				confirm_question: 'Do you really want to remove this comment?',
+				confirm_question: this.mod_strings.LBL_CONFIRM_DELETE,
 			},
 			'update_comment': {
-				confirm_question: 'Do you really want to update this comment?',
+				confirm_question: this.mod_strings.LBL_CONFIRM_UPDATE,
 			}
 		}
 		this.confirmation_info.action = action;

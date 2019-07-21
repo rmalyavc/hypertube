@@ -9,9 +9,6 @@
 	width: 70%;
 	left: 15%;
 	/*float: right;*/
-	/*display: flex;
-	justify-content: center;
-	align-items: flex-start;*/
 }
 
 .main_button {
@@ -24,7 +21,8 @@
 
 .advaced_cont {
 	position: relative;
-	width: 27%;
+	width: 25%;
+	display: flex;
 	margin-left: 0.5%;
 	margin-right: 0.5%;
 }
@@ -38,4 +36,14 @@
 	border: none;
 	background: none;
 	font-size: 100%;
+}
+
+.form_field {
+	display: inline;
+}
+
+.flex {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

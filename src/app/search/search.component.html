@@ -1,23 +1,27 @@
-<form #search_form="ngForm">
+<form #search_form="ngForm" *ngIf="mod_strings.labels">
 	<div class="field_container">
-		<input type="text" #search="ngModel" [(ngModel)]="search_string" name="search" class="form_field" placeholder="{{ app_strings.LBL_SEARCH_PLACEHOLDER }}" required>
-		<button class="main_button" type="button" [disabled]="search.invalid" [class.button_disabled]="search.invalid" (click)="do_search()"><strong class="button_text white">{{ app_strings.LBL_SEARCH }}</strong></button>
+		<input type="text" #search="ngModel" [(ngModel)]="search_string" name="search" class="form_field" placeholder="{{ mod_strings.labels.LBL_SEARCH_PLACEHOLDER }}" (keyup.enter)="do_search()">
+		<button class="main_button" type="button" (click)="do_search()"><strong class="button_text white">{{ mod_strings.labels.LBL_SEARCH_BUTTON }}</strong></button>
 	</div>
 	<div class="field_container">
 		<button  (click)="show_advanced()" class="advanced_button">
-			<small>{{ app_strings.LBL_ADVANCED_SEARCH }}&nbsp;<small *ngIf="!advanced">&#10147;</small><small *ngIf="advanced">&#11163;</small></small>
+			<small>{{ mod_strings.labels.LBL_ADVANCED_SEARCH }}&nbsp;<small *ngIf="!advanced">&#10147;</small><small *ngIf="advanced">&#11163;</small></small>
 		</button>
 	</div>
-	<div *ngIf="advanced" class="field_container" style="width: 100%;display: flex;">
-		<div *ngFor="let key of keys;" class="advaced_cont">
-			<input type="checkbox" [name]="key" [checked]="groups_visible[key]" [(ngModel)]="groups_visible[key]" id="{{ key }}">
-			<small>&nbsp;{{ key }}</small>
-			<div *ngIf="groups_visible[key]">
-				<div *ngFor="let filt of groups[key]" style="margin-left: 10px;">
-					<input type="checkbox" [name]="filt" [checked]="filters[key][filt]" [(ngModel)]="filters[key][filt]">
-					<small>&nbsp;{{ filt }}</small>
-				</div>
-			</div>
+	<div *ngIf="advanced && mod_strings.labels" class="field_container flex">
+		<div *ngFor="let key of keys;" class="advaced_cont flex">
+			<strong *ngIf="mod_strings.labels[key]">{{ mod_strings.labels[key] }}:&nbsp;</strong>
+			<strong *ngIf="!mod_strings.labels[key]">{{ key }}:&nbsp;</strong>
+			<select [name]="key" class="form_field" [(ngModel)]="filters[key]" (change)=do_search()>
+				<option *ngFor="let option of groups[key]" value="{{ option }}" [selected]="filters[key] == option">
+					<span *ngIf="mod_strings.lists[key][option]">
+						{{ mod_strings.lists[key][option] }}
+					</span>
+					<span *ngIf="!mod_strings.lists[key][option]">
+						{{ option }}
+					</span>
+				</option>
+			</select>
 		</div>
 	</div>
 </form>

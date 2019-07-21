@@ -32,5 +32,10 @@
 	"LBL_SEARCH_PEOPLE": "People",
 	"LBL_SEARCH_NEWS": "News",
 	"LBL_SEARCH_ACTORS": "Actors",
-	"LBL_SEARCH_USERS": "Users"
+	"LBL_SEARCH_USERS": "Users",
+	"LBL_QUERY_FAILED": "Query failed. Please contact system administrator",
+	"LBL_LOADING": "Loading",
+	"LBL_YES": "Yes",
+	"LBL_NO": "No",
+	"LBL_HOME": "Home"
 }
