@@ -1,15 +1,15 @@
 <div class="history_scroll_container" (scroll)="handle_scroll($event)">
-	<h3 class="text_header gray_text">Brawsing History</h3>
+	<h3 class="text_header gray_text">{{ mod_strings.LBL_BRAWSING_HISTORY }}</h3>
 	<form *ngIf="page_user" #login_form="ngForm" class="filters_cont">
-		<strong>Order by</strong>
+		<strong>{{ mod_strings.LBL_ORDER_BY }}</strong>
 		<select class="form_field" #order_by="ngModel" [(ngModel)]="filters.order_by" name="order_by" (change)="ngOnInit()">
-			<option value="updated_at">Date</option>
-			<option value="name">Name</option>
+			<option value="updated_at">{{ mod_strings.LBL_DATE }}</option>
+			<option value="name">{{ mod_strings.LBL_NAME }}</option>
 		</select>
-		<strong>Sort order</strong>
+		<strong>{{ mod_strings.LBL_SORT_ORDER }}</strong>
 		<select class="form_field" #sort_order="ngModel" [(ngModel)]="filters.sort_order" name="sort_order" (change)="ngOnInit()">
-			<option value="DESC">Descending</option>
-			<option value="ASC">Ascending</option>
+			<option value="DESC">{{ mod_strings.LBL_DESC }}</option>
+			<option value="ASC">{{ mod_strings.LBL_ASC }}</option>
 		</select>
 	</form>
 	<div *ngIf="history.length > 0" class="history_cont">

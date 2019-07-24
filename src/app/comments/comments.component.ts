@@ -28,7 +28,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 
 	ngOnInit() {
 		this.get_mod_strings();
-		this.base_url = this.user_service.get_base_url() + '/';
+		this.base_url = this.user_service.get_base_url();
 		// if (this.comments.length == 0)
 		this.get_comments();
 		console.log(this.comments);

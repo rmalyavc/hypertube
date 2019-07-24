@@ -1,4 +1,4 @@
-<h2 class="text_header gray_text">Most Popular</h2>
+<h2 class="text_header gray_text">{{ app_strings.LBL_MOST_POPULAR }}</h2>
 <div *ngIf="results.data" class="slider_image">
 	<div *ngIf="curr_set.length > 0" [@prev_slide]="state_name" class="slider_cont">
 		<div *ngFor="let res of curr_set; let i = index" class="search_result"  (click)="watch_movie(res.id)">

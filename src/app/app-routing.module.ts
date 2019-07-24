@@ -9,6 +9,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { WatchComponent } from './watch/watch.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HistoryComponent } from './history/history.component';
+import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
 
 const routes: Routes = [
 	{
@@ -30,6 +31,10 @@ const routes: Routes = [
 	{
 		path: 'register',
 		component: RegisterComponent
+	},
+	{
+		path: 'register/verify/:token',
+		component: CompleteRegistrationComponent
 	},
 	{
 		path: 'search',

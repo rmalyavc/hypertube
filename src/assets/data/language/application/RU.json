@@ -37,5 +37,8 @@
 	"LBL_LOADING": "Загрузка",
 	"LBL_YES": "Да",
 	"LBL_NO": "Нет",
-	"LBL_HOME": "Домой"
+	"LBL_HOME": "Домой",
+	"LBL_ALL_RIGHTS_RESERVED": "Все права защищены",
+	"LBL_CONFIRMATION_LINK_SENT": "На вашу почту отправлена ссылка. Пожалуйста, перейдите по ней для завершения регистрации.",
+	"LBL_MOST_POPULAR": "Самые популярные"
 }

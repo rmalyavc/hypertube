@@ -10,18 +10,20 @@
 	</div>
 	<div *ngIf="advanced && mod_strings.labels" class="field_container flex">
 		<div *ngFor="let key of keys;" class="advaced_cont flex">
-			<strong *ngIf="mod_strings.labels[key]">{{ mod_strings.labels[key] }}:&nbsp;</strong>
-			<strong *ngIf="!mod_strings.labels[key]">{{ key }}:&nbsp;</strong>
-			<select [name]="key" class="form_field" [(ngModel)]="filters[key]" (change)=do_search()>
-				<option *ngFor="let option of groups[key]" value="{{ option }}" [selected]="filters[key] == option">
-					<span *ngIf="mod_strings.lists[key][option]">
-						{{ mod_strings.lists[key][option] }}
-					</span>
-					<span *ngIf="!mod_strings.lists[key][option]">
-						{{ option }}
-					</span>
-				</option>
-			</select>
+			<div style="position:relative;width:100%">
+				<small *ngIf="mod_strings.labels[key]"><strong>{{ mod_strings.labels[key] }}:&nbsp;</strong></small>
+				<small *ngIf="!mod_strings.labels[key]"><strong>{{ key }}:&nbsp;</strong></small>
+				<select [name]="key" class="form_field" [(ngModel)]="filters[key]" (change)=do_search()>
+					<option *ngFor="let option of groups[key]" value="{{ option }}" [selected]="filters[key] == option">
+						<span *ngIf="mod_strings.lists[key][option]">
+							{{ mod_strings.lists[key][option] }}
+						</span>
+						<span *ngIf="!mod_strings.lists[key][option]">
+							{{ option }}
+						</span>
+					</option>
+				</select>
+			</div>
 		</div>
 	</div>
 </form>

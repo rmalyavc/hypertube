@@ -37,5 +37,8 @@
 	"LBL_LOADING": "Loading",
 	"LBL_YES": "Yes",
 	"LBL_NO": "No",
-	"LBL_HOME": "Home"
+	"LBL_HOME": "Home",
+	"LBL_ALL_RIGHTS_RESERVED": "All rights reserved",
+	"LBL_CONFIRMATION_LINK_SENT": "We have sent a confirmation link to your email. Please finish your registration by following it.",
+	"LBL_MOST_POPULAR": "Most Popular"
 }

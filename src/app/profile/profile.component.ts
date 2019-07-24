@@ -40,7 +40,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 	private tmp: string = '';
 	private edit: boolean = false;
 	private owner: boolean = false;
-	private input_text: string = 'Choose your avatar';
+	private input_text: string = '';
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
@@ -51,11 +51,13 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 			this.router.navigate(['']);
 		else {
 			this.check_login();
+			this.get_mod_strings();
 			this.file = null;
 			this.file_error = '';
 			this.route.params.subscribe(params => {
 				this.user_id = params['id'];
 				this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
+					this.input_text = this.mod_strings.LBL_CHOOSE_AVATAR;
 					this.page_user = res.data || false;
 					// this.page_user = res['42'];
 					this.owner = this.page_user.uid == this.current_user.uid;
@@ -86,13 +88,13 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		console.log(event);
 		if (event.target.files.length > 0) {
 			this.file = event.target.files[0];
-			this.input_text = this.file.name && this.file.name != '' ? this.file.name : 'Choose your avatar';
+			this.input_text = this.file.name && this.file.name != '' ? this.file.name : this.mod_strings.LBL_CHOOSE_AVATAR;
 		}
 	}
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://8ce86995.ngrok.io/user/update/image';
+		var _url = 'https://35218b74.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {

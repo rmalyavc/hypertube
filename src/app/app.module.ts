@@ -29,6 +29,7 @@ import { HistoryComponent } from './history/history.component';
 import { ScrollTracker } from './scroll-tracker.directive';
 import { FogComponent } from './fog/fog.component';
 import { LoaderComponent } from './loader/loader.component';
+import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { LoaderComponent } from './loader/loader.component';
     HistoryComponent,
     ScrollTracker,
     FogComponent,
-    LoaderComponent
+    LoaderComponent,
+    CompleteRegistrationComponent
   ],
   imports: [
     BrowserModule,

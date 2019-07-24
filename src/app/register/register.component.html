@@ -26,5 +26,7 @@
 	</div>
 	<button class="main_button" type="button" [class.button_disabled]="name.invalid || password.invalid || password_confirmation.invalid || e_mail.invalid" [disabled]="name.invalid || password.invalid || password_confirmation.invalid || e_mail.invalid" (click)="register()"><strong class="button_text white">{{ app_strings.LBL_REGISTER }}</strong></button>
 </form>
-<h3 *ngIf="result != false && result.success == true" class="text_header green">We have sent a confirmation link to your email. Please finish your registration by following it.</h3>
+<h3 *ngIf="result != false && result.success == true" class="text_header green">
+	{{ app_strings.LBL_CONFIRMATION_LINK_SENT }}
+</h3>
 <h3 *ngIf="result != false && result.success == false" class="text_header error_text">{{ result.error }}</h3>
