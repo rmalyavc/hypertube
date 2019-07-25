@@ -8,9 +8,20 @@ import { IResult } from './Result';
   	providedIn: 'root'
 })
 export class FilmService {
-	private _url: string = '';
+	  private _url: string = '';
+    public movie_db_url = 'https://api.themoviedb.org/3/';
+    public api_key = '412d472aa9ed6eec7376bf00249e3b0a';
+    public config: any = {};
+    private access_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MTJkNDcyYWE5ZWQ2ZWVjNzM3NmJmMDAyNDllM2IwYSIsInN1YiI6IjVkMzllYWU3NjBjNTFkMjAxNTgyMTlkZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bi-ooSJ99qDJn7kKsTabhwsfPsT4lgAhZfJCBmI5LNw';
 
-  	constructor(private http: HttpClient) { }
+
+  	constructor(private http: HttpClient) {
+      this._url = this.movie_db_url + 'configuration?api_key=' + this.api_key;
+      this.http.get(this._url).subscribe(res => {
+        this.config = res;
+        console.log(this.config);
+      });
+    }
 
     get_base_url() {
       return 'https://35218b74.ngrok.io/';
@@ -79,4 +90,8 @@ export class FilmService {
       };
       return this.http.post<IResult>(this._url, params);
     }
+
+    // get_movie_config() {
+      
+    // }
 }
