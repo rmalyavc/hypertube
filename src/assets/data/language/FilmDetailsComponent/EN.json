@@ -2,5 +2,6 @@
 	"LBL_NAME": "Name",
 	"LBL_YEAR": "Year",
 	"LBL_LANGUAGE": "Language",
-	"LBL_DESCRIPTION": "Description"
+	"LBL_DESCRIPTION": "Description",
+	"LBL_RELEASE_DATE": "Release Date"
 }

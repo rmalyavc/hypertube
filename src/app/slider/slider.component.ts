@@ -32,19 +32,22 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 	private state_name: string = 'next';
 	private curr_index: number = 0;
 
-	// constructor(private search_service: SearchService) { }
-
 	ngOnInit() {
-		this.results = this.search_service.get_results(false, 'download_count').subscribe(res => {
-			this.results = res;
-
+		this.film_service.search_movies().subscribe(res => {
+			for (var i = 0; i < res.results.length; i++) {
+				if (res.results[i].poster_path)
+					res.results[i].img = this.film_service.config.images.base_url + 'original' + res.results[i].poster_path;
+				else
+					res.results[i].img = this.no_img;
+			}
+			this.results = res.results.slice(0, 20);
 			this.start_slider();
 		});
 	}
 
 	start_slider() {
 		var obj = this;
-		this.curr_set = this.results.data.movies.slice(this.count, this.count + 4);
+		this.curr_set = this.results.slice(this.count, this.count + 4);
 		this.interval_id = setInterval(function() {
 			obj.change_slide(4);
 		}, 5000);
@@ -60,13 +63,13 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 		setTimeout(() => {
 			if (manual)
 				clearInterval(this.interval_id);
-			if (this.count + nb > this.results.data.movies.length - 1)
+			if (this.count + nb > this.results.length - 1)
 				this.count = 0;
 			else if (this.count + nb < 0)
-				this.count = this.results.data.movies.length - 4;
+				this.count = this.results.length - 4;
 			else
 				this.count += nb;
-			this.curr_set = this.results.data.movies.slice(this.count, this.count + 4);
+			this.curr_set = this.results.slice(this.count, this.count + 4);
 			if (manual)
 				this.start_slider();
 		}, 250);

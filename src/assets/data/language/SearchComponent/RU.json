@@ -1,6 +1,6 @@
 {
 	"labels": {
-		"genre": "Жанр",
+		"with_genres": "Жанр",
 		"quality": "Качество",
 		"sort_by": "Сортировать по",
 		"order_by": "Порядок Сортировки",
@@ -11,22 +11,8 @@
 		"LBL_NO_RESULTS": "Ничего не найдено по"
 	},
 	"lists": {
-		"genre": {
-			"": "Все",
-			"comedy": "Комедия",
-			"sci-fi": "Научная фантастика",
-			"horror": "Ужасы",
-			"romance": "Романтический",
-			"action": "Боевик",
-			"thriller": "Триллер",
-			"drama": "Драма",
-			"mystery": "Мистика",
-			"crime": "Криминал",
-			"animation": "Мультфильмы",
-			"adventure": "Приключения",
-			"fantasy": "Фентези",
-			"superhero": "Супергерои",
-			"other": "Другие"
+		"with_genres": {
+			"": "Все"
 		},		
 		"quality": {
 			"": "Все",
@@ -36,12 +22,13 @@
 			"1080p": "1080p"
 		},		
 		"sort_by": {
-			"date_added": "Дата добавления",
-			"title": "Имя",
-			"year": "Год",
-			"rating": "Рейтинг",
-			"download_count": "Количество загрузок",
-			"like_count": "Количество лайков"
+			"popularity": "Популярности",
+			"release_date": "Дате релиза",
+			"revenue": "Кассовым Сборам",
+			"primary_release_date": "Дате Релиза",
+			"original_title": "Названию",
+			"vote_average": "Средней Оценке",
+			"vote_count": "Количеству Голосов"
 		},		
 		"order_by": {
 			"desc": "По убыванию",

@@ -2,7 +2,7 @@
 <div class="app-search" [parent_data]="search_data" (refresh_search)="refresh_search($event)"></div>
 <div *ngIf="results" class="results_cont">
 	<h2 *ngIf="search_data.search_string != ''" class="text_header gray_text">{{ mod_strings.labels.LBL_SEARCH_RESULTS_ON }} "{{ search_data.search_string }}":</h2>
-	<h3 *ngIf="results.status != 'ok'" class="text_header error_text">{{ app_strings.LBL_QUERY_FAILED }}</h3>
+	<!-- <h3 *ngIf="results.status != 'ok'" class="text_header error_text">{{ app_strings.LBL_QUERY_FAILED }}</h3> -->
 	<h3 *ngIf="!results || results.length == 0" class="text_header error_text">{{ mod_strings.labels.LBL_NO_RESULTS }} "{{ search_data.search_string }}"</h3>
 	<div *ngIf="results.length > 0">
 		<div *ngFor="let res of results; let i = index" class="search_result" (click)="watch_movie(res.id)">

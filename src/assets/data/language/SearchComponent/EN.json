@@ -1,6 +1,6 @@
 {
 	"labels": {
-		"genre": "Genre",
+		"with_genres": "Genre",
 		"quality": "Quality",
 		"sort_by": "Sort By",
 		"order_by": "Sort Order",
@@ -11,22 +11,8 @@
 		"LBL_NO_RESULTS": "No results found on"
 	},
 	"lists": {
-		"genre": {
-			"": "All",
-			"comedy": "Comedy",
-			"sci-fi": "Sci-Fi",
-			"horror": "Horror",
-			"romance": "Romance",
-			"action": "Action",
-			"thriller": "Thriller",
-			"drama": "Drama",
-			"mystery": "Mystery",
-			"crime": "Crime",
-			"animation": "Animation",
-			"adventure": "Adventure",
-			"fantasy": "Fantasy",
-			"superhero": "Superhero",
-			"other": "Other"
+		"with_genres": {
+			"": "All"
 		},
 		"quality": {
 			"": "All",
@@ -36,12 +22,13 @@
 			"1080p": "1080p"
 		},
 		"sort_by": {
-			"date_added": "Date Added",
-			"title": "Name",
-			"year": "Year",
-			"rating": "Rating",
-			"download_count": "Download Count",
-			"like_count": "Like Count"
+			"popularity": "Popularity",
+			"release_date": "Release Date",
+			"revenue": "Revenue",
+			"primary_release_date": "Primary Release Date",
+			"original_title": "Original Title",
+			"vote_average": "Vote Average",
+			"vote_count": "Vote Count"
 		},
 		"order_by": {
 			"desc": "Descending",

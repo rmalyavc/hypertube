@@ -5,6 +5,7 @@ import { IFilter } from '../Filter';
 import { Observable } from 'rxjs';
 import { UserService } from '../user.service';
 import { LangService } from '../lang.service';
+import { FilmService } from '../film.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 
 
@@ -25,7 +26,7 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	public _url: string;
 	public search_string: string;
 
-	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
+	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
 	}
 
@@ -33,12 +34,20 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		this.get_mod_strings();
 		this.groups = this.get_filters().subscribe(data => {
 			this.groups = data;
+			var genre_keys = Object.keys(this.film_service.genre_list);
+			for (var i = 0; i < genre_keys.length; i++) {
+				var key = genre_keys[i];
+				this.groups['with_genres'].push(key);
+				this.mod_strings.lists.with_genres[key] = this.film_service.genre_list[key];
+			}
 			this.keys = Object.keys(this.groups);
+			
 			for (var i = 0; i < this.keys.length; i++) {
 				var key = this.keys[i];
 				if (this.groups[key].length > 0)
 					this.filters[key] = this.groups[key][0];
 			}
+			
 		});
 		if (this.parent_data != false && this.parent_data != {}) {
 			this.keys = this.parent_data.keys ? this.parent_data.keys : this.keys;

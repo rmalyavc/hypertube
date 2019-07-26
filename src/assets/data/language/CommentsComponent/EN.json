@@ -2,6 +2,7 @@
 	"LBL_COMMENTS": "Comments",
 	"LBL_UPDATE": "Update",
 	"LBL_COMMENT_PLACEHOLDER": "Start type your comment here...",
+	"LBL_COMMENT_PLACEHOLDER_NO_USER": "You need to register to add comments",
 	"LBL_SEND": "Send",
 	"LBL_CONFIRM_DELETE": "Do you really want to remove this comment?",
 	"LBL_CONFIRM_UPDATE": "Do you really want to update this comment?"

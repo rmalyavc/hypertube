@@ -22,6 +22,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 		action: '',
 		nb: 0
 	};
+	private placeholder: string = '';
 	@Input() private movie_data: any;
 
 	// constructor(private film_service: FilmService, public lang_service: LangService) { }
@@ -31,6 +32,13 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 		this.base_url = this.user_service.get_base_url();
 		// if (this.comments.length == 0)
 		this.get_comments();
+		var obj = this;
+		var interval_id = setInterval(function() {
+			if (obj.mod_strings.LBL_COMMENT_PLACEHOLDER) {
+				obj.placeholder = obj.current_user ? obj.mod_strings.LBL_COMMENT_PLACEHOLDER : obj.mod_strings.LBL_COMMENT_PLACEHOLDER_NO_USER;
+				clearInterval(interval_id);
+			}
+		}, 100);
 		console.log(this.comments);
 	}
 

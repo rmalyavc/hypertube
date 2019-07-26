@@ -6,6 +6,8 @@ import { LangService } from '../lang.service';
 import { FilmService } from '../film.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
+declare var require: any;
+
 @Component({
 	selector: 'app-watch',
 	templateUrl: './watch.component.html',
@@ -14,6 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class WatchComponent extends BaseComponent implements OnInit {
 	private page_id: string;
 	private film_data: any = {};
+	public no_img: string = require('../search-results/assets/no_image.png');
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
@@ -23,20 +26,22 @@ export class WatchComponent extends BaseComponent implements OnInit {
 		this.route.params.subscribe(params => {
 			this.page_id = params['id'];
 			this.film_service.get_film(this.page_id).subscribe(res => {
-				this.film_data.id = res.data.movie.id;
-				this.film_data.name = res.data.movie.title_long;
-				this.film_data.lang = res.data.movie.language;
-				this.film_data.img = res.data.movie.large_cover_image;
+				console.log(res);
+				this.film_data.id = res['id'];
+				this.film_data.name = res['title'];
+				// this.film_data.lang = res['language'];
+				this.film_data.img = this.no_img;
+				if (res['poster_path'])
+					this.film_data.img = this.film_service.config.images.base_url + 'original' + res['poster_path'];
 				this.film_data.link = "";
-				this.film_data.description = res.data.movie.description_intro;
-				this.film_data.genres = res.data.movie.genres;
-				this.film_data.year = res.data.movie.year;
-				// this.film_service.get_comments(this.page_id).subscribe(result => {
-				// 	console.log(result);
-				// });
-				this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
-					console.log(res);
-				});
+				this.film_data.description = res['overview'];
+				this.film_data.genres = res['genres'];
+				this.film_data.year = res['release_date'];
+				if (this.current_user) {
+					this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
+						console.log(res);
+					});
+				}
 			});
 		});	
 	}

@@ -2,5 +2,6 @@
 	"LBL_NAME": "Название",
 	"LBL_YEAR": "Год",
 	"LBL_LANGUAGE": "Язык",
-	"LBL_DESCRIPTION": "Описание"
+	"LBL_DESCRIPTION": "Описание",
+	"LBL_RELEASE_DATE": "Дата Релиза"
 }

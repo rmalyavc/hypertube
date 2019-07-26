@@ -1,18 +1,6 @@
 {
-	"genre": [
-		"",
-		"comedy",
-		"sci-fi",
-		"horror",
-		"romance",
-		"action",
-		"thriller",
-		"drama",
-		"mystery",
-		"crime",
-		"animation",
-		"adventure",
-		"fantasy"
+	"with_genres": [
+		""
 	],
 	"quality": [
 		"",
@@ -23,12 +11,13 @@
 		"3D"
 	],
 	"sort_by": [
-		"date_added",
-		"title",
-		"year",
-		"rating",
-		"download_count",
-		"like_count"
+		"popularity",
+		"release_date",
+		"revenue",
+		"primary_release_date",
+		"original_title",
+		"vote_average",
+		"vote_count"
 	],
 	"order_by": [
 		"desc",
