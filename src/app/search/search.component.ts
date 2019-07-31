@@ -25,28 +25,41 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	public keys: string[];
 	public _url: string;
 	public search_string: string;
+	private dropdown_settings: any;
+	private genre_list: any = [];
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
+		this.get_mod_strings();
+		this.dropdown_settings = {
+			singleSelection: false,
+			idField: 'with_genres',
+			textField: 'item_text',
+			selectAllText: 'Select All',
+			unSelectAllText: 'UnSelect All',
+			itemsShowLimit: 3,
+			allowSearchFilter: true
+		};
 	}
 
 	ngOnInit() {
-		this.get_mod_strings();
+		
 		this.groups = this.get_filters().subscribe(data => {
+			var obj = this;
+			var count = 0;
+			var interval_id = setInterval(function() {
+				if ((Object.keys(obj.film_service.genre_list).length > 0 || count++ > 50) && obj.collect_genres()) {
+					obj.keys = Object.keys(obj.groups);
+				
+					for (var i = 0; i < obj.keys.length; i++) {
+						var key = obj.keys[i];
+						if (obj.groups[key].length > 0)
+							obj.filters[key] = obj.groups[key][0];
+					}
+					clearInterval(interval_id);
+				}
+			}, 100)
 			this.groups = data;
-			var genre_keys = Object.keys(this.film_service.genre_list);
-			for (var i = 0; i < genre_keys.length; i++) {
-				var key = genre_keys[i];
-				this.groups['with_genres'].push(key);
-				this.mod_strings.lists.with_genres[key] = this.film_service.genre_list[key];
-			}
-			this.keys = Object.keys(this.groups);
-			
-			for (var i = 0; i < this.keys.length; i++) {
-				var key = this.keys[i];
-				if (this.groups[key].length > 0)
-					this.filters[key] = this.groups[key][0];
-			}
 			
 		});
 		if (this.parent_data != false && this.parent_data != {}) {
@@ -81,6 +94,21 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		setTimeout(function() {
 			that.refresh_search.emit(true);	
 		}, 300);
-		
+	}
+	collect_genres() {
+		var genre_keys = Object.keys(this.film_service.genre_list);
+		for (var i = 0; i < genre_keys.length; i++) {
+			var key = genre_keys[i];
+			this.groups['with_genres'].push(key);
+			this.mod_strings.lists.with_genres[key] = this.film_service.genre_list[key];
+			this.genre_list.push({item_id: key, item_text: this.film_service.genre_list[key]});
+		}
+		return true;
+	}
+	onItemSelect(item: any) {
+	    console.log(item);
+	}
+	onSelectAll(items: any) {
+	    console.log(items);
 	}
 }

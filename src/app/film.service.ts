@@ -26,6 +26,7 @@ export class FilmService {
             this.lang = current_user.lang;
         this._url = this.movie_db_url + 'genre/movie/list?api_key=' + this.api_key + '&language=' + this.lang;
         this.http.get(this._url).subscribe(res => {
+            console.log(res);
             if (res['genres'] && res['genres'].length > 0) {
                 for (var i = 0; i < res['genres'].length; i++) {
                     var genre = res['genres'][i];
@@ -36,7 +37,7 @@ export class FilmService {
     }
 
     get_base_url() {
-        return 'https://14c2da9c.ngrok.io/';
+        return 'https://8f0fd646.ngrok.io/';
     }
 
   	get_film(film_id) {

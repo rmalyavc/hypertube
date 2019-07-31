@@ -71,7 +71,11 @@ export class BaseComponent implements OnInit {
 
 	public get_mod_strings(component = this.component_name, lang = this.current_user.lang) {
 		this.mod_strings = this.lang_service.get_labels(lang, component).subscribe(data => {
-			this.mod_strings = data;
+			console.log(data);
+			var keys = Object.keys(data);
+			for (var i = 0; i < keys.length; i++) {
+				this.mod_strings[keys[i]] = data[keys[i]];
+			}
 		});
 	}
 }

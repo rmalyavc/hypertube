@@ -1,7 +1,4 @@
 {
-	"with_genres": [
-		""
-	],
 	"quality": [
 		"",
 		"360p",
@@ -22,5 +19,8 @@
 	"order_by": [
 		"desc",
 		"asc"
+	],
+	"with_genres": [
+		""
 	]
 }

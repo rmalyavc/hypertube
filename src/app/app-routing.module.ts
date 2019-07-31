@@ -10,6 +10,7 @@ import { WatchComponent } from './watch/watch.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HistoryComponent } from './history/history.component';
 import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
+import { RestorePasswordComponent } from './restore-password/restore-password.component';
 
 const routes: Routes = [
 	{
@@ -49,9 +50,13 @@ const routes: Routes = [
 		component: WatchComponent,
 	},
 	{
+		path: 'restore/:action',
+		component: RestorePasswordComponent,
+	},
+	{
 		path: '**',
 		component: NotFoundComponent,
-	}
+	},
 ];
 
 @NgModule({

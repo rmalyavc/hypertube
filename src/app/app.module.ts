@@ -30,6 +30,8 @@ import { ScrollTracker } from './scroll-tracker.directive';
 import { FogComponent } from './fog/fog.component';
 import { LoaderComponent } from './loader/loader.component';
 import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { RestorePasswordComponent } from './restore-password/restore-password.component';
 
 @NgModule({
   declarations: [
@@ -56,14 +58,16 @@ import { CompleteRegistrationComponent } from './complete-registration/complete-
     ScrollTracker,
     FogComponent,
     LoaderComponent,
-    CompleteRegistrationComponent
+    CompleteRegistrationComponent,
+    RestorePasswordComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

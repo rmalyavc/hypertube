@@ -94,7 +94,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://14c2da9c.ngrok.io/user/update/image';
+		var _url = 'https://8f0fd646.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {
@@ -117,6 +117,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		var form_data = Object.assign({}, this.form_data);
 		delete form_data.login;
 		this.user_service.update_user(form_data).subscribe(res => {
+			console.log(res);
 			this.update_status = res.status;
 			this.errors = [];
 			if (res.errors) {
@@ -129,10 +130,13 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 				}
 			}
 			else {
+				res.data.token = this.current_user.token;
+				res.data.id = res.data.uid;
+				localStorage.setItem('current_user', JSON.stringify(res.data));
+				this.current_user = res.data;
 				this.change_editable();
 				this.ngOnInit();	
 			}
-			
 		});
 
 	}

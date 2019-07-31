@@ -32,7 +32,7 @@ body {
   transition: background 0.3s linear;
 }
 
-.app-login, .app-register {
+.app-login, .app-register, .app-restore-password {
 	position: relative;
 	width: 30%;
 	max-width: 400px;
@@ -73,7 +73,7 @@ body {
 	opacity: 0.3;
 }
 
-.app-login .main_button, .app-register .main_button, .app-profile .main_button {
+.app-login .main_button, .app-register .main_button, .app-profile .main_button, .app-restore-password .main_button {
 	width: 50%;
 	height: 30px;
 	left: 25%;
@@ -161,4 +161,13 @@ app-home {
 	width: 100%;
 	height: 99%;
 	overflow: hidden;
+}
+
+span.dropdown-btn {
+	background-color: white;
+	border: 2px solid rgba(200,200,200,0.3) !important;
+}
+
+ul.item1 {
+	overflow-x: hidden !important;
 }

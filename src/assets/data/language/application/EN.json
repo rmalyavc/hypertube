@@ -40,5 +40,6 @@
 	"LBL_HOME": "Home",
 	"LBL_ALL_RIGHTS_RESERVED": "All rights reserved",
 	"LBL_CONFIRMATION_LINK_SENT": "We have sent a confirmation link to your email. Please finish your registration by following it.",
-	"LBL_MOST_POPULAR": "Most Popular"
+	"LBL_MOST_POPULAR": "Most Popular",
+	"LBL_SUBMIT": "Submit"
 }

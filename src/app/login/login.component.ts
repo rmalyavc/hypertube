@@ -26,7 +26,6 @@ export class LoginComponent extends BaseComponent implements OnInit {
 			// });
 			// this.redirect_to_home(true);
 			this.user_service.login_user(this.form_data).subscribe(res => {
-				console.log(res);
 				if (res.status === true) {
 					// delete data['success'];
 					res.data.token = res.token;
