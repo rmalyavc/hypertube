@@ -29,7 +29,6 @@ export class RestorePasswordComponent extends BaseComponent implements OnInit {
 
 	ngOnInit() {
 		this.errors = [];
-		console.log(this.mod_strings);
 		this.route.params.subscribe(params => {
 			this.action = params['action'];
 			this.header = this.mod_strings['LBL_' + this.action.toUpperCase()];
@@ -37,12 +36,22 @@ export class RestorePasswordComponent extends BaseComponent implements OnInit {
 			if (this.action == 'recover') {
 				this.route.queryParams.subscribe(params => {
 					if (!params.token || params.token == '') {
-						this.errors.push(this.mod_strings.LBL_ERR_NO_TOKEN);
+						var obj = this;
+						var interval_id = setInterval(function() {
+							if (Object.keys(obj.mod_strings).length > 0) {
+								clearInterval(interval_id);
+								obj.errors.push(obj.mod_strings.LBL_ERR_NO_TOKEN);
+							}
+						}, 50);
 					}
 					else {
 						this.form_data.token = params.token;
 					}
 				});
+			}
+			else if (this.action == 'change') {
+				// this.check_login();
+				this.form_data.token = this.current_user.token;
 			}
 		});
 	}

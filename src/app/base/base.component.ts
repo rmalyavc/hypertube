@@ -24,10 +24,11 @@ export class BaseComponent implements OnInit {
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
 		// this.current_user.lang = 'RU';
-		this.app_strings = this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
+		this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
 			this.app_strings = data;
 		});
 		this.component_name = this.constructor.name;
+		// this.get_mod_strings();
 	}
 
 	ngOnInit() {
@@ -70,12 +71,18 @@ export class BaseComponent implements OnInit {
 	}
 
 	public get_mod_strings(component = this.component_name, lang = this.current_user.lang) {
-		this.mod_strings = this.lang_service.get_labels(lang, component).subscribe(data => {
-			console.log(data);
+		this.lang_service.get_labels(lang, component).subscribe(data => {
 			var keys = Object.keys(data);
-			for (var i = 0; i < keys.length; i++) {
-				this.mod_strings[keys[i]] = data[keys[i]];
+			Object.assign(this.mod_strings, data);
+			// for (var i = 0; i < keys.length; i++) {
+			// 	this.mod_strings[keys[i]] = data[keys[i]];
+			// }
+		}, error => {
+			console.log('ERROR IS: ', error);
+			if (error.status == 404) {
+				this.mod_strings = {};
 			}
 		});
+		return true;
 	}
 }
