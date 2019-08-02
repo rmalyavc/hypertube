@@ -33,11 +33,11 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		this.get_mod_strings();
 		this.dropdown_settings = {
 			singleSelection: false,
-			idField: 'with_genres',
+			idField: 'item_id',
 			textField: 'item_text',
 			selectAllText: 'Select All',
 			unSelectAllText: 'UnSelect All',
-			itemsShowLimit: 3,
+			itemsShowLimit: 4,
 			allowSearchFilter: true
 		};
 	}

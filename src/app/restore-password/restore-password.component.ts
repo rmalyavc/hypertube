@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../base/base.component';
+import { LoginComponent } from '../login/login.component';
 import { UserService } from '../user.service';
 import { LangService } from '../lang.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,9 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './restore-password.component.html',
   styleUrls: ['./restore-password.component.css']
 })
-export class RestorePasswordComponent extends BaseComponent implements OnInit {
+export class RestorePasswordComponent extends LoginComponent implements OnInit {
 	private action: string = '';
-	private form_data: any = {
+	public form_data: any = {
 		action: '',
 		token: '',
 		password: '',
@@ -19,8 +19,7 @@ export class RestorePasswordComponent extends BaseComponent implements OnInit {
 		old_password: '',
 		email: ''
 	};
-	private header: string = '';
-	private errors: string[] = [];
+	private message: string = '';
 
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		super(user_service, router, route, lang_service);
@@ -31,7 +30,7 @@ export class RestorePasswordComponent extends BaseComponent implements OnInit {
 		this.errors = [];
 		this.route.params.subscribe(params => {
 			this.action = params['action'];
-			this.header = this.mod_strings['LBL_' + this.action.toUpperCase()];
+			// this.header = this.mod_strings['LBL_' + this.action.toUpperCase()];
 			this.form_data.action = this.action;
 			if (this.action == 'recover') {
 				this.route.queryParams.subscribe(params => {
@@ -50,15 +49,40 @@ export class RestorePasswordComponent extends BaseComponent implements OnInit {
 				});
 			}
 			else if (this.action == 'change') {
-				// this.check_login();
+				this.check_login();
+				this.form_data.uid = this.current_user.uid;
 				this.form_data.token = this.current_user.token;
 			}
+			else if (this.action != 'forgot')
+				this.router.navigate(['not_found']);
 		});
 	}
 
 	recover_password() {
 		this.user_service.change_password(this.form_data).subscribe(res => {
-			console.log(res);
+			if (res && res.status) {
+				if (this.action == 'forgot')
+					this.message = this.mod_strings.LBL_LINK_SENT;
+				else if (this.action == 'change')
+					this.message = this.mod_strings['LBL_PASSWORD_CHANGED'];
+				else if (this.action == 'recover' && res.data.login) {
+					this.form_data.login = res.data.login;
+					this.login();
+				}
+			}
+			else {
+				if (typeof res.error == 'object') {
+					var err_keys = Object.keys(res.error);
+					for (var i = 0; i < err_keys.length; i++) {
+						var key = err_keys[i];
+						for (var j = 0; res.error[key][j]; j++) {
+							this.errors.push(res.error[key][j]);
+						}
+					}
+				}
+				else
+					this.errors.push(res.error);
+			}
 		});
 	}
 }

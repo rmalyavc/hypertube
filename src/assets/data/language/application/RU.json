@@ -4,6 +4,7 @@
 	"LBL_LOGIN": "Логин",
 	"LBL_PASSWORD": "Пароль",
 	"LBL_PASSWORD_AGAIN": "Пароль снова",
+	"LBL_CURRENT_PASSWORD": "Текущий Пароль",
 	"LBL_REGISTER": "Регистрация",
 	"LBL_REGISTRATION": "Регистрация",
 	"LBL_FIRST_NAME": "Имя",
@@ -41,5 +42,6 @@
 	"LBL_ALL_RIGHTS_RESERVED": "Все права защищены",
 	"LBL_CONFIRMATION_LINK_SENT": "На вашу почту отправлена ссылка. Пожалуйста, перейдите по ней для завершения регистрации.",
 	"LBL_MOST_POPULAR": "Самые популярные",
-	"LBL_SUBMIT": "Отправить"
+	"LBL_SUBMIT": "Отправить",
+	"LBL_LOGIN_FAILED": "Не удалось войти"
 }

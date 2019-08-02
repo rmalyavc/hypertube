@@ -14,5 +14,6 @@
 	"LBL_UPDATE": "Обновить",
 	"LBL_BRAWSING_HISTORY": "История просмотров",
 	"LBL_VIEW_ALL_HISTORY": "Смотреть всю историю",
-	"LBL_CHOOSE_AVATAR": "Выберите аватар"
+	"LBL_CHOOSE_AVATAR": "Выберите аватар",
+	"LBL_CHANGE_PASSWORD": "Смена пароля"
 }

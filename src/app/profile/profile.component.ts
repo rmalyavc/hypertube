@@ -35,7 +35,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 	public history: string[] = [];
 	private file: any = null;
 	private update_status: boolean = true;
-	private errors: string[] = [];
+	// private errors: string[] = [];
 	private file_error: string = '';
 	private tmp: string = '';
 	private edit: boolean = false;
@@ -94,7 +94,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://8f0fd646.ngrok.io/user/update/image';
+		var _url = 'https://c002203f.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {

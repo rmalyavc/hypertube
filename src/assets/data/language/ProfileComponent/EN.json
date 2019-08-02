@@ -14,5 +14,6 @@
 	"LBL_UPDATE": "Update",
 	"LBL_BRAWSING_HISTORY": "Brawsing History",
 	"LBL_VIEW_ALL_HISTORY": "View all history",
-	"LBL_CHOOSE_AVATAR": "Choose your avatar"
+	"LBL_CHOOSE_AVATAR": "Choose your avatar",
+	"LBL_CHANGE_PASSWORD": "Change Password"
 }

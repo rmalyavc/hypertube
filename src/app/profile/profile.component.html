@@ -68,6 +68,9 @@
 				</small>
 			</p>
 		</div>
+		<div class="field_container" *ngIf="edit">
+			<p class="text_header"><a routerLink="/restore/change">{{ mod_strings.LBL_CHANGE_PASSWORD }}</a></p>
+		</div>
 		<button *ngIf="edit" class="main_button" type="button" (click)="update()"><strong class="button_text white">{{ mod_strings.LBL_UPDATE }}</strong></button>
 	</div>
 	

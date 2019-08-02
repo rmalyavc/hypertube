@@ -20,6 +20,7 @@ export class BaseComponent implements OnInit {
 	public show_fog: boolean = false;
 	public show_loader: boolean = false;
 	public confirm_question: string = '';
+	public errors: string[] = [];
 
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
@@ -46,12 +47,10 @@ export class BaseComponent implements OnInit {
 	}
 
 	public check_login() {
-		console.log(this.current_user);
 		if (!this.current_user)
 			this.redirect_to_home(true);
 		else {
 			this.user_service.is_logged_in(this.current_user).subscribe(data => {
-				console.log(data);
 				if (!data.status)
 					this.logout();
 			});
@@ -60,25 +59,17 @@ export class BaseComponent implements OnInit {
 
 	public logout() {
 		this.user_service.logout_user(this.current_user).subscribe(data => {
-			// console.log(data);
 			localStorage.removeItem('current_user');
 			this.current_user = false;
 			window.location.href = '/login';	
 		});
-		// localStorage.removeItem('current_user');
-		// this.current_user = false;
-		// window.location.href = '/login';
 	}
 
 	public get_mod_strings(component = this.component_name, lang = this.current_user.lang) {
 		this.lang_service.get_labels(lang, component).subscribe(data => {
 			var keys = Object.keys(data);
 			Object.assign(this.mod_strings, data);
-			// for (var i = 0; i < keys.length; i++) {
-			// 	this.mod_strings[keys[i]] = data[keys[i]];
-			// }
 		}, error => {
-			console.log('ERROR IS: ', error);
 			if (error.status == 404) {
 				this.mod_strings = {};
 			}

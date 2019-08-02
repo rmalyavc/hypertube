@@ -8,7 +8,7 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
-	private form_data;
+	public form_data;
 	private success: boolean;
 
 	ngOnInit() {
@@ -18,7 +18,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
 		}
 	}
 
-	public login() {
+	protected login() {
 		console.log(this.form_data);
 		if (this.form_data['login'] && this.form_data['password']) {
 			// this.user_service.get_current_user().subscribe(function(data) {
@@ -39,12 +39,9 @@ export class LoginComponent extends BaseComponent implements OnInit {
 						password: ''
 					}
 					this.success = false;
+					this.errors.push(this.app_strings['LBL_LOGIN_FAILED']);
 				}
 			});
 		}
 	}
-	// login() {
-	// 	this.router.navigate(['']);	
-	// }
-	
 }
