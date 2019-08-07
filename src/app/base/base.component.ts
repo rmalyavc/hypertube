@@ -25,9 +25,9 @@ export class BaseComponent implements OnInit {
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
 		// this.current_user.lang = 'RU';
-		this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
-			this.app_strings = data;
-		});
+		// this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
+		// 	this.app_strings = data;
+		// });
 		this.component_name = this.constructor.name;
 		// this.get_mod_strings();
 	}
@@ -65,15 +65,20 @@ export class BaseComponent implements OnInit {
 		});
 	}
 
-	public get_mod_strings(component = this.component_name, lang = this.current_user.lang) {
+	public get_mod_strings(component = this.component_name, lang = this.current_user.lang, callback = function() { return ;}) {
 		this.lang_service.get_labels(lang, component).subscribe(data => {
-			var keys = Object.keys(data);
-			Object.assign(this.mod_strings, data);
+			if (component != 'application')
+				Object.assign(this.mod_strings, data);
+			else
+				Object.assign(this.app_strings, data);
+			callback();
+
 		}, error => {
 			if (error.status == 404) {
 				this.mod_strings = {};
 			}
+			callback();
 		});
-		return true;
+		// return true;
 	}
 }

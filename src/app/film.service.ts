@@ -37,7 +37,7 @@ export class FilmService {
     }
 
     get_base_url() {
-        return 'https://c002203f.ngrok.io/';
+        return 'https://c334d803.ngrok.io/';
     }
 
   	get_film(film_id) {
@@ -118,14 +118,28 @@ export class FilmService {
                     search_data.filters.order_by != '') {
                     search_data.filters.sort_by = search_data.filters.sort_by.replace('.asc', '').replace('.desc', '') + '.' + search_data.filters.order_by;
                 }
-
-                if (key != 'order_by' && search_data.filters[key] && search_data.filters[key] != '')
-                    query_part += '&' + key + '=' + search_data.filters[key];
+                // else if (key == 'with_genres' && search_data.filters.with_genres && search_data.filters.with_genres != '') {
+                //     query_part += ''
+                // }
+                else if (key != 'order_by' && search_data.filters[key] && search_data.filters[key] != '') {
+                    query_part += '&' + key + '=';
+                    if (key != 'with_genres') {
+                        query_part += search_data.filters[key];
+                    }
+                    else {
+                        var genres = [];
+                        for (var j = 0; search_data.filters[key][j]; j++) {
+                            genres.push(search_data.filters[key][j].item_id);
+                        }
+                        query_part += genres.join();
+                    }
+                }
             }
         }
         query_part += '&page=' + page;
         // query_part += '&language=' + this.lang;
         this._url += method + '/movie' + query_part;
+        console.log(this._url);
         return this.http.get<ISearchResult>(this._url);
     }
 }

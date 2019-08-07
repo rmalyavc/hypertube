@@ -26,7 +26,6 @@ export class WatchComponent extends BaseComponent implements OnInit {
 		this.route.params.subscribe(params => {
 			this.page_id = params['id'];
 			this.film_service.get_film(this.page_id).subscribe(res => {
-				console.log(res);
 				this.film_data.id = res['id'];
 				this.film_data.name = res['title'];
 				// this.film_data.lang = res['language'];
@@ -38,9 +37,7 @@ export class WatchComponent extends BaseComponent implements OnInit {
 				this.film_data.genres = res['genres'];
 				this.film_data.year = res['release_date'];
 				if (this.current_user) {
-					this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
-						console.log(res);
-					});
+					this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {});
 				}
 			});
 		});	

@@ -13,7 +13,6 @@ export class FilmDetailsComponent extends BaseComponent implements OnInit {
 
 	ngOnInit() {
 		this.get_mod_strings();
-		console.log(this.film_data);
 	}
 
 }

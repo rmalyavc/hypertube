@@ -17,24 +17,26 @@ export class HistoryComponent extends ProfileComponent implements OnInit {
 	private order_by: string = 'updated_at';
 
   	ngOnInit() {
-  		this.get_mod_strings();
-  		this.history = [];
-  		this.skip = 0;
-	  	if (!this.current_user)
-			this.router.navigate(['']);
-		else {
-			this.check_login();
-			this.route.params.subscribe(params => {
-				this.user_id = params['id'];
-				this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
-					this.page_user = res.data || false;
-					if (this.page_user)
-						this.page_user.id = this.page_user.uid;
-					this.get_brawsing_history(this.limit, this.skip, this.filters.order_by, this.filters.sort_order);
-				});
-				console.log(this);
+  		this.get_mod_strings('application', this.current_user.lang, () => {
+			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
+		  		this.history = [];
+		  		this.skip = 0;
+			  	if (!this.current_user)
+					this.router.navigate(['']);
+				else {
+					this.check_login();
+					this.route.params.subscribe(params => {
+						this.user_id = params['id'];
+						this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
+							this.page_user = res.data || false;
+							if (this.page_user)
+								this.page_user.id = this.page_user.uid;
+							this.get_brawsing_history(this.limit, this.skip, this.filters.order_by, this.filters.sort_order);
+						});
+					});
+				}
 			});
-		}
+		});
 	}
 	handle_scroll(event) {
 		let tracker = event.target;

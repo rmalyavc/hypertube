@@ -27,34 +27,38 @@ export class RestorePasswordComponent extends LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.errors = [];
-		this.route.params.subscribe(params => {
-			this.action = params['action'];
-			// this.header = this.mod_strings['LBL_' + this.action.toUpperCase()];
-			this.form_data.action = this.action;
-			if (this.action == 'recover') {
-				this.route.queryParams.subscribe(params => {
-					if (!params.token || params.token == '') {
-						var obj = this;
-						var interval_id = setInterval(function() {
-							if (Object.keys(obj.mod_strings).length > 0) {
-								clearInterval(interval_id);
-								obj.errors.push(obj.mod_strings.LBL_ERR_NO_TOKEN);
+		this.get_mod_strings('application', this.current_user.lang, () => {
+			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
+				this.errors = [];
+				this.route.params.subscribe(params => {
+					this.action = params['action'];
+					// this.header = this.mod_strings['LBL_' + this.action.toUpperCase()];
+					this.form_data.action = this.action;
+					if (this.action == 'recover') {
+						this.route.queryParams.subscribe(params => {
+							if (!params.token || params.token == '') {
+								var obj = this;
+								var interval_id = setInterval(function() {
+									if (Object.keys(obj.mod_strings).length > 0) {
+										clearInterval(interval_id);
+										obj.errors.push(obj.mod_strings.LBL_ERR_NO_TOKEN);
+									}
+								}, 50);
 							}
-						}, 50);
+							else {
+								this.form_data.token = params.token;
+							}
+						});
 					}
-					else {
-						this.form_data.token = params.token;
+					else if (this.action == 'change') {
+						this.check_login();
+						this.form_data.uid = this.current_user.uid;
+						this.form_data.token = this.current_user.token;
 					}
+					else if (this.action != 'forgot')
+						this.router.navigate(['not_found']);
 				});
-			}
-			else if (this.action == 'change') {
-				this.check_login();
-				this.form_data.uid = this.current_user.uid;
-				this.form_data.token = this.current_user.token;
-			}
-			else if (this.action != 'forgot')
-				this.router.navigate(['not_found']);
+			});
 		});
 	}
 

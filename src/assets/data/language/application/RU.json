@@ -43,5 +43,7 @@
 	"LBL_CONFIRMATION_LINK_SENT": "На вашу почту отправлена ссылка. Пожалуйста, перейдите по ней для завершения регистрации.",
 	"LBL_MOST_POPULAR": "Самые популярные",
 	"LBL_SUBMIT": "Отправить",
-	"LBL_LOGIN_FAILED": "Не удалось войти"
+	"LBL_LOGIN_FAILED": "Не удалось войти",
+	"LBL_SELECT_ALL": "Выбрать Все",
+	"LBL_DESELECT_ALL": "Отменить Все"
 }

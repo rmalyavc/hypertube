@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 export class HomeComponent extends BaseComponent implements OnInit {
 	load_more: Subject<boolean> = new Subject();
 	ngOnInit() {
+		this.get_mod_strings('application');
 	}
 
 	handle_scroll(event) {

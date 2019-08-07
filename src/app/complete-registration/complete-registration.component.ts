@@ -9,16 +9,18 @@ import { BaseComponent } from '../base/base.component';
 export class CompleteRegistrationComponent extends BaseComponent implements OnInit {
 	private error: string = '';
 	ngOnInit() {
-		this.route.params.subscribe(params => {
-			this.user_service.complete_registration(params['token']).subscribe(res => {
-				if (res.status) {
-					res.data.token = res.token;
-					res.data.id = res.data.uid;
-					localStorage.setItem('current_user', JSON.stringify(res.data));
-					this.redirect_to_home(true);
-				}
-				else
-					this.error = res.error;
+		this.get_mod_strings('application', this.current_user.lang, () => {
+			this.route.params.subscribe(params => {
+				this.user_service.complete_registration(params['token']).subscribe(res => {
+					if (res.status) {
+						res.data.token = res.token;
+						res.data.id = res.data.uid;
+						localStorage.setItem('current_user', JSON.stringify(res.data));
+						this.redirect_to_home(true);
+					}
+					else
+						this.error = res.error;
+				});
 			});
 		});
 	}

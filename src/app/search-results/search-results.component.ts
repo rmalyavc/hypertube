@@ -26,46 +26,61 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 	private page: number = 1;
 	private limit: number = 20;
 	public no_img: string = require('./assets/no_image.png');
+	private end_of_results: boolean = false;
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public search_service: SearchService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
 	}
 
 	ngOnInit() {
-		this.get_mod_strings('SearchComponent');
-		this.load_more.subscribe(v => {
-			this.page++;
-			this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
-				if (results.results) {
-					for (var i = 0; i < results.results.length; i++) {
-						if (results.results[i].poster_path)
-							results.results[i].img = this.film_service.config.images.base_url + 'original' + results.results[i].poster_path;
-						else
-							results.results[i].img = this.no_img;
-						this.results.push(results.results[i]);
+		this.get_mod_strings('application', this.current_user.lang, () => {
+			this.get_mod_strings('SearchComponent', this.current_user.lang, () => {
+				this.end_of_results = false;
+				this.load_more.subscribe(v => {
+					if (!this.end_of_results) {
+						this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
+							if (results.results) {
+								for (var i = 0; i < results.results.length; i++) {
+									if (results.results[i].poster_path)
+										results.results[i].img = this.film_service.config.images.base_url + 'original' + results.results[i].poster_path;
+									else
+										results.results[i].img = this.no_img;
+									if (this.results)
+										this.results.push(results.results[i]);
+								}
+								if (results.results.length > 0)
+									this.page++;
+								else
+									this.end_of_results = true;
+							}
+						});
 					}
-				}
-			});
-		});
-		this.route.queryParams.subscribe(params => {
-			if (params != {}) {
-				this.search_data.advanced = params.advanced == "true" ? true : false;
-				this.search_data.filters = params.filters ? JSON.parse(params.filters) : {};
-				this.search_data.groups = params.groups ? JSON.parse(params.groups) : {};
-				this.search_data.search_string = params.search_string ? params.search_string : '';
-				this.search_data.keys = Object.keys(this.search_data.groups);
-			}
-			this.show_loader = true;
-			this.page = 1;
-			this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
-				this.results = results.results;
-				for (var i = 0; i < this.results.length; i++) {
-					if (this.results[i].poster_path)
-						this.results[i].img = this.film_service.config.images.base_url + 'original' + this.results[i].poster_path;
-					else
-						this.results[i].img = this.no_img;
-				}
-				this.show_loader = false;
+				});
+				this.route.queryParams.subscribe(params => {
+					if (params != {}) {
+						this.search_data.advanced = params.advanced == "true" ? true : false;
+						this.search_data.filters = params.filters ? JSON.parse(params.filters) : {};
+						this.search_data.groups = params.groups ? JSON.parse(params.groups) : {};
+						this.search_data.search_string = params.search_string ? params.search_string : '';
+						this.search_data.keys = Object.keys(this.search_data.groups);
+					}
+					this.show_loader = true;
+					this.page = 1;
+					this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
+						this.results = results.results;
+						for (var i = 0; i < this.results.length; i++) {
+							if (this.results[i].poster_path)
+								this.results[i].img = this.film_service.config.images.base_url + 'original' + this.results[i].poster_path;
+							else
+								this.results[i].img = this.no_img;
+						}
+						if (this.results.length > 0)
+							this.page++;
+						else
+							this.end_of_results = true;
+						this.show_loader = false;
+					});
+				});
 			});
 		});
 	}

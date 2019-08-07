@@ -7,17 +7,17 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
-	private form_data;
+	private form_data = {
+		login: '',
+		password: '',
+		password_confirmation: '',
+		email: '',
+	};
 	private result: any;
 
 	ngOnInit(res: any = false) {
-		this.form_data = {
-			login: '',
-			password: '',
-			password_confirmation: '',
-			email: '',
-		}
 		this.result = res;
+		this.get_mod_strings('application');
 	}
 
 	register() {

@@ -12,7 +12,7 @@ export class LoaderComponent extends BaseComponent implements OnInit {
 	private loader: string = require('./assets/loader.gif');
 
 	ngOnInit() {
-
+		this.get_mod_strings('application');
 	}
 
 }

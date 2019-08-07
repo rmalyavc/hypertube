@@ -30,45 +30,50 @@ export class SearchComponent extends BaseComponent implements OnInit {
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
-		this.get_mod_strings();
-		this.dropdown_settings = {
-			singleSelection: false,
-			idField: 'item_id',
-			textField: 'item_text',
-			selectAllText: 'Select All',
-			unSelectAllText: 'UnSelect All',
-			itemsShowLimit: 4,
-			allowSearchFilter: true
-		};
+		
+		
 	}
 
 	ngOnInit() {
-		
-		this.groups = this.get_filters().subscribe(data => {
-			var obj = this;
-			var count = 0;
-			var interval_id = setInterval(function() {
-				if ((Object.keys(obj.film_service.genre_list).length > 0 || count++ > 50) && obj.collect_genres()) {
-					obj.keys = Object.keys(obj.groups);
-				
-					for (var i = 0; i < obj.keys.length; i++) {
-						var key = obj.keys[i];
-						if (obj.groups[key].length > 0)
-							obj.filters[key] = obj.groups[key][0];
-					}
-					clearInterval(interval_id);
+		this.get_mod_strings('application', this.current_user.lang, () => {
+			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
+				console.log(this.app_strings);
+				this.dropdown_settings = {
+					singleSelection: false,
+					idField: 'item_id',
+					textField: 'item_text',
+					selectAllText: this.app_strings.LBL_SELECT_ALL,
+					unSelectAllText: this.app_strings.LBL_SELECT_ALL,
+					itemsShowLimit: 4,
+					allowSearchFilter: true
+				};
+				this.groups = this.get_filters().subscribe(data => {
+					var obj = this;
+					var count = 0;
+					var interval_id = setInterval(function() {
+						if ((Object.keys(obj.film_service.genre_list).length > 0 || count++ > 50) && obj.collect_genres()) {
+							obj.keys = Object.keys(obj.groups);
+						
+							for (var i = 0; i < obj.keys.length; i++) {
+								var key = obj.keys[i];
+								if (obj.groups[key].length > 0)
+									obj.filters[key] = obj.groups[key][0];
+							}
+							clearInterval(interval_id);
+						}
+					}, 100)
+					this.groups = data;
+					
+				});
+				if (this.parent_data != false && this.parent_data != {}) {
+					this.keys = this.parent_data.keys ? this.parent_data.keys : this.keys;
+					this.advanced = this.parent_data.advanced ? this.parent_data.advanced : this.advanced;
+					this.filters = this.parent_data.filters ? this.parent_data.filters : this.filters;
+					this.groups = this.parent_data.groups ? this.parent_data.groups : this.groups;
+					this.search_string = this.parent_data.search_string ? this.parent_data.search_string : this.search_string;
 				}
-			}, 100)
-			this.groups = data;
-			
+			});
 		});
-		if (this.parent_data != false && this.parent_data != {}) {
-			this.keys = this.parent_data.keys ? this.parent_data.keys : this.keys;
-			this.advanced = this.parent_data.advanced ? this.parent_data.advanced : this.advanced;
-			this.filters = this.parent_data.filters ? this.parent_data.filters : this.filters;
-			this.groups = this.parent_data.groups ? this.parent_data.groups : this.groups;
-			this.search_string = this.parent_data.search_string ? this.parent_data.search_string : this.search_string;
-		}
 	}
 
 	get_filters() {
@@ -96,6 +101,8 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		}, 300);
 	}
 	collect_genres() {
+		// console.log(this.groups);
+		// return ;
 		var genre_keys = Object.keys(this.film_service.genre_list);
 		for (var i = 0; i < genre_keys.length; i++) {
 			var key = genre_keys[i];

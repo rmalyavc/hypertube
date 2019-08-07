@@ -13,7 +13,7 @@ export class FogComponent extends BaseComponent implements OnInit {
 	// constructor() { }
 
 	ngOnInit() {
-		
+		this.get_mod_strings('application');
 	}
 
 	return_answer(res) {
