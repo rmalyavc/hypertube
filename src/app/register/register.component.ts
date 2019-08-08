@@ -22,7 +22,6 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
 	register() {
 		this.result = this.user_service.register_user(this.form_data).subscribe(data => {
-			console.log(data);
 			this.ngOnInit(data);
 		});
 	}

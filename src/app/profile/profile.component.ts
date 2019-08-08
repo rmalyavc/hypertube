@@ -47,8 +47,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.get_mod_strings('application', this.current_user.lang, () => {
-			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
+		this.get_mod_strings('application', this.page_lang, () => {
+			this.get_mod_strings(this.component_name, this.page_lang, () => {
 				if (!this.current_user)
 					this.router.navigate(['']);
 				else {
@@ -88,7 +88,6 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 	}
 
 	private file_selected(event) {
-		console.log(event);
 		if (event.target.files.length > 0) {
 			this.file = event.target.files[0];
 			this.input_text = this.file.name && this.file.name != '' ? this.file.name : this.mod_strings.LBL_CHOOSE_AVATAR;
@@ -97,7 +96,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://c334d803.ngrok.io/user/update/image';
+		var _url = 'https://acfa60a9.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		this.http.post<IResult>(_url, fd).subscribe(res => {
@@ -120,7 +119,6 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 		var form_data = Object.assign({}, this.form_data);
 		delete form_data.login;
 		this.user_service.update_user(form_data).subscribe(res => {
-			console.log(res);
 			this.update_status = res.status;
 			this.errors = [];
 			if (res.errors) {
@@ -138,7 +136,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 				localStorage.setItem('current_user', JSON.stringify(res.data));
 				this.current_user = res.data;
 				this.change_editable();
-				this.ngOnInit();	
+				// this.ngOnInit();
+				window.location.reload();
 			}
 		});
 

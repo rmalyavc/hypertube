@@ -21,12 +21,11 @@ export class FilmService {
         this.http.get(this._url).subscribe(res => {
             this.config = res;
         });
-        var current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
-        if (current_user)
-            this.lang = current_user.lang;
+        var lang = localStorage.getItem('page_lang');
+        if (lang)
+            this.lang = lang;
         this._url = this.movie_db_url + 'genre/movie/list?api_key=' + this.api_key + '&language=' + this.lang;
         this.http.get(this._url).subscribe(res => {
-            console.log(res);
             if (res['genres'] && res['genres'].length > 0) {
                 for (var i = 0; i < res['genres'].length; i++) {
                     var genre = res['genres'][i];
@@ -37,7 +36,7 @@ export class FilmService {
     }
 
     get_base_url() {
-        return 'https://c334d803.ngrok.io/';
+        return 'https://acfa60a9.ngrok.io/';
     }
 
   	get_film(film_id) {
@@ -118,9 +117,6 @@ export class FilmService {
                     search_data.filters.order_by != '') {
                     search_data.filters.sort_by = search_data.filters.sort_by.replace('.asc', '').replace('.desc', '') + '.' + search_data.filters.order_by;
                 }
-                // else if (key == 'with_genres' && search_data.filters.with_genres && search_data.filters.with_genres != '') {
-                //     query_part += ''
-                // }
                 else if (key != 'order_by' && search_data.filters[key] && search_data.filters[key] != '') {
                     query_part += '&' + key + '=';
                     if (key != 'with_genres') {
@@ -136,7 +132,7 @@ export class FilmService {
                 }
             }
         }
-        query_part += '&page=' + page;
+        query_part += '&page=' + page + '&language=' + this.lang.toLowerCase();
         // query_part += '&language=' + this.lang;
         this._url += method + '/movie' + query_part;
         console.log(this._url);

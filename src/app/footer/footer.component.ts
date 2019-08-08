@@ -10,7 +10,6 @@ declare var require: any;
 })
 export class FooterComponent extends BaseComponent implements OnInit {
 	private wolf = require('./assets/wolf.png');
-	// constructor() { }
 
 	ngOnInit() {
 		this.get_mod_strings('application');

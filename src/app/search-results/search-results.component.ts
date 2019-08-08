@@ -33,8 +33,9 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.get_mod_strings('application', this.current_user.lang, () => {
-			this.get_mod_strings('SearchComponent', this.current_user.lang, () => {
+		this.film_service.lang = this.page_lang;
+		this.get_mod_strings('application', this.page_lang, () => {
+			this.get_mod_strings('SearchComponent', this.page_lang, () => {
 				this.end_of_results = false;
 				this.load_more.subscribe(v => {
 					if (!this.end_of_results) {
@@ -84,56 +85,6 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 			});
 		});
 	}
-// popularity.asc,
-// popularity.desc,
-// release_date.asc,
-// release_date.desc,
-// revenue.asc,
-// revenue.desc,
-// primary_release_date.asc,
-// primary_release_date.desc,
-// original_title.asc,
-// original_title.desc,
-// vote_average.asc,
-// vote_average.desc,
-// vote_count.asc,
-// vote_count.desc
-	// get_results() {
-	// 	// var query_part = '?query_term=' + this.search_data.search_string;
-	// 	var query_part = '?api_key=' + this.film_service.api_key + '&query=' + this.search_data.search_string;
-	// 	var method = this.search_data.search_string != '' ? 'search' : 'discover';
-	// 	for (var i = 0; i < this.search_data.keys.length; i++) {
-	// 		var key = this.search_data.keys[i];
-	// 		if (this.search_data.filters[key] && this.search_data.filters[key] != '')
-	// 			query_part += '&' + key + '=' + this.search_data.filters[key];
-	// 	}
-	// 	query_part += '&limit=' + this.limit;
-	// 	query_part += '&page=' + this.page++;
-	// 	// this._url = 'https://yts.lt/api/v2/list_movies.json' + query_part;
-	// 	this._url = this.film_service.movie_db_url + method + '/movie' + query_part;
-	// 	console.log(this._url);
-	// 	return this.http.get<ISearchResult>(this._url);
-		
-	// }
-
-	// get_final_filters() {
-	// 	var groups = Object.keys(this.search_data.groups_visible);
-	// 	var filters = Object.assign({}, this.search_data.filters);
-	// 	for (var i = 0; i < groups.length; i++) {
-	// 		if (!this.search_data.groups_visible[groups[i]])
-	// 			delete filters[groups[i]];
-	// 		else {
-	// 			var keys = Object.keys(filters[groups[i]]);
-	// 			for (var j = 0; j < keys.length; j++) {
-	// 				if (!filters[groups[i]][keys[j]])
-	// 					delete filters[groups[i]][keys[j]];
-	// 			}
-	// 			if (keys.length > 0 && Object.keys(filters[groups[i]]).length == 0)
-	// 				delete filters[groups[i]];
-	// 		}
-	// 	}
-	// 	return filters;
-	// }
 
 	watch_movie(id) {
 		this.router.navigate(['/watch/' + id]);

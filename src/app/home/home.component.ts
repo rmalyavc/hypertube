@@ -14,7 +14,6 @@ export class HomeComponent extends BaseComponent implements OnInit {
 	}
 
 	handle_scroll(event) {
-		// console.log(this.load_more);
 		let tracker = event.target;
 		let limit = tracker.scrollHeight - tracker.clientHeight;
 

@@ -45,5 +45,6 @@
 	"LBL_SUBMIT": "Отправить",
 	"LBL_LOGIN_FAILED": "Не удалось войти",
 	"LBL_SELECT_ALL": "Выбрать Все",
-	"LBL_DESELECT_ALL": "Отменить Все"
+	"LBL_DESELECT_ALL": "Отменить Все",
+	"LBL_SELECT": "Выберите"
 }

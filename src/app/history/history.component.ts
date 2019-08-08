@@ -17,8 +17,8 @@ export class HistoryComponent extends ProfileComponent implements OnInit {
 	private order_by: string = 'updated_at';
 
   	ngOnInit() {
-  		this.get_mod_strings('application', this.current_user.lang, () => {
-			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
+  		this.get_mod_strings('application', this.page_lang, () => {
+			this.get_mod_strings(this.component_name, this.page_lang, () => {
 		  		this.history = [];
 		  		this.skip = 0;
 			  	if (!this.current_user)

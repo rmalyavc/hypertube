@@ -27,8 +27,8 @@ export class RestorePasswordComponent extends LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.get_mod_strings('application', this.current_user.lang, () => {
-			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
+		this.get_mod_strings('application', this.page_lang, () => {
+			this.get_mod_strings(this.component_name, this.page_lang, () => {
 				this.errors = [];
 				this.route.params.subscribe(params => {
 					this.action = params['action'];

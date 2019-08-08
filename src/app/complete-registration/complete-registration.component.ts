@@ -9,7 +9,7 @@ import { BaseComponent } from '../base/base.component';
 export class CompleteRegistrationComponent extends BaseComponent implements OnInit {
 	private error: string = '';
 	ngOnInit() {
-		this.get_mod_strings('application', this.current_user.lang, () => {
+		this.get_mod_strings('application', this.page_lang, () => {
 			this.route.params.subscribe(params => {
 				this.user_service.complete_registration(params['token']).subscribe(res => {
 					if (res.status) {

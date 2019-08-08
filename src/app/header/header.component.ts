@@ -15,7 +15,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
 	public buttons: string[];
 
 	ngOnInit() {
-		this.buttons = this.current_user ? ['logout', 'profile'] : ['login'];
+		this.buttons = this.current_user ? ['logout', 'profile', 'lang'] : ['login', 'lang'];
 	}
 	
 }

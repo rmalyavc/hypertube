@@ -21,19 +21,25 @@ export class BaseComponent implements OnInit {
 	public show_loader: boolean = false;
 	public confirm_question: string = '';
 	public errors: string[] = [];
+	public page_lang: string = 'EN';
 
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
-		// this.current_user.lang = 'RU';
-		// this.lang_service.get_labels(this.current_user.lang).subscribe(data => {
-		// 	this.app_strings = data;
-		// });
+		var lang = localStorage.getItem('page_lang');
+		if (!this.current_user) {
+			if (!lang)
+				localStorage.setItem('page_lang', this.page_lang);
+			else
+				this.page_lang = lang;
+		}
+		else {
+			this.page_lang = this.current_user.lang;
+			localStorage.setItem('page_lang', this.page_lang);
+		}
 		this.component_name = this.constructor.name;
-		// this.get_mod_strings();
 	}
 
 	ngOnInit() {
-		// console.log(this.current_user);
 	}
 
 	public redirect_to_login() {
@@ -65,7 +71,7 @@ export class BaseComponent implements OnInit {
 		});
 	}
 
-	public get_mod_strings(component = this.component_name, lang = this.current_user.lang, callback = function() { return ;}) {
+	public get_mod_strings(component = this.component_name, lang = this.page_lang, callback = function() { return ;}) {
 		this.lang_service.get_labels(lang, component).subscribe(data => {
 			if (component != 'application')
 				Object.assign(this.mod_strings, data);
@@ -79,6 +85,26 @@ export class BaseComponent implements OnInit {
 			}
 			callback();
 		});
-		// return true;
+	}
+
+	public change_lang() {
+		localStorage.setItem('page_lang', this.page_lang);
+		if (this.current_user) {
+			this.current_user.lang = this.page_lang;
+			var form_data = Object.assign({}, this.current_user);
+			delete form_data.login;
+			this.user_service.update_user(form_data).subscribe(res => {
+				if (res.status) {
+					res.data.token = this.current_user.token;
+					res.data.id = res.data.uid;
+					localStorage.setItem('current_user', JSON.stringify(res.data));
+					this.current_user = res.data;
+					this.ngOnInit();
+					window.location.reload();
+				}
+			});
+		}
+		else
+			window.location.reload();
 	}
 }

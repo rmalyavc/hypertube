@@ -33,7 +33,8 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 	private curr_index: number = 0;
 
 	ngOnInit() {
-		this.get_mod_strings('application', this.current_user.lang, () => {
+		this.film_service.lang = this.page_lang;
+		this.get_mod_strings('application', this.page_lang, () => {
 			this.film_service.search_movies().subscribe(res => {
 				for (var i = 0; i < res.results.length; i++) {
 					if (res.results[i].poster_path)

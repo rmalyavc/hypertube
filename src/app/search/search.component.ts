@@ -35,15 +35,15 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.get_mod_strings('application', this.current_user.lang, () => {
-			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
-				console.log(this.app_strings);
+		this.get_mod_strings('application', this.page_lang, () => {
+			this.get_mod_strings(this.component_name, this.page_lang, () => {
 				this.dropdown_settings = {
 					singleSelection: false,
 					idField: 'item_id',
 					textField: 'item_text',
 					selectAllText: this.app_strings.LBL_SELECT_ALL,
-					unSelectAllText: this.app_strings.LBL_SELECT_ALL,
+					unSelectAllText: this.app_strings.LBL_DESELECT_ALL,
+					searchPlaceholderText: this.app_strings.LBL_SEARCH,
 					itemsShowLimit: 4,
 					allowSearchFilter: true
 				};

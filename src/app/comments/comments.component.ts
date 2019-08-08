@@ -25,25 +25,15 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	private placeholder: string = '';
 	@Input() private movie_data: any;
 
-	// constructor(private film_service: FilmService, public lang_service: LangService) { }
-
 	ngOnInit() {
-		this.get_mod_strings('application', this.current_user.lang, () => {
-			this.get_mod_strings(this.component_name, this.current_user.lang, () => {
+		this.get_mod_strings('application', this.page_lang, () => {
+			this.get_mod_strings(this.component_name, this.page_lang, () => {
 				this.get_mod_strings();
 				this.base_url = this.user_service.get_base_url();
-				// if (this.comments.length == 0)
 				this.placeholder = this.current_user ? this.mod_strings.LBL_COMMENT_PLACEHOLDER : this.mod_strings.LBL_COMMENT_PLACEHOLDER_NO_USER;
 				this.get_comments();
-				// var obj = this;
-				// var interval_id = setInterval(function() {
-				// 	if (obj.mod_strings.LBL_COMMENT_PLACEHOLDER) {
-				// 		clearInterval(interval_id);
-				// 	}
-				// }, 100);
 			});
 		});
-		console.log(this.comments);
 	}
 
 	send_comment() {
@@ -61,7 +51,6 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	get_comments(limit: number = 10, append: boolean = false) {
 		this.film_service.get_comments(this.current_user, this.movie_data.id, limit).subscribe(res => {
 			if (res.status) {
-				console.log(res);
 				for (var i = 0; i < res.data.length; i++) {
 					res.data[i].editable = false;
 					if (!append)

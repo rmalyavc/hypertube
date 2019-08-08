@@ -28,7 +28,6 @@ export class WatchComponent extends BaseComponent implements OnInit {
 			this.film_service.get_film(this.page_id).subscribe(res => {
 				this.film_data.id = res['id'];
 				this.film_data.name = res['title'];
-				// this.film_data.lang = res['language'];
 				this.film_data.img = this.no_img;
 				if (res['poster_path'])
 					this.film_data.img = this.film_service.config.images.base_url + 'original' + res['poster_path'];

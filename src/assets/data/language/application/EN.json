@@ -45,5 +45,6 @@
 	"LBL_SUBMIT": "Submit",
 	"LBL_LOGIN_FAILED": "Login Failed",
 	"LBL_SELECT_ALL": "Select All",
-	"LBL_DESELECT_ALL": "Deselect All"
+	"LBL_DESELECT_ALL": "Deselect All",
+	"LBL_SELECT": "Select"
 }

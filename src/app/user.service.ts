@@ -14,7 +14,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	get_base_url() {
-		return 'https://c334d803.ngrok.io/';
+		return 'https://acfa60a9.ngrok.io/';
 	}
 
 	get_current_user(logged_out = false): Observable<IUser> {
@@ -39,7 +39,6 @@ export class UserService {
 
 	logout_user(current_user) {
 		this._url = this.get_base_url() + '/logout?token=' + current_user.token;
-		console.log(this._url);
 		return this.http.get<IResult>(this._url);
 	}
 
@@ -60,7 +59,6 @@ export class UserService {
 
 	change_password(form_data) {
 		this._url = this.get_base_url() + 'user/password/' + form_data.action;
-		console.log(this._url, form_data);
 		return this.http.post<IResult>(this._url, form_data);
 	}
 	// get_csrf() {
