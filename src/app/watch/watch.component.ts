@@ -18,7 +18,7 @@ export class WatchComponent extends BaseComponent implements OnInit {
 	private film_data: any = {};
 	public no_img: string = require('../search-results/assets/no_image.png');
 
-	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
+	constructor(public http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
 	}
 
@@ -39,13 +39,13 @@ export class WatchComponent extends BaseComponent implements OnInit {
 					if (this.current_user) {
 						this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
 							if (!res.status)
-								this.handle_request_error(true, this.app_strings['_LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
+								this.handle_request_error(false, this.app_strings['_LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
 						}, error => {
-							this.handle_request_error(true);
+							this.handle_request_error();
 						});
 					}
 				}, error => {
-					this.handle_request_error(true);
+					this.handle_request_error();
 				});
 			});
 		});

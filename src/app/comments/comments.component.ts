@@ -1,7 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FilmService } from '../film.service';
 import { LangService } from '../lang.service';
+import { UserService } from '../user.service';
+import { CommentService } from '../comment.service';
 import { WatchComponent } from '../watch/watch.component';
+import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var require: any
 
@@ -23,7 +27,12 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 		nb: 0
 	};
 	private placeholder: string = '';
+	private auto_complete: boolean = false;
 	@Input() private movie_data: any;
+
+	constructor(private comment_service: CommentService, public http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
+		super(http, user_service, router, route, lang_service, film_service);
+	}
 
 	ngOnInit() {
 		this.get_mod_strings('application', this.page_lang, () => {
@@ -123,4 +132,55 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 		else if (this.confirmation_info.action == 'update_comment')
 			this.update_comment(this.confirmation_info.nb);
 	}
+
+	get_suggests(event, elem) {
+		if (this.check_auto_complete(this.comment_value, event.target.selectionStart)) {
+			this.comment_service.get_suggests().subscribe(res => {
+				console.log('(' + this.word_to_complete(this.comment_value, event.target.selectionStart) + ')');
+				// console.log(this.at_position(this.comment_value, event.target.selectionStart));
+			});
+		}
+	}
+
+	check_auto_complete(str, pos) {
+		let sub = str.substr(0, pos);
+		let at_pos = this.at_position(str, pos);
+		let at_sub = str.substr(at_pos, pos);
+		return at_pos != -1 &&
+			pos - at_pos > 1 &&
+			(at_pos == 0 ||
+			at_pos > sub.lastIndexOf(' ') ||
+			at_pos > sub.lastIndexOf(',') ||
+			at_pos > sub.lastIndexOf(';') ||
+			at_pos > sub.lastIndexOf("\t") ||
+			at_pos > sub.lastIndexOf('.')) &&
+			at_sub.lastIndexOf(' ') == -1 &&
+			at_sub.lastIndexOf(',') == -1 &&
+			at_sub.lastIndexOf(';') == -1 &&
+			at_sub.lastIndexOf("\t") == -1 &&
+			at_sub.lastIndexOf('.') == -1;
+	}
+
+	word_to_complete(str, pos) {
+		let at_pos = this.at_position(str, pos);
+		return str.substr(at_pos + 1, pos);
+	}
+
+	at_position(str, pos) {
+		return str.substr(0, pos).lastIndexOf('@');
+	}
+
+	// function get_caret_position (field) {
+	// 	var iCaretPos = 0;
+	// 	if (document.selection) {
+	// 		field.focus();
+	// 		var oSel = document.selection.createRange();
+	// 		oSel.moveStart('character', -field.value.length);
+	// 		iCaretPos = oSel.text.length;
+	// 	}
+	// 	else if (field.selectionStart || field.selectionStart == '0')
+	// 		iCaretPos = field.selectionDirection=='backward' ? field.selectionStart : field.selectionEnd;
+
+	// 	return iCaretPos;
+	// }
 }

@@ -26,7 +26,7 @@
 	</form>
 	<form class="add_comment_form" #comment_form="ngForm">
 		<div class="field_container">
-			<textarea class="form_field" name="comment_text" #comment_text="ngModel" [(ngModel)]="comment_value" placeholder="{{ placeholder }}" required (keyup.enter)="send_comment()" [readonly]="!current_user"></textarea>
+			<textarea class="form_field" name="comment_text" #comment_text="ngModel" [(ngModel)]="comment_value" placeholder="{{ placeholder }}" required (keyup.enter)="send_comment()" [readonly]="!current_user" (keyup)="get_suggests($event, this)"></textarea>
 			<button *ngIf="comment_text.valid" type="button" class="main_button" (click)="send_comment()"><strong class="button_text white">{{ mod_strings.LBL_SEND }}</strong></button>
 		</div>
 	</form>
