@@ -5,5 +5,6 @@
 	"LBL_COMMENT_PLACEHOLDER_NO_USER": "You need to register to add comments",
 	"LBL_SEND": "Send",
 	"LBL_CONFIRM_DELETE": "Do you really want to remove this comment?",
-	"LBL_CONFIRM_UPDATE": "Do you really want to update this comment?"
+	"LBL_CONFIRM_UPDATE": "Do you really want to update this comment?",
+	"LBL_ERR_FAIL_ADDING_COMMENT": "Unable to add a comment. Please contact support team"
 }

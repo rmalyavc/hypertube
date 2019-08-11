@@ -23,22 +23,31 @@ export class WatchComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.route.params.subscribe(params => {
-			this.page_id = params['id'];
-			this.film_service.get_film(this.page_id).subscribe(res => {
-				this.film_data.id = res['id'];
-				this.film_data.name = res['title'];
-				this.film_data.img = this.no_img;
-				if (res['poster_path'])
-					this.film_data.img = this.film_service.config.images.base_url + 'original' + res['poster_path'];
-				this.film_data.link = "";
-				this.film_data.description = res['overview'];
-				this.film_data.genres = res['genres'];
-				this.film_data.year = res['release_date'];
-				if (this.current_user) {
-					this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {});
-				}
+		this.get_mod_strings('application', this.page_lang, () => {
+			this.route.params.subscribe(params => {
+				this.page_id = params['id'];
+				this.film_service.get_film(this.page_id).subscribe(res => {
+					this.film_data.id = res['id'];
+					this.film_data.name = res['title'];
+					this.film_data.img = this.no_img;
+					if (res['poster_path'])
+						this.film_data.img = this.film_service.config.images.base_url + 'original' + res['poster_path'];
+					this.film_data.link = "";
+					this.film_data.description = res['overview'];
+					this.film_data.genres = res['genres'];
+					this.film_data.year = res['release_date'];
+					if (this.current_user) {
+						this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
+							if (!res.status)
+								this.handle_request_error(true, this.app_strings['_LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
+						}, error => {
+							this.handle_request_error(true);
+						});
+					}
+				}, error => {
+					this.handle_request_error(true);
+				});
 			});
-		});	
+		});
 	}
 }

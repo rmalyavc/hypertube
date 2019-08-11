@@ -54,6 +54,8 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 								else
 									this.end_of_results = true;
 							}
+						}, error => {
+							this.handle_request_error();
 						});
 					}
 				});
@@ -80,6 +82,8 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 						else
 							this.end_of_results = true;
 						this.show_loader = false;
+					}, error => {
+						this.handle_request_error();
 					});
 				});
 			});

@@ -22,6 +22,7 @@ export class BaseComponent implements OnInit {
 	public confirm_question: string = '';
 	public errors: string[] = [];
 	public page_lang: string = 'EN';
+	public success: boolean;
 
 	constructor(public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService) {
 		this.current_user = JSON.parse(localStorage.getItem('current_user') || 'false');
@@ -67,7 +68,12 @@ export class BaseComponent implements OnInit {
 		this.user_service.logout_user(this.current_user).subscribe(data => {
 			localStorage.removeItem('current_user');
 			this.current_user = false;
-			window.location.href = '/login';	
+			window.location.href = '/login';
+		}, error => {
+			localStorage.removeItem('current_user');
+			this.current_user = false;
+			window.location.href = '/login';
+			console.clear();
 		});
 	}
 
@@ -78,11 +84,8 @@ export class BaseComponent implements OnInit {
 			else
 				Object.assign(this.app_strings, data);
 			callback();
-
 		}, error => {
-			if (error.status == 404) {
-				this.mod_strings = {};
-			}
+			this.mod_strings = {};
 			callback();
 		});
 	}
@@ -90,6 +93,7 @@ export class BaseComponent implements OnInit {
 	public change_lang() {
 		localStorage.setItem('page_lang', this.page_lang);
 		if (this.current_user) {
+			this.check_login();
 			this.current_user.lang = this.page_lang;
 			var form_data = Object.assign({}, this.current_user);
 			delete form_data.login;
@@ -106,5 +110,15 @@ export class BaseComponent implements OnInit {
 		}
 		else
 			window.location.reload();
+	}
+
+	public handle_request_error(need_alert: boolean = false, message: string = this.app_strings.LBL_ERR_500) {
+		console.clear();
+		this.success = false;
+		if (need_alert)
+			alert(message);
+		else
+			this.errors.push(message);
+		this.show_loader = false;
 	}
 }

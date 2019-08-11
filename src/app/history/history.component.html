@@ -1,5 +1,6 @@
 <div class="history_scroll_container" (scroll)="handle_scroll($event)">
 	<h3 class="text_header gray_text">{{ mod_strings.LBL_BRAWSING_HISTORY }}</h3>
+	<p *ngFor="let error of errors;" class="text_header error_text">{{ error }}</p>
 	<form *ngIf="page_user" #login_form="ngForm" class="filters_cont">
 		<strong>{{ mod_strings.LBL_ORDER_BY }}</strong>
 		<select class="form_field" #order_by="ngModel" [(ngModel)]="filters.order_by" name="order_by" (change)="ngOnInit()">

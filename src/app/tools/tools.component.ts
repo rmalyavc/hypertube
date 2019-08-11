@@ -11,8 +11,7 @@ export class ToolsComponent implements OnInit {
 	@Input() current_user : any;
 
 	public name = 'test';
-	constructor() {
-	}
+	constructor() {}
 
 	ngOnInit() {
 	}

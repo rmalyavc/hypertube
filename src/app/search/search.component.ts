@@ -113,9 +113,9 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		return true;
 	}
 	onItemSelect(item: any) {
-	    console.log(item);
+	    // console.log(item);
 	}
 	onSelectAll(items: any) {
-	    console.log(items);
+	    // console.log(items);
 	}
 }

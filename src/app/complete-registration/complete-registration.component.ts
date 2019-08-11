@@ -7,7 +7,7 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./complete-registration.component.css']
 })
 export class CompleteRegistrationComponent extends BaseComponent implements OnInit {
-	private error: string = '';
+	// private error: string = '';
 	ngOnInit() {
 		this.get_mod_strings('application', this.page_lang, () => {
 			this.route.params.subscribe(params => {
@@ -19,7 +19,9 @@ export class CompleteRegistrationComponent extends BaseComponent implements OnIn
 						this.redirect_to_home(true);
 					}
 					else
-						this.error = res.error;
+						this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
+				}, error => {
+					this.handle_request_error();
 				});
 			});
 		});

@@ -17,7 +17,8 @@ export class RestorePasswordComponent extends LoginComponent implements OnInit {
 		password: '',
 		password_confirmation: '',
 		old_password: '',
-		email: ''
+		email: '',
+		lang: ''
 	};
 	private message: string = '';
 
@@ -27,12 +28,12 @@ export class RestorePasswordComponent extends LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.form_data.lang = this.page_lang;
 		this.get_mod_strings('application', this.page_lang, () => {
 			this.get_mod_strings(this.component_name, this.page_lang, () => {
 				this.errors = [];
 				this.route.params.subscribe(params => {
 					this.action = params['action'];
-					// this.header = this.mod_strings['LBL_' + this.action.toUpperCase()];
 					this.form_data.action = this.action;
 					if (this.action == 'recover') {
 						this.route.queryParams.subscribe(params => {
@@ -85,8 +86,10 @@ export class RestorePasswordComponent extends LoginComponent implements OnInit {
 					}
 				}
 				else
-					this.errors.push(res.error);
+					this.errors.push(this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
 			}
+		}, error => {
+			this.handle_request_error();
 		});
 	}
 }

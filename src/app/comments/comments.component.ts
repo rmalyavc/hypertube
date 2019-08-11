@@ -39,12 +39,16 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	send_comment() {
 		this.show_loader = true;
 		this.film_service.post_comment(this.current_user, this.movie_data.id, this.comment_value).subscribe(res => {
+			this.comment_value = '';
 			if (res.status) {
 				this.get_comments(1, true);
-				// this.ngOnInit();
 			}
-			this.comment_value = '';
+			else
+				this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
 			this.show_loader = false;
+		}, error => {
+			this.comment_value = '';
+			this.handle_request_error();
 		});
 	}
 
@@ -59,6 +63,8 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 						this.comments.unshift(res.data[i]);
 				}
 			}
+		}, error => {
+			this.handle_request_error();
 		});
 	}
 
@@ -86,6 +92,10 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 		this.film_service.update_comment(this.current_user, this.comments[nb]).subscribe(res => {
 			this.comments[nb].editable = false;
 			this.show_loader = false;
+			if (!res.status)
+				this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
+		}, error => {
+			this.handle_request_error();
 		});
 	}
 
@@ -96,7 +106,11 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 			if (res.status) {
 				this.comments.splice(nb, 1);
 			}
+			else
+				this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
 			this.show_loader = false;
+		}, error => {
+			this.handle_request_error();
 		});
 	}
 

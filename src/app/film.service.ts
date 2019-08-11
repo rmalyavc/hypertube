@@ -36,7 +36,7 @@ export class FilmService {
     }
 
     get_base_url() {
-        return 'https://acfa60a9.ngrok.io/';
+        return 'https://3e673b44.ngrok.io/';
     }
 
   	get_film(film_id) {
@@ -52,7 +52,7 @@ export class FilmService {
   	}
 
     save_visit(movie, current_user) {
-        this._url = this.get_base_url() + '/user/history/addMovie';
+        this._url = this.get_base_url() + 'user/history/addMovie';
 
         var query_part = {
             movie_id: movie.id,

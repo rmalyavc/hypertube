@@ -44,6 +44,8 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 				}
 				this.results = res.results.slice(0, 20);
 				this.start_slider();
+			}, error => {
+				this.handle_request_error();
 			});
 		});
 	}

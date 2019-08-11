@@ -2,6 +2,7 @@
 <div *ngIf="show_loader" class="app-loader"></div>
 <div class="comments_cont">
 	<h3 class="gray_text">{{ mod_strings.LBL_COMMENTS }}({{ comments.length }})</h3>
+	<p *ngFor="let error of errors;" class="error_text">{{ error }}</p>
 	<form #edit_comment_form="ngForm">
 		<div *ngIf="comments.length > 0">
 			<div *ngFor="let item of comments; let i = index;" class="single_comment" [class.editable]="current_user.uid == item.uid">

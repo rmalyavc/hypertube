@@ -9,7 +9,8 @@
 		<span class="error_text" *ngIf="password.invalid && password.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
 	</div>
 	<div *ngIf="success === false" class="field_container">
-		<span class="error_text" >{{ app_strings.LBL_INVALID_LOGIN_PASSWORD }}</span>
+		<!-- <span class="error_text" >{{ app_strings.LBL_INVALID_LOGIN_PASSWORD }}</span> -->
+		<p *ngFor="let error of errors;" class="error_text">{{ error }}</p>
 	</div>
 	<div class="field_container">
 		<p class="text_header"><a routerLink="/restore/forgot">{{ app_strings.LBL_FROGOT_PASSWORD }}?</a></p>

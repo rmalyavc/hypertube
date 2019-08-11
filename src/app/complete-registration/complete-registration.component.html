@@ -1,4 +1,5 @@
-<div *ngIf="error != ''">
-	<h2 class="text_header error_text">{{ error }}</h2>
+<div *ngIf="errors.length > 0">
+	<p *ngFor="let error of errors;" class="text_header error_text">{{ error }}</p>
+	<!-- <h2 class="text_header error_text">{{ error }}</h2> -->
 	<h4 class="text_header" ><a routerLink="/">{{ app_strings.LBL_HOME }}</a></h4>
 </div>

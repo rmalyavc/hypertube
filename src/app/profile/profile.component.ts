@@ -57,29 +57,32 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 					this.file_error = '';
 					this.route.params.subscribe(params => {
 						this.user_id = params['id'];
+						this.show_loader = true;
 						this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
 							this.input_text = this.mod_strings.LBL_CHOOSE_AVATAR;
 							this.page_user = res.data || false;
-							// this.page_user = res['42'];
 							this.owner = this.page_user.uid == this.current_user.uid;
-							if (this.page_user)
+							if (this.page_user) {
 								this.page_user.id = this.page_user.uid;
-							this.form_data = {
-								uid: this.page_user.uid,
-								login: this.page_user.login,
-								first_name: this.page_user.first_name,
-								last_name: this.page_user.last_name,
-								email: this.page_user.email,
-								lang: this.page_user.lang,
-								notify: this.page_user.notify,
-								token: this.current_user.token
-							};
-							if (this.page_user.avatar && this.page_user.avatar != '') {
-								this.avatar = this.user_service.get_base_url() + this.page_user.avatar;
-								// this.avatar = this.page_user.avatar;
+								this.form_data = {
+									uid: this.page_user.uid,
+									login: this.page_user.login,
+									first_name: this.page_user.first_name,
+									last_name: this.page_user.last_name,
+									email: this.page_user.email,
+									lang: this.page_user.lang,
+									notify: this.page_user.notify,
+									token: this.current_user.token
+								};
+								if (this.page_user.avatar && this.page_user.avatar != '') {
+									this.avatar = this.user_service.get_base_url() + this.page_user.avatar;
+								}
 							}
+							this.show_loader = false;
 							if (this.history.length == 0)
 								this.get_brawsing_history(5);
+						}, error => {
+							this.handle_request_error();
 						});
 					});
 				}
@@ -96,9 +99,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://acfa60a9.ngrok.io/user/update/image';
+		var _url = 'https://3e673b44.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
+		fd.append('lang', this.current_user.lang);
 		this.http.post<IResult>(_url, fd).subscribe(res => {
 			if (res.status == true) {
 				this.file = null;
@@ -107,8 +111,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 				this.ngOnInit();
 			}
 			else {
-				this.file_error = res.error;
+				this.file_error = this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500;
 			}
+		}, error => {
+			this.handle_request_error();
 		});
 	}
 	private trigger_file() {
@@ -136,9 +142,10 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 				localStorage.setItem('current_user', JSON.stringify(res.data));
 				this.current_user = res.data;
 				this.change_editable();
-				// this.ngOnInit();
 				window.location.reload();
 			}
+		}, error => {
+			this.handle_request_error();
 		});
 
 	}
@@ -161,6 +168,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 					this.history.push(res.data[i]);
 				}
 			}
+		}, error => {
+			this.handle_request_error();
 		});
 	}
 }

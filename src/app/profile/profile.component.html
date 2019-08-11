@@ -1,4 +1,5 @@
 <!-- {{ page_user | json }} -->
+<div *ngIf="show_loader" class="app-loader"></div>
 <div *ngIf="mod_strings">
 <h2 *ngIf="!page_user" class="text_header error_text">{{ mod_strings.LBL_USER_NOT_FOUND }}</h2>
 <h2 *ngIf="page_user" class="text_header gray_text">{{ page_user.login }}'s {{ mod_strings.LBL_PROFILE }}</h2>

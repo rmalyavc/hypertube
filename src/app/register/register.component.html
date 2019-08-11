@@ -1,5 +1,5 @@
 <h2 class="text_header gray_text">{{ app_strings.LBL_REGISTRATION }}</h2>
-<form *ngIf="result == false" #login_form="ngForm">
+<form #login_form="ngForm">
 	<div class="field_container">
 		<input type="text" #name="ngModel" [class.invalid_field]="name.invalid && name.touched" name="login" class="form_field" placeholder="{{ app_strings.LBL_LOGIN }}" [(ngModel)]="form_data.login" minlength="4" required>
 		<span class="error_text" *ngIf="name.errors && name.errors.required && name.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
@@ -29,4 +29,5 @@
 <h3 *ngIf="result != false && result.success == true" class="text_header green">
 	{{ app_strings.LBL_CONFIRMATION_LINK_SENT }}
 </h3>
-<h3 *ngIf="result != false && result.success == false" class="text_header error_text">{{ result.error }}</h3>
+<p class="text_header error_text" *ngFor="let error of errors;">{{ error }}</p>
+<!-- <h3 *ngIf="result != false && result.success == false" class="text_header error_text">{{ result.error }}</h3> -->
