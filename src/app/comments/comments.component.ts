@@ -28,6 +28,8 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	};
 	private placeholder: string = '';
 	private auto_complete: boolean = false;
+	private suggests: string[] = [];
+	private curr_pos: number = 0;
 	@Input() private movie_data: any;
 
 	constructor(private comment_service: CommentService, public http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
@@ -134,12 +136,27 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	}
 
 	get_suggests(event, elem) {
-		if (this.check_auto_complete(this.comment_value, event.target.selectionStart)) {
+		this.curr_pos = event.target.selectionStart;
+		if (event.type == 'click') {
+			this.curr_pos--;
+			this.suggests = [];
+		}
+		else if (this.check_auto_complete(this.comment_value, this.curr_pos)) {
 			this.comment_service.get_suggests().subscribe(res => {
-				console.log('(' + this.word_to_complete(this.comment_value, event.target.selectionStart) + ')');
-				// console.log(this.at_position(this.comment_value, event.target.selectionStart));
+				let word = this.word_to_complete(this.comment_value, this.curr_pos);
+				this.suggests = res['users'].filter(function(el) {
+					return el.toLowerCase().indexOf(word) == 0 && el.toLowerCase() != word;
+				});
 			});
 		}
+		else
+			this.suggests = [];
+	}
+
+	complete(suggest) {
+		let at_pos = this.at_position(this.comment_value, this.curr_pos);
+		this.comment_value = this.comment_value.substr(0, at_pos + 1) + suggest + this.comment_value.substr(this.curr_pos, this.comment_value.length);
+		this.suggests = [];
 	}
 
 	check_auto_complete(str, pos) {
@@ -163,24 +180,10 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 
 	word_to_complete(str, pos) {
 		let at_pos = this.at_position(str, pos);
-		return str.substr(at_pos + 1, pos);
+		return str.substr(at_pos + 1, pos).toLowerCase();
 	}
 
 	at_position(str, pos) {
 		return str.substr(0, pos).lastIndexOf('@');
 	}
-
-	// function get_caret_position (field) {
-	// 	var iCaretPos = 0;
-	// 	if (document.selection) {
-	// 		field.focus();
-	// 		var oSel = document.selection.createRange();
-	// 		oSel.moveStart('character', -field.value.length);
-	// 		iCaretPos = oSel.text.length;
-	// 	}
-	// 	else if (field.selectionStart || field.selectionStart == '0')
-	// 		iCaretPos = field.selectionDirection=='backward' ? field.selectionStart : field.selectionEnd;
-
-	// 	return iCaretPos;
-	// }
 }
