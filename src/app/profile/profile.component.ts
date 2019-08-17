@@ -47,6 +47,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.page_user = false;
+		
 		this.get_mod_strings('application', this.page_lang, () => {
 			this.get_mod_strings(this.component_name, this.page_lang, () => {
 				if (!this.current_user)
@@ -77,6 +79,8 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 								if (this.page_user.avatar && this.page_user.avatar != '') {
 									this.avatar = this.user_service.get_base_url() + this.page_user.avatar;
 								}
+								else
+									this.avatar = require('./assets/default/avatar.png');
 							}
 							this.show_loader = false;
 							if (this.history.length == 0)
@@ -99,7 +103,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://3e673b44.ngrok.io/user/update/image';
+		var _url = 'https://70fc0be4.ngrok.io/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		fd.append('lang', this.current_user.lang);

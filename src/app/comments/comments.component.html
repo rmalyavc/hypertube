@@ -29,8 +29,8 @@
 			<textarea class="form_field" name="comment_text" #comment_text1 #comment_text="ngModel" [(ngModel)]="comment_value" placeholder="{{ placeholder }}" required [readonly]="!current_user" (keyup)="get_suggests($event, this)" (click)="get_suggests($event, this)"></textarea>
 			<div class="form_field suggest_area" [class.transparent]="suggests.length == 0">
 				<div *ngFor="let suggest of suggests;" class="single_suggest" (click)="complete(suggest); comment_text1.focus()">
-					<div class="suggest_avatar"><strong class="button_text white">{{ suggest.substr(0, 2) }}</strong></div>
-					<span class="suggest_text">{{ suggest }}</span>
+					<div class="suggest_avatar"><strong class="button_text white">{{ suggest.initials }}</strong></div>
+					<span class="suggest_text">{{ (suggest.full_name ) }}</span>
 				</div>
 			</div>
 			<button *ngIf="comment_text.valid" type="button" class="main_button" (click)="send_comment()"><strong class="button_text white">{{ mod_strings.LBL_SEND }}</strong></button>

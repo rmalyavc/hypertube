@@ -14,7 +14,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	get_base_url() {
-		return 'https://3e673b44.ngrok.io/';
+		return 'https://70fc0be4.ngrok.io/';
 	}
 
 	get_current_user(logged_out = false): Observable<IUser> {
@@ -59,9 +59,12 @@ export class UserService {
 
 	change_password(form_data) {
 		this._url = this.get_base_url() + 'user/password/' + form_data.action;
-		console.log(this._url);
-		console.log(form_data);
 		return this.http.post<IResult>(this._url, form_data);
+	}
+
+	get_notifications(current_user) {
+		this._url = '/assets/data/notifications.json';
+		return this.http.get<IResult>(this._url);
 	}
 	// get_csrf() {
 	// 	this._url = 'http://84087a29.ngrok.io/app/token';

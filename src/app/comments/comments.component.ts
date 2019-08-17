@@ -49,7 +49,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 
 	send_comment() {
 		this.show_loader = true;
-		this.film_service.post_comment(this.current_user, this.movie_data.id, this.comment_value).subscribe(res => {
+		this.comment_service.post_comment(this.current_user, this.movie_data.id, this.comment_value).subscribe(res => {
 			this.comment_value = '';
 			if (res.status) {
 				this.get_comments(1, true);
@@ -64,7 +64,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	}
 
 	get_comments(limit: number = 10, append: boolean = false) {
-		this.film_service.get_comments(this.current_user, this.movie_data.id, limit).subscribe(res => {
+		this.comment_service.get_comments(this.current_user, this.movie_data.id, limit).subscribe(res => {
 			if (res.status) {
 				for (var i = 0; i < res.data.length; i++) {
 					res.data[i].editable = false;
@@ -100,7 +100,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 
 	update_comment(nb) {
 		this.show_loader = true;
-		this.film_service.update_comment(this.current_user, this.comments[nb]).subscribe(res => {
+		this.comment_service.update_comment(this.current_user, this.comments[nb]).subscribe(res => {
 			this.comments[nb].editable = false;
 			this.show_loader = false;
 			if (!res.status)
@@ -112,7 +112,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 
 	delete_comment(nb) {
 		this.show_loader = true;
-		this.film_service.delete_comment(this.current_user, this.comments[nb]).subscribe(res => {
+		this.comment_service.delete_comment(this.current_user, this.comments[nb]).subscribe(res => {
 			this.comments[nb].editable = false;
 			if (res.status) {
 				this.comments.splice(nb, 1);
@@ -144,8 +144,18 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 		else if (this.check_auto_complete(this.comment_value, this.curr_pos)) {
 			this.comment_service.get_suggests().subscribe(res => {
 				let word = this.word_to_complete(this.comment_value, this.curr_pos);
+				this.suggests = res['users'].map(el => {
+					if ((el.first_name || el.last_name) && (el.first_name != '' || el.last_name != '')) {
+						el['initials'] = (el.first_name.toUpperCase().substr(0, 1) || '') + (el.last_name.toUpperCase().substr(0, 1) || '');
+						el['full_name'] = (el.first_name.toUpperCase() || '') + ' ' + (el.last_name.toUpperCase() || '');
+					}
+					else {
+						el['initials'] = el.login.substr(0, 1).toUpperCase();
+						el['full_name'] = el.login;
+					}
+				});
 				this.suggests = res['users'].filter(function(el) {
-					return el.toLowerCase().indexOf(word) == 0 && el.toLowerCase() != word;
+					return el.login.toLowerCase().indexOf(word) == 0 && el.login.toLowerCase() != word;
 				});
 			});
 		}
@@ -155,7 +165,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 
 	complete(suggest) {
 		let at_pos = this.at_position(this.comment_value, this.curr_pos);
-		this.comment_value = this.comment_value.substr(0, at_pos + 1) + suggest + this.comment_value.substr(this.curr_pos, this.comment_value.length);
+		this.comment_value = this.comment_value.substr(0, at_pos + 1) + suggest.login + this.comment_value.substr(this.curr_pos, this.comment_value.length);
 		this.suggests = [];
 	}
 

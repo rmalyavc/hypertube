@@ -113,7 +113,7 @@ export class BaseComponent implements OnInit {
 	}
 
 	public handle_request_error(need_alert: boolean = false, message: string = this.app_strings.LBL_ERR_500) {
-		console.clear();
+		// console.clear();
 		this.success = false;
 		if (need_alert)
 			alert(message);

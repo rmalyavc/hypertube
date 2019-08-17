@@ -32,6 +32,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { RestorePasswordComponent } from './restore-password/restore-password.co
     FogComponent,
     LoaderComponent,
     CompleteRegistrationComponent,
-    RestorePasswordComponent
+    RestorePasswordComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
