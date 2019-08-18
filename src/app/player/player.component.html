@@ -5,6 +5,6 @@
 		</div>
 	</div> -->
 	<video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
-        <source src="http://localhost:3000/scroll.mp4" >
+        <source [src]="film_data.video_link" >
     </video>
 </div>

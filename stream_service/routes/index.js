@@ -21,7 +21,7 @@ router.get('/get_video', function(req, res, next) {
 	// res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
 	res.send({
 		status: true,
-		data: 'http://localhost:3000/scroll.mp4'
+		data: 'http://localhost:3000/copy.mp4'
 	});
 });
 
