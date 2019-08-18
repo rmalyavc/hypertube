@@ -29,6 +29,10 @@ import { HistoryComponent } from './history/history.component';
 import { ScrollTracker } from './scroll-tracker.directive';
 import { FogComponent } from './fog/fog.component';
 import { LoaderComponent } from './loader/loader.component';
+import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { RestorePasswordComponent } from './restore-password/restore-password.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -57,14 +61,18 @@ var AppModule = /** @class */ (function () {
                 HistoryComponent,
                 ScrollTracker,
                 FogComponent,
-                LoaderComponent
+                LoaderComponent,
+                CompleteRegistrationComponent,
+                RestorePasswordComponent,
+                NotificationsComponent
             ],
             imports: [
                 BrowserModule,
                 BrowserAnimationsModule,
                 AppRoutingModule,
                 FormsModule,
-                HttpClientModule
+                HttpClientModule,
+                NgMultiSelectDropDownModule.forRoot()
             ],
             providers: [UserService],
             bootstrap: [AppComponent]

@@ -10,6 +10,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { WatchComponent } from './watch/watch.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HistoryComponent } from './history/history.component';
+import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
+import { RestorePasswordComponent } from './restore-password/restore-password.component';
 var routes = [
     {
         path: 'profile/:id',
@@ -32,6 +34,10 @@ var routes = [
         component: RegisterComponent
     },
     {
+        path: 'register/verify/:token',
+        component: CompleteRegistrationComponent
+    },
+    {
         path: 'search',
         component: SearchComponent,
     },
@@ -44,9 +50,13 @@ var routes = [
         component: WatchComponent,
     },
     {
+        path: 'restore/:action',
+        component: RestorePasswordComponent,
+    },
+    {
         path: '**',
         component: NotFoundComponent,
-    }
+    },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

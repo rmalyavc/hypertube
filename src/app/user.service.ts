@@ -14,7 +14,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	get_base_url() {
-		return 'https://70fc0be4.ngrok.io/';
+		return 'https://542fcaad.ngrok.io/';
 	}
 
 	get_current_user(logged_out = false): Observable<IUser> {
@@ -63,7 +63,12 @@ export class UserService {
 	}
 
 	get_notifications(current_user) {
-		this._url = '/assets/data/notifications.json';
+		this._url = this.get_base_url() + 'user/notifications?token=' + current_user.token + '&uid=' + current_user.uid;
+		// this._url = '/assets/data/notifications.json';
+		return this.http.get<IResult>(this._url);
+	}
+	clear_notification(current_user, notification_id) {
+		this._url = this.get_base_url() + '/user/notification/clear?token=' + current_user.token + '&id=' + notification_id + '&uid=' + current_user.uid;
 		return this.http.get<IResult>(this._url);
 	}
 	// get_csrf() {

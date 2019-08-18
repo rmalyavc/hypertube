@@ -12,7 +12,7 @@
 				</div>
 				<div class="comment_wrapper">
 					<a routerLink="/profile/{{item.uid}}"><strong>{{ comments[i].login }}</strong></a><br>
-					<span *ngIf="!comments[i].editable" class="gray_text">{{ comments[i].comment }}</span>
+					<span *ngIf="!comments[i].editable" class="gray_text" [innerHTML]="comments[i].parsed_comment"></span>
 					<textarea *ngIf="comments[i].editable" name="single_comment_value_{{i}}" [(ngModel)]="comments[i].comment" class="form_field comment_value" [class.non-editable]="!comments[i].editable" (keyup.enter)="get_confirmation('update_comment', i)"></textarea>
 					<div *ngIf="current_user.uid == item.uid" class="comment_tools" [class.visible]="comments[i].editable">
 						<img class="comment_tool edit_comment_button" [src]="edit_icon" (click)="enable_edit(i)">

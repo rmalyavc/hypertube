@@ -7,6 +7,12 @@ import { trigger, state, transition, style, animate, group, query } from '@angul
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css'],
   animations: [
+		trigger('single_notification', [
+			state('void', style({
+		    	transform: 'translateX(100%)'
+		    })),
+		    transition('*=>void', animate('0.1s'))
+		]),
 		trigger('notification_container', [
 			state('hidden', style({
 		    	opacity: 0
@@ -51,7 +57,13 @@ export class NotificationsComponent extends BaseComponent implements OnInit {
 			return el['id'] != id;
 		});
 		this.qty = this.notifications.length;
-		if (this.qty == 0)
-			this.show_hide();
+		if (this.qty == 0) {
+			setTimeout(() => {
+				this.show_hide();
+			}, 0);
+		}
+		this.user_service.clear_notification(this.current_user, id).subscribe(res => {
+			console.log(res);
+		});
 	}
 }

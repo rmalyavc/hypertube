@@ -103,7 +103,7 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 
 	private upload_file() {
 		var fd = new FormData();
-		var _url = 'https://70fc0be4.ngrok.io/user/update/image';
+		var _url = this.user_service.get_base_url() + '/user/update/image';
 		fd.append('image', this.file, this.file.name);
 		fd.append('token', this.current_user.token);
 		fd.append('lang', this.current_user.lang);

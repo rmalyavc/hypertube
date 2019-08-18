@@ -73,6 +73,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 					else
 						this.comments.unshift(res.data[i]);
 				}
+				console.log(this.comments);
 			}
 		}, error => {
 			this.handle_request_error();
@@ -105,6 +106,8 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 			this.show_loader = false;
 			if (!res.status)
 				this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
+			else
+				this.comments[nb].parsed_comment = res['parsed_comment'];
 		}, error => {
 			this.handle_request_error();
 		});
@@ -136,15 +139,16 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 	}
 
 	get_suggests(event, elem) {
+		this.suggests = [];
 		this.curr_pos = event.target.selectionStart;
 		if (event.type == 'click') {
 			this.curr_pos--;
 			this.suggests = [];
 		}
 		else if (this.check_auto_complete(this.comment_value, this.curr_pos)) {
-			this.comment_service.get_suggests().subscribe(res => {
-				let word = this.word_to_complete(this.comment_value, this.curr_pos);
-				this.suggests = res['users'].map(el => {
+			let word = this.word_to_complete(this.comment_value, this.curr_pos);
+			this.comment_service.get_suggests(this.current_user, word).subscribe(res => {
+				this.suggests = res['data'].map(el => {
 					if ((el.first_name || el.last_name) && (el.first_name != '' || el.last_name != '')) {
 						el['initials'] = (el.first_name.toUpperCase().substr(0, 1) || '') + (el.last_name.toUpperCase().substr(0, 1) || '');
 						el['full_name'] = (el.first_name.toUpperCase() || '') + ' ' + (el.last_name.toUpperCase() || '');
@@ -153,10 +157,11 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 						el['initials'] = el.login.substr(0, 1).toUpperCase();
 						el['full_name'] = el.login;
 					}
+					return el;
 				});
-				this.suggests = res['users'].filter(function(el) {
-					return el.login.toLowerCase().indexOf(word) == 0 && el.login.toLowerCase() != word;
-				});
+				// this.suggests = res['users'].filter(function(el) {
+				// 	return el.login.toLowerCase().indexOf(word) == 0 && el.login.toLowerCase() != word;
+				// });
 			});
 		}
 		else

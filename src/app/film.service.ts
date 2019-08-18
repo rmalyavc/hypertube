@@ -36,12 +36,12 @@ export class FilmService {
     }
 
     get_base_url() {
-        return 'https://70fc0be4.ngrok.io/';
+        return 'https://542fcaad.ngrok.io/';
     }
 
   	get_film(film_id) {
   		// this._url = 'https://yts.lt/api/v2/movie_details.json?movie_id=' + film_id;
-        this._url = this.movie_db_url + 'movie/' + film_id + '?api_key=' + this.api_key + '&language=' + this.lang;
+        this._url = this.movie_db_url + 'movie/' + film_id + '?api_key=' + this.api_key + '&language=' + this.lang + '&append_to_response=videos';
   		return this.http.get(this._url);
   	}
 
@@ -137,5 +137,9 @@ export class FilmService {
         this._url += method + '/movie' + query_part;
         console.log(this._url);
         return this.http.get<ISearchResult>(this._url);
+    }
+    get_video() {
+        this._url = 'http://localhost:3000/get_video';
+        return this.http.get<IResult>(this._url);
     }
 }

@@ -1,0 +1,20 @@
+<h2 class="text_header gray_text">{{ app_strings.LBL_MOST_POPULAR }}</h2>
+<div *ngIf="results" class="slider_image">
+	<div *ngIf="results.length > 0" [@prev_slide]="state_name" class="slider_cont">
+		<!-- <div *ngFor="let res of curr_set; let i = index" class="search_result"  (click)="watch_movie(res.id)"> -->
+		<div *ngFor="let i of range;" class="search_result"  (click)="watch_movie(results[i].id)">
+			<p class="text_header gray_text movie_name">{{ results[i].title }}</p>
+			<img class="result_img" src="{{ results[i].img }}">
+			<div class="result_description">
+				<textarea class="description_text" value="{{ results[i].overview.substring(0,200) }}..." id="result_description_{{i}}" disabled> 
+				</textarea>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="slider_button left" (click)="change_slide(-4, true)">
+	<img src="/assets/slider/prev.png">
+</div>
+<div class="slider_button right"  (click)="change_slide(4, true)">
+	<img src="/assets/slider/next.png">
+</div>

@@ -1,0 +1,1 @@
+[{"__symbolic":"module","version":4,"metadata":{"VgStates":{"__symbolic":"class","decorators":[{"__symbolic":"call","expression":{"__symbolic":"reference","module":"@angular/core","name":"Injectable","line":2,"character":1}}],"statics":{"VG_ENDED":"ended","VG_PAUSED":"paused","VG_PLAYING":"playing","VG_LOADING":"waiting"}}}}]

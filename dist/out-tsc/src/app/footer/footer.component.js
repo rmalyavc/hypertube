@@ -8,8 +8,8 @@ var FooterComponent = /** @class */ (function (_super) {
         _this.wolf = require('./assets/wolf.png');
         return _this;
     }
-    // constructor() { }
     FooterComponent.prototype.ngOnInit = function () {
+        this.get_mod_strings('application');
     };
     FooterComponent = tslib_1.__decorate([
         Component({

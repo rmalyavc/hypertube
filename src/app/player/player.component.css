@@ -5,6 +5,11 @@
 	margin-bottom: 20px;
 }
 
+.player_cont video {
+	position: relative;
+	max-width: 100%;
+}
+
 .player {
 	position: relative;
 	width: 800px;

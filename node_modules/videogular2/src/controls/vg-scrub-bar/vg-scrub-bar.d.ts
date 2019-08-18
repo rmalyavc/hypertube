@@ -1,0 +1,34 @@
+import { ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { VgAPI } from '../../core/services/vg-api';
+import { VgControlsHidden } from './../../core/services/vg-controls-hidden';
+import { Subscription } from 'rxjs';
+export declare class VgScrubBar implements OnInit, OnDestroy {
+    API: VgAPI;
+    hideScrubBar: boolean;
+    vgFor: string;
+    vgSlider: boolean;
+    elem: HTMLElement;
+    target: any;
+    isSeeking: boolean;
+    wasPlaying: boolean;
+    subscriptions: Subscription[];
+    constructor(ref: ElementRef, API: VgAPI, vgControlsHiddenState: VgControlsHidden);
+    ngOnInit(): void;
+    onPlayerReady(): void;
+    protected seekStart(): void;
+    protected seekMove(offset: number): void;
+    protected seekEnd(offset: number): void;
+    protected touchEnd(): void;
+    protected getTouchOffset(event: any): number;
+    onMouseDownScrubBar($event: any): void;
+    onMouseMoveScrubBar($event: any): void;
+    onMouseUpScrubBar($event: any): void;
+    onTouchStartScrubBar($event: any): void;
+    onTouchMoveScrubBar($event: any): void;
+    onTouchCancelScrubBar($event: any): void;
+    onTouchEndScrubBar($event: any): void;
+    arrowAdjustVolume(event: KeyboardEvent): void;
+    getPercentage(): string;
+    onHideScrubBar(hide: boolean): void;
+    ngOnDestroy(): void;
+}

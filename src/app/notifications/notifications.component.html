@@ -3,7 +3,7 @@
 		<strong>{{ qty }}</strong>
 	</div>
 	<div class="notification_cont"  [@notification_container]="current_state">
-		<div *ngFor="let notification of notifications;" class="single_notification">
+		<div *ngFor="let notification of notifications;" class="single_notification" [@single_notification]>
 			<span class="close_button"><a (click)="remove_notification(notification.id)">X&nbsp;{{ mod_strings.LBL_CLEAR }}</a></span>
 			<span>
 				<span>{{ mod_strings.LBL_USER }}&nbsp;</span>

@@ -1,7 +1,10 @@
 <div class="player_cont">
-	<div class="player">
+	<!-- <div class="player">
 		<div class="main_button_cont">
 			<img [src]="play" class="main_play_button">
 		</div>
-	</div>
+	</div> -->
+	<video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+        <source src="http://localhost:3000/scroll.mp4" >
+    </video>
 </div>

@@ -9,7 +9,9 @@ var HeaderComponent = /** @class */ (function (_super) {
         return _this;
     }
     HeaderComponent.prototype.ngOnInit = function () {
-        this.buttons = this.current_user ? ['logout', 'profile'] : ['login'];
+        if (this.current_user)
+            this.check_login();
+        this.buttons = this.current_user ? ['logout', 'profile', 'lang'] : ['login', 'lang'];
     };
     HeaderComponent = tslib_1.__decorate([
         Component({

@@ -24,6 +24,7 @@
     "ng-multiselect-dropdown": "^0.2.3",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
+    "videogular2": "^6.3.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "@angular/cli": "~7.3.8",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
+    "@types/core-js": "^2.5.2",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^8.10.48",

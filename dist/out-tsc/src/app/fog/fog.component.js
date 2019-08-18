@@ -1,10 +1,16 @@
 import * as tslib_1 from "tslib";
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-var FogComponent = /** @class */ (function () {
+import { BaseComponent } from '../base/base.component';
+var FogComponent = /** @class */ (function (_super) {
+    tslib_1.__extends(FogComponent, _super);
     function FogComponent() {
-        this.answer = new EventEmitter();
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.answer = new EventEmitter();
+        return _this;
     }
+    // constructor() { }
     FogComponent.prototype.ngOnInit = function () {
+        this.get_mod_strings('application');
     };
     FogComponent.prototype.return_answer = function (res) {
         this.answer.emit(res);
@@ -22,10 +28,9 @@ var FogComponent = /** @class */ (function () {
             selector: '.app-fog',
             templateUrl: './fog.component.html',
             styleUrls: ['./fog.component.css']
-        }),
-        tslib_1.__metadata("design:paramtypes", [])
+        })
     ], FogComponent);
     return FogComponent;
-}());
+}(BaseComponent));
 export { FogComponent };
 //# sourceMappingURL=fog.component.js.map

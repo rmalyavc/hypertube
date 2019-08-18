@@ -33,6 +33,10 @@ import { CompleteRegistrationComponent } from './complete-registration/complete-
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { VgCoreModule } from 'videogular2/core';
+import { VgControlsModule } from 'videogular2/controls';
+import { VgOverlayPlayModule } from 'videogular2/overlay-play';
+import { VgBufferingModule } from 'videogular2/buffering';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,11 @@ import { NotificationsComponent } from './notifications/notifications.component'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

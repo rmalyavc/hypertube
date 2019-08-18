@@ -19,12 +19,16 @@ var ToolComponent = /** @class */ (function (_super) {
             profile: {
                 is_icon: false,
             },
+            lang: {
+                is_icon: false,
+            }
         };
         return _this;
     }
     // constructor() {
     // }
     ToolComponent.prototype.ngOnInit = function () {
+        this.get_mod_strings('application');
         this.id = this.tool_id;
         this.action = !this.tool_map[this.id].is_icon ? false : this.tool_map[this.id].action;
         this.icon = this.id != 'profile' ? this.tool_map[this.id].icon : false;

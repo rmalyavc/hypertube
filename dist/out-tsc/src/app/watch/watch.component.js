@@ -17,26 +17,34 @@ var WatchComponent = /** @class */ (function (_super) {
         _this.lang_service = lang_service;
         _this.film_service = film_service;
         _this.film_data = {};
+        _this.no_img = require('../search-results/assets/no_image.png');
         return _this;
     }
     WatchComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params.subscribe(function (params) {
-            _this.page_id = params['id'];
-            _this.film_service.get_film(_this.page_id).subscribe(function (res) {
-                _this.film_data.id = res.data.movie.id;
-                _this.film_data.name = res.data.movie.title_long;
-                _this.film_data.lang = res.data.movie.language;
-                _this.film_data.img = res.data.movie.large_cover_image;
-                _this.film_data.link = "";
-                _this.film_data.description = res.data.movie.description_intro;
-                _this.film_data.genres = res.data.movie.genres;
-                _this.film_data.year = res.data.movie.year;
-                // this.film_service.get_comments(this.page_id).subscribe(result => {
-                // 	console.log(result);
-                // });
-                _this.film_service.save_visit(_this.film_data, _this.current_user).subscribe(function (res) {
-                    console.log(res);
+        this.get_mod_strings('application', this.page_lang, function () {
+            _this.route.params.subscribe(function (params) {
+                _this.page_id = params['id'];
+                _this.film_service.get_film(_this.page_id).subscribe(function (res) {
+                    _this.film_data.id = res['id'];
+                    _this.film_data.name = res['title'];
+                    _this.film_data.img = _this.no_img;
+                    if (res['poster_path'])
+                        _this.film_data.img = _this.film_service.config.images.base_url + 'original' + res['poster_path'];
+                    _this.film_data.link = "";
+                    _this.film_data.description = res['overview'];
+                    _this.film_data.genres = res['genres'];
+                    _this.film_data.year = res['release_date'];
+                    if (_this.current_user) {
+                        _this.film_service.save_visit(_this.film_data, _this.current_user).subscribe(function (res) {
+                            if (!res.status)
+                                _this.handle_request_error(false, _this.app_strings['_LBL_ERR_' + res.error] || _this.app_strings.LBL_ERR_500);
+                        }, function (error) {
+                            _this.handle_request_error();
+                        });
+                    }
+                }, function (error) {
+                    _this.handle_request_error();
                 });
             });
         });

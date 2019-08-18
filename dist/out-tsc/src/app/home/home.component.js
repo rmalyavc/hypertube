@@ -10,9 +10,9 @@ var HomeComponent = /** @class */ (function (_super) {
         return _this;
     }
     HomeComponent.prototype.ngOnInit = function () {
+        this.get_mod_strings('application');
     };
     HomeComponent.prototype.handle_scroll = function (event) {
-        // console.log(this.load_more);
         var tracker = event.target;
         var limit = tracker.scrollHeight - tracker.clientHeight;
         if (event.target.scrollTop >= limit - 1) {

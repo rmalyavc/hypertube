@@ -5,9 +5,11 @@ var LangService = /** @class */ (function () {
     function LangService(http) {
         this.http = http;
     }
-    LangService.prototype.get_labels = function (lang) {
+    LangService.prototype.get_labels = function (lang, component) {
         if (lang === void 0) { lang = 'EN'; }
-        this._url = '/assets/data/' + lang + '.json';
+        if (component === void 0) { component = 'application'; }
+        var file = component + '/' + lang + '.json';
+        this._url = '/assets/data/language/' + file;
         return this.http.get(this._url);
     };
     LangService = tslib_1.__decorate([

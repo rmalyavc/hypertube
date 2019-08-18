@@ -14,13 +14,13 @@ export class CommentService {
 	}
 
 	get_base_url() {
-		return 'https://70fc0be4.ngrok.io/';
+		return 'https://542fcaad.ngrok.io/';
 		// return '/assets/data/user_suggests/users.json';
 	}
 
-	get_suggests() {
-		// this._url = this.get_base_url();
-		this._url = '/assets/data/user_suggests/users.json';
+	get_suggests(current_user, search) {
+		this._url = this.get_base_url() + 'user/suggest_login?token=' + current_user.token + '&login=' + search;
+		// this._url = '/assets/data/user_suggests/users.json';
 		return this.http.get<IResult>(this._url);
 	}
 
@@ -32,6 +32,7 @@ export class CommentService {
             record_id: movie_id,
             comment: value,
         };
+        console.log(params);
         return this.http.post<IResult>(this._url, params);
     }
 
