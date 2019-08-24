@@ -1,10 +1,12 @@
 <div class="player_cont">
+	<h2 class="gray_text">{{ film_data.player_header }}</h2>
 	<!-- <div class="player">
 		<div class="main_button_cont">
 			<img [src]="play" class="main_play_button">
 		</div>
 	</div> -->
-	<video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+	<video *ngIf="!film_data.is_trailer" [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
         <source [src]="film_data.video_link" >
     </video>
+    <youtube-player *ngIf="film_data.is_trailer" [videoId]="film_data.trailer_id"></youtube-player>
 </div>

@@ -45,6 +45,14 @@ export class FilmService {
   		return this.http.get(this._url);
   	}
 
+    get_torrent(imdb) {
+        this._url = `https://yts.lt/api/v2/list_movies.json?query_term=${imdb}`;
+        return this.http.get(this._url);
+    }
+    get_video(hash) {
+        this._url = `http://localhost:3000/get_video?hash=${hash}`;
+        return this.http.get<IResult>(this._url);
+    }
   	// get_comments(current_user, movie_id: string, limit: number = 10, skip: number = 0) {
   	// 	this._url = this.get_base_url() + '/movie/get/comments';
    //      this._url += '?token=' + current_user.token + '&record_id=' + movie_id + '&limit=' + limit + '&skip=' + skip;
@@ -137,9 +145,5 @@ export class FilmService {
         this._url += method + '/movie' + query_part;
         console.log(this._url);
         return this.http.get<ISearchResult>(this._url);
-    }
-    get_video() {
-        this._url = 'http://localhost:3000/get_video';
-        return this.http.get<IResult>(this._url);
     }
 }

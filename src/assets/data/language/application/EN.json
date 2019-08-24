@@ -64,5 +64,6 @@
 	"LBL_ERR_426": "Session Expired",
 	"LBL_ERR_401.24": "Verification failed",
 	"LBL_ERR_448": "This user already verified",
-	"LBL_ERR_449": "This email already verified"
+	"LBL_ERR_449": "This email already verified",
+	"LBL_VIDEO_NOT_AVAILABLE": "No video available"
 }

@@ -5,7 +5,7 @@
 	margin-bottom: 20px;
 }
 
-.player_cont video {
+.player_cont video, .player_cont youtube-player {
 	position: relative;
 	max-width: 100%;
 }
