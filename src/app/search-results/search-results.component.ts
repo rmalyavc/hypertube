@@ -70,6 +70,7 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 					this.show_loader = true;
 					this.page = 1;
 					this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
+						console.log(results);
 						this.results = results.results;
 						for (var i = 0; i < this.results.length; i++) {
 							if (this.results[i].poster_path)

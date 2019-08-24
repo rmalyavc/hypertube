@@ -7,6 +7,10 @@ var cors = require('cors')
 
 var app = express()
 app.use(cors());
+
+// var Client = require('node-torrent');
+// var client = new Client({logLevel: 'DEBUG'});
+// var torrent = client.addTorrent('a.torrent');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	res.render('index', { title: 'Express' });
@@ -21,8 +25,21 @@ router.get('/get_video', function(req, res, next) {
 	// res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
 	res.send({
 		status: true,
-		data: 'http://localhost:3000/copy.mp4'
+		data: 'http://localhost:3000/scroll.mp4'
 	});
 });
+
+// router.get('/test_torrent', function(req, res, next) {
+// 	var read = fs.createReadStream(file);
+// 	var write = fs.createWriteStream('public/copy.mp4');
+// 	read.pipe(write);
+// 	// res.setHeader("Access-Control-Allow-Origin", 'http://myDomain:8080');
+// 	// res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
+// 	// res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
+// 	res.send({
+// 		status: true,
+// 		data: 'http://localhost:3000/scroll.mp4'
+// 	});
+// });
 
 module.exports = router;
