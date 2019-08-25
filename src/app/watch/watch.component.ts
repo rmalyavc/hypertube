@@ -47,33 +47,62 @@ export class WatchComponent extends BaseComponent implements OnInit {
 						this.film_data.trailer_id = video_res.key;
 						this.film_data.is_trailer = true;
 					}
-					// this.film_data.is_trailer = false;
-					// this.film_data.video_link = 'http://localhost:3000/test.mp4';
+
+					// this.film_service.get_video(res['id']).subscribe(video => {
+					// 	if (video.status) {
+					// 		this.film_data.is_trailer = false;
+					// 		this.film_data.video_link = video.data;
+					// 	}
+					// 	else {
+							// console.log('test');
 					this.film_service.get_torrent(res['imdb_id']).subscribe(t_res => {
-						console.log(t_res);
+						// console.log(t_res);
 						if (t_res['status'] == 'ok' && t_res['data']['movies'] && t_res['data']['movies'][0]) {
 							let movie = t_res['data']['movies'][0];
-							console.log(movie);
+							// console.log(movie);
 							if (movie.torrents && movie.torrents[0]) {
-								this.film_service.get_video(movie.torrents[0]['hash']).subscribe(video => {
+								console.log(movie.torrents);
+								this.film_service.get_video(res['id'], movie.torrents[0]['hash']).subscribe(video => {
 									console.log(video);
-									// console.log(res);
-									this.film_data.is_trailer = false;
-									this.film_data.video_link = video.data;
-									
+									var d = new Date();
+  									var n = d.getTime();
+
+									if (video.status) {
+										this.film_data.is_trailer = false;
+										this.film_data.video_link = `http://localhost:3000/${video.data}?v=${n}`;
+									}
 								});
 							}
 						}
 					});
+						// }
+					// });
 
-					if (this.current_user) {
-						this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
-							if (!res.status)
-								this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
-						}, error => {
-							this.handle_request_error();
-						});
-					}
+					// this.film_service.get_torrent(res['imdb_id']).subscribe(t_res => {
+					// 	console.log(t_res);
+					// 	if (t_res['status'] == 'ok' && t_res['data']['movies'] && t_res['data']['movies'][0]) {
+					// 		let movie = t_res['data']['movies'][0];
+					// 		console.log(movie);
+					// 		if (movie.torrents && movie.torrents[0]) {
+					// 			this.film_service.get_video(movie.torrents[0]['hash']).subscribe(video => {
+					// 				console.log(video);
+					// 				// console.log(res);
+					// 				this.film_data.is_trailer = false;
+					// 				this.film_data.video_link = video.data;
+									
+					// 			});
+					// 		}
+					// 	}
+					// });
+
+					// if (this.current_user) {
+					// 	this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
+					// 		if (!res.status)
+					// 			this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
+					// 	}, error => {
+					// 		this.handle_request_error();
+					// 	});
+					// }
 					console.log(this.film_data.video_link);
 					
 				}, error => {

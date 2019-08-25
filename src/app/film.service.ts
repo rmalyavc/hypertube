@@ -36,7 +36,7 @@ export class FilmService {
     }
 
     get_base_url() {
-        return 'https://542fcaad.ngrok.io/';
+        return 'https://89719d18.ngrok.io/';
     }
 
   	get_film(film_id) {
@@ -49,8 +49,8 @@ export class FilmService {
         this._url = `https://yts.lt/api/v2/list_movies.json?query_term=${imdb}`;
         return this.http.get(this._url);
     }
-    get_video(hash) {
-        this._url = `http://localhost:3000/get_video?hash=${hash}`;
+    get_video(movie_id, hash = '') {
+        this._url = `http://localhost:3000/get_video?movie_id=${movie_id}&hash=${hash}`;
         return this.http.get<IResult>(this._url);
     }
   	// get_comments(current_user, movie_id: string, limit: number = 10, skip: number = 0) {

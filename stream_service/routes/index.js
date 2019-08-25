@@ -17,52 +17,58 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get_video', function(req, res, next) {
-	var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
-	console.log(link);
-
-    client.add(link, function (torrent) {
-    	let sent = false;
-    	let file_name = '';
-    	torrent.on('download', function() {
-    		console.log('Exists!');
-    		if (!sent && fs.existsSync('public/test.mp4')) {
-    			sent = true;
-    			res.send({
-					status: true,
-					data: `http://localhost:3000/test.mp4`
-				});
-		    }
-    	});
-    	torrent.on('done', function () {
-		    console.log('torrent download finished');
+	var file_name = `public/${req.query.movie_id}/${req.query.movie_id}.mp4`;
+	console.log(file_name);
+	if (fs.existsSync(file_name)) {
+		console.log('File exists!');
+		res.send({
+			status: true,
+			data: file_name.replace('public/', '')
 		});
-		const files = torrent.files;
-		let length = files.length;
-		torrent.files.forEach(function (file) {
-			if (file.name.endsWith('.mp4')) {
-				// var folder = 'public/' + file.name.replace('.mp4', '').replace('.', '_');
-				// file_name = `${folder}/test.mp4`;
-				const source = file.createReadStream(file);
-				const destination = fs.createWriteStream('public/test.mp4');
-				source.pipe(destination);
-				// file_name = `${file.name}`;
-			}
-			// console.log(Object.keys(file));
-		
-			// console.log(file._torrent);
-			// console.log(file.path);
-			// console.log(file.name);
-        	// length -= 1;
-		    // if (!length)
-		   	// 	process.exit();
-		   	
-        });
-        // client.remove(link);
-    })
+	}
+	else {
+		var count = 0;
+		// console.log('Else entered');
+		var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
+		console.log(link);
+	    client.add(link, function (torrent) {
+	    	let sent = false;
+	    	torrent.on('download', function() {
+	    		console.log(`DOWNLOAD_${count}`);
+	    		if (!sent && fs.existsSync(file_name)) {
+	    			console.log('Exists!');
+	    			sent = true;
+	    			res.send({
+						status: true,
+						data: file_name.replace('public/', ''),
+					});
+			    }
 
-	// var read = fs.createReadStream(file);
-	// var write = fs.createWriteStream('public/copy.mp4');
-	// read.pipe(write);
+			    if (!sent) {
+		   	    	for (let i = 0; i < torrent.files.length; i++) {
+			    		file = torrent.files[i];
+			    		console.log(file.name);
+						if (file.name.endsWith('.mp4')) {
+							if (!fs.existsSync(`public/${req.query.movie_id}`))
+								fs.mkdirSync(`public/${req.query.movie_id}`);
+							const source = file.createReadStream(file);
+							// file_name = 'public/test.mp4';
+							const destination = fs.createWriteStream(file_name);
+							source.pipe(destination);
+							break ;
+						}   	
+		    		}
+			    }
+
+			    count++;
+	    	});
+	    	torrent.on('done', function () {
+			    console.log('torrent download finished');
+			});
+
+
+	    });
+	}
 });
 
 // router.get('/test_torrent', function(req, res, next) {
