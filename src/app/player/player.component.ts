@@ -14,6 +14,7 @@ export class PlayerComponent implements OnInit {
 
 	private preload:string = 'auto';
     private api: VgAPI;
+    private pos: number = 0;
 
 	constructor() { }
 
@@ -21,10 +22,15 @@ export class PlayerComponent implements OnInit {
 	
 	}
 
-	onPlayerReady(api:VgAPI) {
+	onPlayerReady(api:VgAPI, position: number = 0) {
 		this.api = api;
+		this.api.getDefaultMedia().play();
 		this.api.getDefaultMedia().subscriptions.canPlay.subscribe(
 	        () => {
+	        	if (this.pos > 0) {
+	        		this.api.getDefaultMedia().currentTime = this.pos - 100;
+	        		this.pos = 0;
+	        	}
 	        	console.log('Can play fired');
 	            // Set the video to the beginning
 	            // this.api.getDefaultMedia().currentTime = 0;
@@ -67,8 +73,14 @@ export class PlayerComponent implements OnInit {
 	        	var d = new Date();
 				var n = d.getTime();
 	        	console.log('ended', event);
-	        	this.film_data.video_link = this.film_data.video_link + '?v=' + n;
-	        	this.ngOnInit();
+	        	this.pos = this.api.getDefaultMedia().currentTime;
+	        	this.film_data.sources = [{src: `${this.film_data.video_link}?n=${n}`, type: "video/mp4"}];
+	        	setTimeout(() => {
+	        		this.onPlayerReady(this.api, this.api.getDefaultMedia().currentTime);
+	        	}, 1000);
+	        	// this.api.getDefaultMedia().currentTime = curr_time;
+	        	// console.log(this.api.getDefaultMedia());
+	        	// this.api.getDefaultMedia().play();
 	        }
 	    );
 	}

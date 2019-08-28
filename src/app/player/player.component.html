@@ -31,8 +31,8 @@
 
 	        <vg-fullscreen></vg-fullscreen>
 	    </vg-controls>
-		<video  [vgMedia]="media" #media id="singleVideo" preload="auto" >
-	        <source [src]="film_data.video_link" >
+		<video  [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay>
+	        <source *ngFor="let video of film_data.sources" [src]="video.src" [type]="video.type">
 	        	<!-- <source src="http://localhost:3000/280/280.mp4"> -->
 	    </video>
 	 </vg-player>

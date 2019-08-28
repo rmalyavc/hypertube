@@ -69,7 +69,8 @@ export class WatchComponent extends BaseComponent implements OnInit {
 
 									if (video.status) {
 										this.film_data.is_trailer = false;
-										this.film_data.video_link = `http://localhost:3000/${video.data}?v=${n}`;
+										this.film_data.video_link = `http://localhost:3000/${video.data}`;
+										this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
 									}
 								});
 							}
