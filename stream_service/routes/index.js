@@ -43,29 +43,24 @@ router.get('/get_video', function(req, res, next) {
 						data: file_name.replace('public/', ''),
 					});
 			    }
-
-			    if (!sent) {
-		   	    	for (let i = 0; i < torrent.files.length; i++) {
-			    		file = torrent.files[i];
-			    		console.log(file.name);
-						if (file.name.endsWith('.mp4')) {
-							if (!fs.existsSync(`public/${req.query.movie_id}`))
-								fs.mkdirSync(`public/${req.query.movie_id}`);
-							const source = file.createReadStream(file);
-							// file_name = 'public/test.mp4';
-							const destination = fs.createWriteStream(file_name);
-							source.pipe(destination);
-							break ;
-						}   	
-		    		}
-			    }
-
 			    count++;
 	    	});
 	    	torrent.on('done', function () {
 			    console.log('torrent download finished');
 			});
-
+   	    	for (let i = 0; i < torrent.files.length; i++) {
+	    		file = torrent.files[i];
+	    		console.log(file.name);
+				if (file.name.endsWith('.mp4')) {
+					if (!fs.existsSync(`public/${req.query.movie_id}`))
+						fs.mkdirSync(`public/${req.query.movie_id}`);
+					const source = file.createReadStream(file);
+					// file_name = 'public/test.mp4';
+					const destination = fs.createWriteStream(file_name);
+					source.pipe(destination);
+					break ;
+				}   	
+    		}
 
 	    });
 	}
