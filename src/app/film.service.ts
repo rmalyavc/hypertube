@@ -36,7 +36,7 @@ export class FilmService {
     }
 
     get_base_url() {
-        return 'https://89719d18.ngrok.io/';
+        return 'https://9587c19d.ngrok.io/';
     }
 
   	get_film(film_id) {

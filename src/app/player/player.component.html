@@ -7,7 +7,7 @@
 	</div> -->
 	<vg-player *ngIf="!film_data.is_trailer" (onPlayerReady)="onPlayerReady($event)">
 	    <vg-overlay-play></vg-overlay-play>
-	    <vg-buffering></vg-buffering>
+	    <vg-buffering [class.visible]="display_buffering"></vg-buffering>
 
 	    <vg-scrub-bar>
 	        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>

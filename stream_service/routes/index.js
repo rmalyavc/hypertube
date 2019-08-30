@@ -47,6 +47,7 @@ router.get('/get_video', function(req, res, next) {
 	    	});
 	    	torrent.on('done', function () {
 			    console.log('torrent download finished');
+			    client.remove(link);
 			});
    	    	for (let i = 0; i < torrent.files.length; i++) {
 	    		file = torrent.files[i];

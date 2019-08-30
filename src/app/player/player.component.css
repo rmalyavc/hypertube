@@ -37,3 +37,11 @@
 .main_play_button:hover {
 	background: rgba(255,255,255,0.1);
 }
+
+.visible {
+	display: block;
+}
+
+.invisible {
+	display: none;
+}

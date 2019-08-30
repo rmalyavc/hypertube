@@ -15,6 +15,7 @@ export class PlayerComponent implements OnInit {
 	private preload:string = 'auto';
     private api: VgAPI;
     private pos: number = 0;
+    private display_buffering: boolean = false;
 
 	constructor() { }
 
@@ -25,25 +26,30 @@ export class PlayerComponent implements OnInit {
 	onPlayerReady(api:VgAPI, test: boolean = false) {
 		console.log('Ready');
 		this.api = api;
+		if (test) {
+    		this.api.pause();
+    		this.wait_media();
+    	}
+    	else {
+    		console.log('this is test can play');
+    		this.api.getDefaultMedia().currentTime = this.pos / 1000;
+    		// this.pos = 0;
+    		this.api.play();
+    	}
 		// this.api.getDefaultMedia().play();
-		this.api.getDefaultMedia().subscriptions.canPlay.subscribe(
-	        () => {
-	        	if (test) {
-	        		this.api.pause();
-	        		this.wait_media();
-	        	}
-	        	else
-	        		this.api.play();
-	        	// document.querySelector('vg-buffering').style.display = 'block';
-	        	// if (this.pos > this.api.getDefaultMedia().currentTime) {
-	        	// 	this.api.getDefaultMedia().currentTime = this.pos + 1;
-	        	// 	// this.pos = 0;
-	        	// }
-	        	// console.log('Can play fired');
-	            // Set the video to the beginning
-	            // this.api.getDefaultMedia().currentTime = 0;
-	        }
-	    );
+		// this.api.getDefaultMedia().subscriptions.canPlay.subscribe(
+	 //        () => {
+
+	 //        	// document.querySelector('vg-buffering').style.display = 'block';
+	 //        	// if (this.pos > this.api.getDefaultMedia().currentTime) {
+	 //        	// 	this.api.getDefaultMedia().currentTime = this.pos + 1;
+	 //        	// 	// this.pos = 0;
+	 //        	// }
+	 //        	// console.log('Can play fired');
+	 //            // Set the video to the beginning
+	 //            // this.api.getDefaultMedia().currentTime = 0;
+	 //        }
+	 //    );
 	    // this.api.getDefaultMedia().subscriptions.canPlayThrough.subscribe(
 	    //     (event) => {
 	    //     	console.log('canPlayThrough', event);
@@ -62,8 +68,11 @@ export class PlayerComponent implements OnInit {
 	    // );
 	    this.api.getDefaultMedia().subscriptions.seeking.subscribe(
 	        (event) => {
-	        	if (this.api.getDefaultMedia().currentTime > 1)
-		        	this.pos = this.api.getDefaultMedia().currentTime;
+	        	let time = this.api.getDefaultMedia().time;
+	        	if (this.api.getDefaultMedia().currentTime > 1) {
+	        		this.pos = time.current;
+		        	// this.pos = this.api.getDefaultMedia().currentTime;
+	        	}
 	        	// console.log('seeking', event);
 	        	// console.log(this.api.getDefaultMedia().currentTime);
 	        }
@@ -73,33 +82,37 @@ export class PlayerComponent implements OnInit {
 	    //     	console.log('Loaded Data', event);	
 	    //     }
 	    // );
-	    this.api.getDefaultMedia().subscriptions.progress.subscribe(
-	        (event) => {
-	        	// console.log('Progress', event);
-	        	if (this.api.getDefaultMedia().currentTime > this.pos)
-		        	this.pos = this.api.getDefaultMedia().currentTime;
-		        // console.log(this.api.getDefaultMedia().buffer);
-		        // console.log(this.api.getDefaultMedia().time);
-	        	// this.film_data.video_link = this.film_data.video_link;	
-	        }
-	    );
+	    // this.api.getDefaultMedia().subscriptions.progress.subscribe(
+	    //     (event) => {
+	    //     	// console.log('Progress', event);
+	    //     	if (this.api.getDefaultMedia().currentTime > this.pos)
+		   //      	this.pos = this.api.getDefaultMedia().currentTime;
+		   //      // console.log(this.api.getDefaultMedia().buffer);
+		   //      // console.log(this.api.getDefaultMedia().time);
+	    //     	// this.film_data.video_link = this.film_data.video_link;	
+	    //     }
+	    // );
 	    this.api.getDefaultMedia().subscriptions.timeUpdate.subscribe(
 	        (event) => {
 	        	let time = this.api.getDefaultMedia().time;
 	        	if (this.api.getDefaultMedia().time.current == 0)
 	        		this.api.pause();
-	        	else if (time.total - time.current > 1000)
+	        	else if (time.total - time.current > 1000 && time.current > this.pos) {
+	        		console.log(time.total - time.current, time.total, time.current);
 	        		this.pos = time.current;
+	        	}
 	        	// console.log('timeUpdate');
 	        	// console.log(this.api.getDefaultMedia().time);
 	        }
 	    );
 	    this.api.getDefaultMedia().subscriptions.ended.subscribe(
 	        (event) => {
-	        	console.log(this.api.getDefaultMedia().time);
+	        	// console.log(this.api.getDefaultMedia().time);
 	        	console.log('ended', event);
-	        	console.log(this.api.getDefaultMedia().buffer);
+	        	// console.log(`POS + (${this.pos})`);
+	        	// console.log(this.api.getDefaultMedia().buffer);
 	        	let time = this.api.getDefaultMedia().time;
+	        	console.log(this.pos, time.total);
 	        	if (this.pos < time.total - 1000)
 	        		this.wait_media();
 	        }
@@ -111,26 +124,32 @@ export class PlayerComponent implements OnInit {
 		var n = d.getTime();
 		var buffer = this.api.getDefaultMedia().buffer;
 		var tmp = 0;
+		var count = 0;
     	let time = this.api.getDefaultMedia().time;
     	if (this.pos < time.total - 1000) {
-    		this.api.getDefaultMedia().currentTime = this.pos / 1000;
+    		this.display_buffering = true;
     		this.api.pause();
-    		(<HTMLElement>document.querySelector('vg-buffering')).style.display = 'block';
+    		// this.api.getDefaultMedia().currentTime = this.pos / 1000;
+    		// (<HTMLElement>document.querySelector('vg-buffering')).style.display = 'block';
     		var interval_id = setInterval(() => {
-    			console.log(buffer.end, this.pos);
+    			console.log(`Buffer end = (${buffer.end})`, `POS = (${this.pos})`, `TMP = (${tmp})`);
     			if (buffer.end >= this.pos) {
     				clearInterval(interval_id);
-    				(<HTMLElement>document.querySelector('vg-buffering')).style.display = 'none';
+    				this.display_buffering = false;
+    				// (<HTMLElement>document.querySelector('vg-buffering')).style.display = 'none';
     				this.onPlayerReady(this.api);
-    				// this.api.play();
     			}
-    			else if (tmp >= buffer.end) {
-    				this.film_data.sources = [{src: `${this.film_data.video_link}?n=${n}`, type: "video/mp4"}];
+    			else if (tmp > buffer.end || (tmp == buffer.end && count > 2)) {
+    				count = 0;
     				clearInterval(interval_id);
+    				this.film_data.sources = [{src: `${this.film_data.video_link}?n=${n}`, type: "video/mp4"}];
+    				this.onPlayerReady(this.api, true);
     			}
-    			else
+    			else {
     				tmp = buffer.end;
-    		}, 200);
+    				count++;
+    			}
+    		}, 1000);
     	}
 	}
 	// savePlayer(player) {
