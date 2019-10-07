@@ -53,6 +53,18 @@ export class FilmService {
         this._url = `http://localhost:3000/get_video?movie_id=${movie_id}&hash=${hash}`;
         return this.http.get<IResult>(this._url);
     }
+<<<<<<< HEAD
+    check_percentage(movie_id) {
+        this._url = `http://localhost:3000/check_percentage?movie_id=${movie_id}`;
+        return this.http.get<IResult>(this._url);
+    }
+=======
+  	// get_comments(current_user, movie_id: string, limit: number = 10, skip: number = 0) {
+  	// 	this._url = this.get_base_url() + '/movie/get/comments';
+   //      this._url += '?token=' + current_user.token + '&record_id=' + movie_id + '&limit=' + limit + '&skip=' + skip;
+  	// 	return this.http.get<IResult>(this._url);
+  	// }
+>>>>>>> parent of 32d558c5... Seeking works finally
 
     save_visit(movie, current_user) {
         this._url = this.get_base_url() + 'user/history/addMovie';
@@ -72,6 +84,38 @@ export class FilmService {
         this._url = this.get_base_url() + '/user/history/movies?limit=' + limit + '&uid=' + page_user.uid + '&token=' + current_user.token + '&skip=' + skip + '&order_by=' + order_by + '&sort_order=' + sort_order;
         return this.http.get<IResult>(this._url);
     }
+
+    // post_comment(current_user, movie_id, value) {
+    //     this._url = this.get_base_url() + '/movie/set/comment';
+    //     var params = {
+    //         uid: current_user.uid,
+    //         token: current_user.token,
+    //         record_id: movie_id,
+    //         comment: value,
+    //     };
+    //     return this.http.post<IResult>(this._url, params);
+    // }
+
+    // update_comment(current_user, current_comment) {
+    //     this._url = this.get_base_url() + '/movie/edit/comment';
+    //     var params = {
+    //         uid: current_user.uid,
+    //         token: current_user.token,
+    //         id: current_comment.id,
+    //         comment: current_comment.comment
+    //     };
+    //     return this.http.post<IResult>(this._url, params);
+    // }
+
+    // delete_comment(current_user, current_comment) {
+    //     this._url = this.get_base_url() + '/movie/delete/comment';
+    //     var params = {
+    //         uid: current_user.uid,
+    //         token: current_user.token,
+    //         id: current_comment.id
+    //     };
+    //     return this.http.post<IResult>(this._url, params);
+    // }
 
     search_movies(search_data: any = false, page = 1) {
         this._url = this.movie_db_url;
@@ -104,7 +148,9 @@ export class FilmService {
             }
         }
         query_part += '&page=' + page + '&language=' + this.lang.toLowerCase();
+        // query_part += '&language=' + this.lang;
         this._url += method + '/movie' + query_part;
+        console.log(this._url);
         return this.http.get<ISearchResult>(this._url);
     }
 }

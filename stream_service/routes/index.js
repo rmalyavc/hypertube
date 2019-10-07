@@ -11,6 +11,8 @@ app.use(cors());
 var WebTorrent = require('webtorrent');
 var client = new WebTorrent();
 
+var downloaded = {};
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	res.render('index', { title: 'Express' });
@@ -19,11 +21,14 @@ router.get('/', function(req, res, next) {
 router.get('/get_video', function(req, res, next) {
 	var file_name = `public/${req.query.movie_id}/${req.query.movie_id}.mp4`;
 	console.log(file_name);
-	if (fs.existsSync(file_name)) {
+	if (fs.existsSync(file_name) && downloaded[req.query.movie_id] == 100) {
 		console.log('File exists!');
 		res.send({
 			status: true,
-			data: file_name.replace('public/', '')
+			data: {
+				path: file_name.replace('public/', ''),
+				percentage: 100
+			}
 		});
 	}
 	else {
@@ -34,13 +39,17 @@ router.get('/get_video', function(req, res, next) {
 	    client.add(link, function (torrent) {
 	    	let sent = false;
 	    	torrent.on('download', function() {
-	    		console.log(`DOWNLOAD_${count}`);
-	    		if (!sent && fs.existsSync(file_name)) {
+	    		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
+	    		console.log(`DOWNLOAD_${count}`, `Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
+	    		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
 	    			console.log('Exists!');
 	    			sent = true;
 	    			res.send({
 						status: true,
-						data: file_name.replace('public/', ''),
+						data: {
+							path: file_name.replace('public/', ''),
+							percentage: downloaded[req.query.movie_id]
+						}
 					});
 			    }
 			    count++;
@@ -64,6 +73,26 @@ router.get('/get_video', function(req, res, next) {
     		}
 
 	    });
+	}
+});
+
+router.get('/check_percentage', function(req, res, next) {
+	var file_name = `public/${req.query.movie_id}/${req.query.movie_id}.mp4`;
+	if (fs.existsSync(file_name)) {
+		res.send({
+			status: true,
+			data: {
+				percentage: downloaded[req.query.movie_id]
+			}
+		});
+	}
+	else {
+		res.send({
+			status: false,
+			data: {
+				percentage: 0
+			}
+		});
 	}
 });
 
