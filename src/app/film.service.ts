@@ -53,18 +53,15 @@ export class FilmService {
         this._url = `http://localhost:3000/get_video?movie_id=${movie_id}&hash=${hash}`;
         return this.http.get<IResult>(this._url);
     }
-<<<<<<< HEAD
     check_percentage(movie_id) {
         this._url = `http://localhost:3000/check_percentage?movie_id=${movie_id}`;
         return this.http.get<IResult>(this._url);
     }
-=======
   	// get_comments(current_user, movie_id: string, limit: number = 10, skip: number = 0) {
   	// 	this._url = this.get_base_url() + '/movie/get/comments';
    //      this._url += '?token=' + current_user.token + '&record_id=' + movie_id + '&limit=' + limit + '&skip=' + skip;
   	// 	return this.http.get<IResult>(this._url);
   	// }
->>>>>>> parent of 32d558c5... Seeking works finally
 
     save_visit(movie, current_user) {
         this._url = this.get_base_url() + 'user/history/addMovie';
