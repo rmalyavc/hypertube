@@ -65,5 +65,6 @@
 	"LBL_ERR_401.24": "Verification failed",
 	"LBL_ERR_448": "This user already verified",
 	"LBL_ERR_449": "This email already verified",
-	"LBL_VIDEO_NOT_AVAILABLE": "No video available"
+	"LBL_VIDEO_NOT_AVAILABLE": "No video available",
+	"LBL_WATCH": "Watch"
 }

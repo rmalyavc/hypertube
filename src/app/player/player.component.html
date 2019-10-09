@@ -1,44 +1,35 @@
 <div class="player_cont">
-	<h2 class="gray_text">{{ film_data.player_header }}</h2>
-	<!-- <div class="player">
-		<div class="main_button_cont">
-			<img [src]="play" class="main_play_button">
-		</div>
-	</div> -->
-	<vg-player *ngIf="!film_data.is_trailer" (onPlayerReady)="onPlayerReady($event)">
-	    <vg-overlay-play></vg-overlay-play>
-	    <vg-buffering [class.visible]="display_buffering"></vg-buffering>
+	<h2 class="gray_text" [class.error_text]="!film_data.has_trailer">{{ film_data.trailer_header }}</h2>
+    <youtube-player [videoId]="film_data.trailer_id"></youtube-player>
+    <h2 class="gray_text" [class.error_text]="!film_data.has_video">{{ film_data.player_header }}</h2>
+    <div class="video_wrapper">
+    	<div *ngIf="!film_data.has_video" class="block_palyer"></div>
+		<vg-player (onPlayerReady)="onPlayerReady($event)">
+		    <vg-overlay-play></vg-overlay-play>
+		    <vg-buffering [class.visible]="display_buffering || (film_data.has_torrents && !film_data.sources)"></vg-buffering>
 
-	    <vg-scrub-bar>
-	        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-	        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-	    </vg-scrub-bar>
+		    <vg-scrub-bar>
+		        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+		        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+		    </vg-scrub-bar>
 
-	    <vg-controls>
-	        <vg-play-pause></vg-play-pause>
-	        <vg-playback-button></vg-playback-button>
+		    <vg-controls>
+		        <vg-play-pause></vg-play-pause>
 
-	        <vg-time-display vgProperty="current" vgFormat="hh:mm:ss"></vg-time-display>
+		        <vg-time-display vgProperty="current" vgFormat="hh:mm:ss"></vg-time-display>
 
-	        <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+		        <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+		        <vg-time-display vgProperty="total" vgFormat="hh:mm:ss"></vg-time-display>
 
-<<<<<<< HEAD
-	        <!-- <vg-time-display vgProperty="left" vgFormat="hh:mm:ss"></vg-time-display> -->
-=======
-	        <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
->>>>>>> parent of 32d558c5... Seeking works finally
-	        <vg-time-display vgProperty="total" vgFormat="hh:mm:ss"></vg-time-display>
+		        <vg-track-selector></vg-track-selector>
+		        <vg-mute></vg-mute>
+		        <vg-volume></vg-volume>
 
-	        <vg-track-selector></vg-track-selector>
-	        <vg-mute></vg-mute>
-	        <vg-volume></vg-volume>
-
-	        <vg-fullscreen></vg-fullscreen>
-	    </vg-controls>
-		<video  [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay>
-	        <source *ngFor="let video of film_data.sources" [src]="video.src" [type]="video.type">
-	        	<!-- <source src="http://localhost:3000/280/280.mp4"> -->
-	    </video>
-	 </vg-player>
-    <youtube-player *ngIf="film_data.is_trailer" [videoId]="film_data.trailer_id"></youtube-player>
+		        <vg-fullscreen></vg-fullscreen>
+		    </vg-controls>
+			<video  [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay>
+		        <source *ngFor="let video of film_data.sources" [src]="video.src" [type]="video.type">
+		    </video>
+		 </vg-player>
+    </div>
 </div>

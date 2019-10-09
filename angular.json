@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/videogular2/fonts/videogular.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -82,6 +83,7 @@
             "styles": [
               "src/styles.css",
               "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "../node_modules/videogular2/fonts/videogular.css"
             ],
             "scripts": [],
             "assets": [

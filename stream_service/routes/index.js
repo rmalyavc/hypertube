@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var fs = require('fs');
+var fs = require('fs-extra');
 var file = 'public/scroll.mp4';
 
 var cors = require('cors')
@@ -21,51 +21,48 @@ router.get('/', function(req, res, next) {
 router.get('/get_video', function(req, res, next) {
 	var file_name = `public/${req.query.movie_id}/${req.query.movie_id}.mp4`;
 	console.log(file_name);
-	if (fs.existsSync(file_name) && downloaded[req.query.movie_id] == 100) {
+	if (fs.existsSync(file_name)) {
 		console.log('File exists!');
 		res.send({
 			status: true,
 			data: {
 				path: file_name.replace('public/', ''),
-				percentage: 100
+				percentage: downloaded[req.query.movie_id]
 			}
 		});
 	}
 	else {
-		var count = 0;
-		// console.log('Else entered');
 		var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
 		console.log(link);
 	    client.add(link, function (torrent) {
 	    	let sent = false;
 	    	torrent.on('download', function() {
 	    		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
-	    		console.log(`DOWNLOAD_${count}`, `Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
+	    		console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
 	    		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
-	    			console.log('Exists!');
 	    			sent = true;
-	    			res.send({
-						status: true,
-						data: {
-							path: file_name.replace('public/', ''),
-							percentage: downloaded[req.query.movie_id]
-						}
-					});
+	    			send_link(req, res, file_name);
 			    }
-			    count++;
 	    	});
 	    	torrent.on('done', function () {
 			    console.log('torrent download finished');
+			    if (!sent && fs.existsSync(file_name)) {
+			    	downloaded[req.query.movie_id] = 100;
+	    			sent = true;
+	    			send_link(req, res, file_name);
+			    }
 			    client.remove(link);
+			    let tmp_folder = '/tmp/webtorrent/' + req.query.hash.toLowerCase();
+			    if (fs.existsSync(tmp_folder)) {
+			    	fs.removeSync(tmp_folder);
+			    }
 			});
    	    	for (let i = 0; i < torrent.files.length; i++) {
 	    		file = torrent.files[i];
-	    		console.log(file.name);
 				if (file.name.endsWith('.mp4')) {
 					if (!fs.existsSync(`public/${req.query.movie_id}`))
 						fs.mkdirSync(`public/${req.query.movie_id}`);
 					const source = file.createReadStream(file);
-					// file_name = 'public/test.mp4';
 					const destination = fs.createWriteStream(file_name);
 					source.pipe(destination);
 					break ;
@@ -96,6 +93,16 @@ router.get('/check_percentage', function(req, res, next) {
 	}
 });
 
+
+function send_link(req, res, file_name) {
+	res.send({
+		status: true,
+		data: {
+			path: file_name.replace('public/', ''),
+			percentage: downloaded[req.query.movie_id]
+		}
+	});
+}
 // router.get('/test_torrent', function(req, res, next) {
 // 	var read = fs.createReadStream(file);
 // 	var write = fs.createWriteStream('public/copy.mp4');

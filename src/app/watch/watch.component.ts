@@ -27,11 +27,10 @@ export class WatchComponent extends BaseComponent implements OnInit {
 			this.route.params.subscribe(params => {
 				this.page_id = params['id'];
 				this.film_service.get_film(this.page_id).subscribe(res => {
-					console.log(res);
 					this.film_data.video_link = "";
-					this.film_data.player_header = this.app_strings.LBL_VIDEO_NOT_AVAILABLE;
-					this.film_data.is_trailer = false;
-
+					this.film_data.trailer_header = this.app_strings.LBL_VIDEO_NOT_AVAILABLE;
+					this.film_data.has_trailer = false;
+					this.film_data.has_video = false;
 					this.film_data.id = res['id'];
 					this.film_data.name = res['title'];
 					this.film_data.img = this.no_img;
@@ -41,41 +40,36 @@ export class WatchComponent extends BaseComponent implements OnInit {
 					this.film_data.description = res['overview'];
 					this.film_data.genres = res['genres'];
 					this.film_data.year = res['release_date'];
+					this.film_data.has_torrents = false;
 					if (res['videos']['results'] && res['videos']['results'].length > 0) {
 						let video_res = res['videos']['results'][0];
-						this.film_data.player_header = video_res.name;
+						this.film_data.trailer_header = video_res.name;
 						this.film_data.trailer_id = video_res.key;
-						this.film_data.is_trailer = true;
+						this.film_data.has_trailer = true;
 					}
-
-					// this.film_service.get_video(res['id']).subscribe(video => {
-					// 	if (video.status) {
-					// 		this.film_data.is_trailer = false;
-					// 		this.film_data.video_link = video.data;
-					// 	}
-					// 	else {
-							// console.log('test');
 					this.film_service.get_torrent(res['imdb_id']).subscribe(t_res => {
-						// console.log(t_res);
 						if (t_res['status'] == 'ok' && t_res['data']['movies'] && t_res['data']['movies'][0]) {
 							let movie = t_res['data']['movies'][0];
-							// console.log(movie);
+							this.film_data.has_torrents = true;
 							if (movie.torrents && movie.torrents[0]) {
 								console.log(movie.torrents);
 								this.film_service.get_video(res['id'], movie.torrents[0]['hash']).subscribe(video => {
-									console.log(video);
 									var d = new Date();
   									var n = d.getTime();
-
 									if (video.status) {
-										this.film_data.is_trailer = false;
+										this.film_data.has_video = true;
 										this.film_data.video_link = `http://localhost:3000/${video.data.path}`;
 										this.film_data.percentage = video.data.percentage;
 										this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
+										this.film_data.player_header = `${this.app_strings.LBL_WATCH} ${this.film_data.name}`;
 									}
 								});
 							}
+							else
+								this.film_data.player_header = this.app_strings.LBL_VIDEO_NOT_AVAILABLE;
 						}
+						else
+							this.film_data.player_header = this.app_strings.LBL_VIDEO_NOT_AVAILABLE;
 					});
 						// }
 					// });
