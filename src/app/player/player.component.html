@@ -27,8 +27,9 @@
 
 		        <vg-fullscreen></vg-fullscreen>
 		    </vg-controls>
-			<video  [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay>
+			<video crossorigin="anonymous" [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay>
 		        <source *ngFor="let video of film_data.sources" [src]="video.src" [type]="video.type">
+		        <track kind="subtitles" label="Russian" src="http://localhost:3000/420817/Aladdin.2019.1080p.BluRay.x264-SPARKS [SubtitleTools.com].vtt" srclang="ru" default>
 		    </video>
 		 </vg-player>
     </div>

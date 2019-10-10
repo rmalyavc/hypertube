@@ -48,6 +48,7 @@ export class WatchComponent extends BaseComponent implements OnInit {
 						this.film_data.has_trailer = true;
 					}
 					this.film_service.get_torrent(res['imdb_id']).subscribe(t_res => {
+						console.log(t_res);
 						if (t_res['status'] == 'ok' && t_res['data']['movies'] && t_res['data']['movies'][0]) {
 							let movie = t_res['data']['movies'][0];
 							this.film_data.has_torrents = true;
@@ -60,8 +61,11 @@ export class WatchComponent extends BaseComponent implements OnInit {
 										this.film_data.has_video = true;
 										this.film_data.video_link = `http://localhost:3000/${video.data.path}`;
 										this.film_data.percentage = video.data.percentage;
-										this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
 										this.film_data.player_header = `${this.app_strings.LBL_WATCH} ${this.film_data.name}`;
+										this.film_service.get_subtitles(this.page_lang.toLowerCase(), this.film_data.video_link, res['imdb_id']).subscribe(result => {
+											console.log(result);
+											this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
+										});
 									}
 								});
 							}
