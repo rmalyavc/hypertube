@@ -53,8 +53,8 @@ export class FilmService {
         this._url = `http://localhost:3000/get_video?movie_id=${movie_id}&hash=${hash}`;
         return this.http.get<IResult>(this._url);
     }
-    get_subtitles(lang, path, imdb) {
-        this._url = `http://localhost:3000/get_subtitles?lang=${lang}&path=${path}&imdb=${imdb}`;
+    get_subtitles(lang, path, imdb, movie_id) {
+        this._url = `http://localhost:3000/get_subtitles?lang=${lang}&path=${path}&imdb=${imdb}&movie_id=${movie_id}`;
         return this.http.get<IResult>(this._url);
     }
     check_percentage(movie_id) {

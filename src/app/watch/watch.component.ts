@@ -62,9 +62,19 @@ export class WatchComponent extends BaseComponent implements OnInit {
 										this.film_data.video_link = `http://localhost:3000/${video.data.path}`;
 										this.film_data.percentage = video.data.percentage;
 										this.film_data.player_header = `${this.app_strings.LBL_WATCH} ${this.film_data.name}`;
-										this.film_service.get_subtitles(this.page_lang.toLowerCase(), this.film_data.video_link, res['imdb_id']).subscribe(result => {
-											console.log(result);
-											this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
+										this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
+										this.film_service.get_subtitles(this.page_lang.toLowerCase(), video.data.path, res['imdb_id'], res['id']).subscribe(result => {
+											// console.log(result);
+											if (result.status) {
+												this.film_data.subtitles = [{
+													src: `http://localhost:3000/${result.data}`,
+													lang: this.app_strings[`LBL_${this.page_lang}`]
+												}]
+												this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
+											}
+											else {
+												this.handle_request_error();
+											}
 										});
 									}
 								});
