@@ -24,7 +24,6 @@ router.get('/', function(req, res, next) {
 
 router.get('/get_video', function(req, res, next) {
 	var file_name = `public/${req.query.movie_id}/${req.query.movie_id}.mp4`;
-	console.log(file_name);
 	if (fs.existsSync(file_name)) {
 		console.log('File exists!');
 		res.send({
@@ -42,7 +41,7 @@ router.get('/get_video', function(req, res, next) {
 	    	let sent = false;
 	    	torrent.on('download', function() {
 	    		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
-	    		// console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
+	    		console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
 	    		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
 	    			sent = true;
 	    			send_link(req, res, file_name);
@@ -95,7 +94,6 @@ router.get('/get_subtitles', async function(req, res, next) {
 		        path: `public/${path}`,
 		        extend: true
 		    });
-		    console.log('Metadata', metadata);
 			let subtitles = await OpenSubtitles.search({
 			    sublanguageid: req.query.lang,
 			    lang: req.query.lang,
@@ -113,35 +111,22 @@ router.get('/get_subtitles', async function(req, res, next) {
 				let tmp_dest = fs.createWriteStream(tmp_file);
 				let download_link = subtitles[req.query.lang][0]['url'];
 
-				console.log('Result', subtitles[req.query.lang] || subtitles);
 				let request = http.get(download_link, function(response) {
 				    response.pipe(tmp_dest);
 				    tmp_dest.on('finish', function() {
 				    	tmp_dest.close(function() {
 				    		let content = fs.readFileSync(tmp_file, 'utf8');
 				    		let vvt_content = srt2webvtt(content);
-				    		if (fs.writeFileSync(subtitles_file, vvt_content)) {
-				    			res.send({
-									status: true,
-									data: subtitles_file.replace('public/', ''),
-				    			});
-				    		}
+				    		fs.writeFileSync(subtitles_file, vvt_content)
+			    			res.send({
+								status: true,
+								data: subtitles_file.replace('public/', ''),
+			    			});
 				    		fs.unlink(tmp_file);
-				    	// 	fs.createReadStream(tmp_dest).pipe(dest);
-				    	// 	dest.on('finish', function() {
-				    	// 		dest.close(function() {
-					    // 			fs.unlink(tmp_file);
-					    // 			res.send({
-									// 	status: true,
-									// 	data: subtitles_file
-									// });
-				    	// 		});
-				    	// 	});
 				    	});
 				    });
-				}).on('error', function(err) { // Handle errors
+				}).on('error', function(err) {
 				    fs.unlink(tmp_file);
-			    	console.log(err.message);
 			    	res.send({
 			    		status: false,
 			    		error: 'Error on downloading subtitles'
