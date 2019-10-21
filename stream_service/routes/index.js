@@ -11,6 +11,7 @@ app.use(cors());
 
 var WebTorrent = require('webtorrent');
 var client = new WebTorrent();
+var torrentStream = require('torrent-stream');
 
 const OS = require('opensubtitles-api');
 const OpenSubtitles = new OS('TemporaryUserAgent');
@@ -37,6 +38,7 @@ router.get('/get_video', function(req, res, next) {
 	else {
 		var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
 		console.log(link);
+		var engine = torrentStream(link);
 	    client.add(link, function (torrent) {
 	    	let sent = false;
 	    	torrent.on('download', function() {
