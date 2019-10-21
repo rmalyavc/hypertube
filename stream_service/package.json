@@ -15,5 +15,8 @@
     "morgan": "~1.9.1",
     "opensubtitles-api": "^5.0.1",
     "webtorrent": "^0.107.5"
+  },
+  "devDependencies": {
+    "torrent-stream": "^1.2.0"
   }
 }

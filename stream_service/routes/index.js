@@ -17,6 +17,10 @@ const OS = require('opensubtitles-api');
 const OpenSubtitles = new OS('TemporaryUserAgent');
 
 var downloaded = {};
+let torrentLength = 0;
+let lastChunk = 0;
+let chunkSize = 0;
+let lastChunkSize = 0;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -39,45 +43,76 @@ router.get('/get_video', function(req, res, next) {
 		var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
 		console.log(link);
 		var engine = torrentStream(link);
-	    client.add(link, function (torrent) {
-	    	let sent = false;
-	    	torrent.on('download', function() {
-	    		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
-	    		console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
-	    		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
-	    			sent = true;
-	    			send_link(req, res, file_name);
-			    }
-	    	});
-	    	torrent.on('done', function () {
-			    console.log('torrent download finished');
-			    if (!sent && fs.existsSync(file_name)) {
-			    	downloaded[req.query.movie_id] = 100;
-	    			sent = true;
-	    			send_link(req, res, file_name);
-			    }
-			    client.remove(link);
-			    let tmp_folder = '/tmp/webtorrent/' + req.query.hash.toLowerCase();
-			    if (fs.existsSync(tmp_folder)) {
-			    	fs.removeSync(tmp_folder);
-			    }
-			});
-   	    	for (let i = 0; i < torrent.files.length; i++) {
-	    		file = torrent.files[i];
-				console.log(file.name);
+		let sent = false;
+		
+		engine.on('ready', () => {
+			sent = false;
+			torrentLength = engine.store.store.length;
+			lastChunk = engine.store.store.lastChunkIndex;
+			chunkSize = engine.store.store.chunkLength;
+			lastChunkSize = engine.store.store.lastChunkLength;
+			console.log('torrentLength', torrentLength);
+			console.log('lastChunk', lastChunk);
+			console.log('chunkSize', chunkSize);
+			console.log('lastChunkSize', lastChunkSize);
+
+			for (let i = 0; i < engine.files.length; i++) {
+				file = engine.files[i];
 				if (file.name.endsWith('.mp4')) {
-					if (typeof source == 'undefined') {
+					if (typeof src == 'undefined') {
 						if (!fs.existsSync(`public/${req.query.movie_id}`))
 							fs.mkdirSync(`public/${req.query.movie_id}`);
-						const source = file.createReadStream(file);
-						const destination = fs.createWriteStream(file_name);
-						source.pipe(destination);
+						const src = file.createReadStream();
+						const dest = fs.createWriteStream(file_name);
+						src.pipe(dest);
 					}
-					// break ;
-				}   	
-    		}
+				}
+			}
+		});
 
-	    });
+		engine.on('download', pieceIdx => {
+			console.log('Downloaded piece #', pieceIdx);
+		});
+
+	  //   client.add(link, function (torrent) {
+	  //   	let sent = false;
+	  //   	torrent.on('download', function() {
+	  //   		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
+	  //   		console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
+	  //   		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
+	  //   			sent = true;
+	  //   			send_link(req, res, file_name);
+			//     }
+	  //   	});
+	  //   	torrent.on('done', function () {
+			//     console.log('torrent download finished');
+			//     if (!sent && fs.existsSync(file_name)) {
+			//     	downloaded[req.query.movie_id] = 100;
+	  //   			sent = true;
+	  //   			send_link(req, res, file_name);
+			//     }
+			//     client.remove(link);
+			//     let tmp_folder = '/tmp/webtorrent/' + req.query.hash.toLowerCase();
+			//     if (fs.existsSync(tmp_folder)) {
+			//     	fs.removeSync(tmp_folder);
+			//     }
+			// });
+   // 	    	for (let i = 0; i < torrent.files.length; i++) {
+	  //   		file = torrent.files[i];
+			// 	console.log(file.name);
+			// 	if (file.name.endsWith('.mp4')) {
+			// 		if (typeof source == 'undefined') {
+			// 			if (!fs.existsSync(`public/${req.query.movie_id}`))
+			// 				fs.mkdirSync(`public/${req.query.movie_id}`);
+			// 			const source = file.createReadStream(file);
+			// 			const destination = fs.createWriteStream(file_name);
+			// 			source.pipe(destination);
+			// 		}
+			// 		// break ;
+			// 	}   	
+   //  		}
+
+	  //   });
 	}
 });
 
