@@ -126,8 +126,8 @@ router.get('/get_video', function(req, res, next) {
 
 		engine.on('idle', () => {
 			console.log('All selected files downloaded');
+			downloaded[req.query.movie_id] = 100;
 			if (!sent && fs.existsSync(file_name)) {
-				downloaded[req.query.movie_id] = 100;
 				sent = true;
 				send_link(req, res, file_name);
 			}
