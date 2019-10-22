@@ -76,6 +76,34 @@ router.get('/get_video', function(req, res, next) {
 			}
 		});
 
+		/*|**************************************************************************|*\
+		|*|                                                                          |*|
+		|*| Apparently this swarm approach doesnt track skipped chunks automatically |*|
+		|*|                                                                          |*|
+		\*|**************************************************************************|*/
+
+		// engine.on('download', pieceIdx => {
+		// 	// console.log('Downloaded piece #', pieceIdx);
+		// 	downloadedChunksTracker[pieceIdx] = true;
+		// 	downloadedBytes = engine.swarm.downloaded;
+		// 	downloaded[req.query.movie_id] = downloadedBytes / torrentLength * 100;
+		// 	console.log(
+		// 		`Length = ${torrentLength}`,
+		// 		`Downloaded = ${downloadedBytes}`,
+		// 		`Pecentage = ${downloaded[req.query.movie_id]}%`
+		// 	);
+		// 	if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
+		// 		sent = true;
+		// 		send_link(req, res, file_name);
+		// 	}
+		// });
+
+		/*|********************************************************************************|*\
+		|*|                                                                                |*|
+		|*| Uncomment the below handler if the swarm approach doesn't work out as expected |*|
+		|*|                                                                                |*|
+		\*|********************************************************************************|*/
+
 		engine.on('download', pieceIdx => {
 			// console.log('Downloaded piece #', pieceIdx);
 			downloadedChunksTracker[pieceIdx] = true;
@@ -277,6 +305,7 @@ function send_link(req, res, file_name) {
 			percentage: downloaded[req.query.movie_id]
 		}
 	});
+	console.log(`Sent the percentage of ${downloaded[req.query.movie_id]}`);
 }
 
 function srt2webvtt(data) {
