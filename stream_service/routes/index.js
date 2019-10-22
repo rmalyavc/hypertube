@@ -21,6 +21,10 @@ let torrentLength = 0;
 let lastChunk = 0;
 let chunkSize = 0;
 let lastChunkSize = 0;
+let downloadedChunksTracker = [];
+let lastDownloadedPartLength = 0;
+let newDownloadedPartLength = 0;
+let downloadedBytes = 0;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -51,10 +55,12 @@ router.get('/get_video', function(req, res, next) {
 			lastChunk = engine.store.store.lastChunkIndex;
 			chunkSize = engine.store.store.chunkLength;
 			lastChunkSize = engine.store.store.lastChunkLength;
+			Array.from(Array(lastChunk + 1).keys()).forEach(idx => {downloadedChunksTracker[idx] = false});
 			console.log('torrentLength', torrentLength);
 			console.log('lastChunk', lastChunk);
 			console.log('chunkSize', chunkSize);
 			console.log('lastChunkSize', lastChunkSize);
+			console.log('downloadedChunksTracker', downloadedChunksTracker);
 
 			for (let i = 0; i < engine.files.length; i++) {
 				file = engine.files[i];
@@ -71,7 +77,36 @@ router.get('/get_video', function(req, res, next) {
 		});
 
 		engine.on('download', pieceIdx => {
-			console.log('Downloaded piece #', pieceIdx);
+			// console.log('Downloaded piece #', pieceIdx);
+			downloadedChunksTracker[pieceIdx] = true;
+			newDownloadedPartLength = getFullyDownloadedLength(downloadedChunksTracker);
+			if (newDownloadedPartLength == lastDownloadedPartLength) // Only proceed if fully downloaded part grew, 
+				return; // i.e. all the chunks [0:pieceIdx] are downloaded, none are skipped.
+			lastDownloadedPartLength = newDownloadedPartLength; // Both these variables are measured in chunks.
+			downloadedBytes = newDownloadedPartLength * chunkSize;
+			downloaded[req.query.movie_id] = downloadedBytes / torrentLength * 100;
+			console.log(
+				`Length = ${torrentLength}`,
+				`Downloaded = ${downloadedBytes}`,
+				`Pecentage = ${downloaded[req.query.movie_id]}%`
+			);
+			if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
+				sent = true;
+				send_link(req, res, file_name);
+			}
+		});
+
+		engine.on('idle', () => {
+			console.log('All selected files downloaded');
+			if (!sent && fs.existsSync(file_name)) {
+				downloaded[req.query.movie_id] = 100;
+				sent = true;
+				send_link(req, res, file_name);
+			}
+			engine.destroy();
+			let tmp_folder = '/tmp/torrent-stream/' + req.query.hash.toLowerCase();
+			if (fs.existsSync(tmp_folder))
+				fs.removeSync(tmp_folder);
 		});
 
 	  //   client.add(link, function (torrent) {
@@ -207,6 +242,32 @@ router.get('/check_percentage', function(req, res, next) {
 	}
 });
 
+/*\
+|*| Returns the length of array part
+|*| form begin (included) to first falsy element (excluded)
+|*| For instance, if fed an array like this:
+|*| {
+|*| 	0: true,
+|*| 	1: true,
+|*| 	2: true,
+|*| 	3: false,
+|*| 	4: true
+|*| }
+|*| this function will return 3.
+|*| 
+|*| Used for calculating length of the part of video from the start
+|*| that is fully downloaded with no chunks missing.
+\*/
+
+function getFullyDownloadedLength(tracker) {
+	let result = 0;
+	for (let i = 0; i < tracker.length; i++) {
+		if (tracker[i])
+			result++;
+		else
+			return result;
+	}
+}
 
 function send_link(req, res, file_name) {
 	res.send({
