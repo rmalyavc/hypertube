@@ -10,7 +10,9 @@ declare var require: any;
 })
 export class LoginComponent extends BaseComponent implements OnInit {
 	public logo_42: string = require('./assets/logo42.png');
+	public logo_git: string = require('./assets/logo_git.png');
 	public intra_link: string = '';
+	public git_link: string = '';
 	public form_data: any = {
 		login: '',
 		password: ''
@@ -18,7 +20,8 @@ export class LoginComponent extends BaseComponent implements OnInit {
 	// private success: boolean;
 
 	ngOnInit() {
-		this.intra_link = 'https://api.intra.42.fr/oauth/authorize?client_id=b7b682799d4496b76ffcd54b3f4c49dafc34fce08f98f8f30fe496681f0c254a&redirect_uri=http%3A%2F%2F1c69dcd0.ngrok.io%2Fuser%2F42%2Fauth&response_type=code';
+		this.intra_link = `https://api.intra.42.fr/oauth/authorize?client_id=b7b682799d4496b76ffcd54b3f4c49dafc34fce08f98f8f30fe496681f0c254a&redirect_uri=https%3A%2F%2Fdac2df49.ngrok.io%2Fuser%2F42%2Fauth&response_type=code`;
+		this.git_link = `https://github.com/login/oauth/authorize?login=Kandzy&client_id=f0e6b1255d577c196e1f&redirect_uri=https://dac2df49.ngrok.io/user/git/auth`;
 		this.get_mod_strings('application', this.page_lang, () => {
 			this.route.queryParams.subscribe(params => {
 				if (params['uid'] && params['token']) {

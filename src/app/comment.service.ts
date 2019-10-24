@@ -14,7 +14,7 @@ export class CommentService {
 	}
 
 	get_base_url() {
-		return 'http://1c69dcd0.ngrok.io/';
+		return 'https://dac2df49.ngrok.io/';
 		// return '/assets/data/user_suggests/users.json';
 	}
 

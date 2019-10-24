@@ -9,8 +9,8 @@ var cors = require('cors')
 var app = express()
 app.use(cors());
 
-var WebTorrent = require('webtorrent');
-var client = new WebTorrent();
+// var WebTorrent = require('webtorrent');
+// var client = new WebTorrent();
 var torrentStream = require('torrent-stream');
 
 const OS = require('opensubtitles-api');
