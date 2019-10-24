@@ -11,11 +11,20 @@ app.use(cors());
 
 var WebTorrent = require('webtorrent');
 var client = new WebTorrent();
+var torrentStream = require('torrent-stream');
 
 const OS = require('opensubtitles-api');
 const OpenSubtitles = new OS('TemporaryUserAgent');
 
 var downloaded = {};
+let torrentLength = 0;
+let lastChunk = 0;
+let chunkSize = 0;
+let lastChunkSize = 0;
+let downloadedChunksTracker = [];
+let lastDownloadedPartLength = 0;
+let newDownloadedPartLength = 0;
+let downloadedBytes = 0;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -34,48 +43,113 @@ router.get('/get_video', function(req, res, next) {
 			}
 		});
 	}
+	// else {
+	// 	var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
+	// 	console.log(link);
+	//     client.add(link, function (torrent) {
+	//     	let sent = false;
+	//     	torrent.on('download', function() {
+	//     		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
+	//     		console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
+	//     		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
+	//     			sent = true;
+	//     			send_link(req, res, file_name);
+	// 		    }
+	//     	});
+	//     	torrent.on('done', function () {
+	// 		    console.log('torrent download finished');
+	// 		    if (!sent && fs.existsSync(file_name)) {
+	// 		    	downloaded[req.query.movie_id] = 100;
+	//     			sent = true;
+	//     			send_link(req, res, file_name);
+	// 		    }
+	// 		    client.remove(link);
+	// 		    let tmp_folder = '/tmp/webtorrent/' + req.query.hash.toLowerCase();
+	// 		    if (fs.existsSync(tmp_folder)) {
+	// 		    	fs.removeSync(tmp_folder);
+	// 		    }
+	// 		});
+ //   	    	for (let i = 0; i < torrent.files.length; i++) {
+	//     		file = torrent.files[i];
+	// 			console.log(file.name);
+	// 			if (file.name.endsWith('.mp4')) {
+	// 				if (typeof source == 'undefined') {
+	// 					if (!fs.existsSync(`public/${req.query.movie_id}`))
+	// 						fs.mkdirSync(`public/${req.query.movie_id}`);
+	// 					const source = file.createReadStream(file);
+	// 					const destination = fs.createWriteStream(file_name);
+	// 					source.pipe(destination);
+	// 				}
+	// 				// break ;
+	// 			}   	
+ //    		}
+
+	//     });
+	// }
 	else {
 		var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
 		console.log(link);
-	    client.add(link, function (torrent) {
-	    	let sent = false;
-	    	torrent.on('download', function() {
-	    		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
-	    		console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
-	    		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
-	    			sent = true;
-	    			send_link(req, res, file_name);
-			    }
-	    	});
-	    	torrent.on('done', function () {
-			    console.log('torrent download finished');
-			    if (!sent && fs.existsSync(file_name)) {
-			    	downloaded[req.query.movie_id] = 100;
-	    			sent = true;
-	    			send_link(req, res, file_name);
-			    }
-			    client.remove(link);
-			    let tmp_folder = '/tmp/webtorrent/' + req.query.hash.toLowerCase();
-			    if (fs.existsSync(tmp_folder)) {
-			    	fs.removeSync(tmp_folder);
-			    }
-			});
-   	    	for (let i = 0; i < torrent.files.length; i++) {
-	    		file = torrent.files[i];
-				console.log(file.name);
+		var engine = torrentStream(link);
+		let sent = false;
+		
+		engine.on('ready', () => {
+			sent = false;
+			torrentLength = engine.store.store.length;
+			lastChunk = engine.store.store.lastChunkIndex;
+			chunkSize = engine.store.store.chunkLength;
+			lastChunkSize = engine.store.store.lastChunkLength;
+			Array.from(Array(lastChunk + 1).keys()).forEach(idx => {downloadedChunksTracker[idx] = false});
+			console.log('torrentLength', torrentLength);
+			console.log('lastChunk', lastChunk);
+			console.log('chunkSize', chunkSize);
+			console.log('lastChunkSize', lastChunkSize);
+			console.log('downloadedChunksTracker', downloadedChunksTracker);
+
+			for (let i = 0; i < engine.files.length; i++) {
+				file = engine.files[i];
 				if (file.name.endsWith('.mp4')) {
-					if (typeof source == 'undefined') {
+					if (typeof src == 'undefined') {
 						if (!fs.existsSync(`public/${req.query.movie_id}`))
 							fs.mkdirSync(`public/${req.query.movie_id}`);
-						const source = file.createReadStream(file);
-						const destination = fs.createWriteStream(file_name);
-						source.pipe(destination);
+						const src = file.createReadStream();
+						const dest = fs.createWriteStream(file_name);
+						src.pipe(dest);
 					}
-					// break ;
-				}   	
-    		}
+				}
+			}
+		});
+		engine.on('download', pieceIdx => {
+			// console.log('Downloaded piece #', pieceIdx);
+			downloadedChunksTracker[pieceIdx] = true;
+			newDownloadedPartLength = getFullyDownloadedLength(downloadedChunksTracker);
+			if (newDownloadedPartLength == lastDownloadedPartLength) // Only proceed if fully downloaded part grew, 
+				return; // i.e. all the chunks [0:pieceIdx] are downloaded, none are skipped.
+			lastDownloadedPartLength = newDownloadedPartLength; // Both these variables are measured in chunks.
+			downloadedBytes = newDownloadedPartLength * chunkSize;
+			downloaded[req.query.movie_id] = downloadedBytes / torrentLength * 100;
+			console.log(
+				`Length = ${torrentLength}`,
+				`Downloaded = ${downloadedBytes}`,
+				`Pecentage = ${downloaded[req.query.movie_id]}%`
+			);
+			if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
+				sent = true;
+				send_link(req, res, file_name);
+			}
+		});
 
-	    });
+		engine.on('idle', () => {
+			console.log('All selected files downloaded');
+			downloaded[req.query.movie_id] = 100;
+			if (!sent && fs.existsSync(file_name)) {
+				sent = true;
+				send_link(req, res, file_name);
+			}
+			engine.destroy();
+			let tmp_folder = '/tmp/torrent-stream/' + req.query.hash.toLowerCase();
+			if (fs.existsSync(tmp_folder))
+				fs.removeSync(tmp_folder);
+		});
 	}
 });
 
@@ -236,6 +310,16 @@ function convertSrtCue(caption) {
     cue += s[line] + "\n\n";
   }
   return cue;
+}
+
+function getFullyDownloadedLength(tracker) {
+	let result = 0;
+	for (let i = 0; i < tracker.length; i++) {
+		if (tracker[i])
+			result++;
+		else
+			return result;
+	}
 }
 
 // router.get('/test_torrent', function(req, res, next) {

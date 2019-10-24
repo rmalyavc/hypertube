@@ -19,24 +19,24 @@ export class FilmService {
   	constructor(private http: HttpClient) {
         this._url = this.movie_db_url + 'configuration?api_key=' + this.api_key;
         this.http.get(this._url).subscribe(res => {
+            console.log('CONFIG RES', res);
             this.config = res;
-        });
-        var lang = localStorage.getItem('page_lang');
-        if (lang)
-            this.lang = lang;
-        this._url = this.movie_db_url + 'genre/movie/list?api_key=' + this.api_key + '&language=' + this.lang;
-        this.http.get(this._url).subscribe(res => {
-            if (res['genres'] && res['genres'].length > 0) {
-                for (var i = 0; i < res['genres'].length; i++) {
-                    var genre = res['genres'][i];
-                    this.genre_list[genre.id] = genre.name;
+            var lang = localStorage.getItem('page_lang');
+            this.lang = lang || this.lang;
+            this._url = this.movie_db_url + 'genre/movie/list?api_key=' + this.api_key + '&language=' + this.lang;
+            this.http.get(this._url).subscribe(res => {
+                if (res['genres'] && res['genres'].length > 0) {
+                    for (var i = 0; i < res['genres'].length; i++) {
+                        var genre = res['genres'][i];
+                        this.genre_list[genre.id] = genre.name;
+                    }
                 }
-            }
+            });
         });
     }
 
     get_base_url() {
-        return 'https://9587c19d.ngrok.io/';
+        return 'http://1c69dcd0.ngrok.io/';
     }
 
   	get_film(film_id) {
@@ -151,7 +151,6 @@ export class FilmService {
         query_part += '&page=' + page + '&language=' + this.lang.toLowerCase();
         // query_part += '&language=' + this.lang;
         this._url += method + '/movie' + query_part;
-        console.log(this._url);
         return this.http.get<ISearchResult>(this._url);
     }
 }

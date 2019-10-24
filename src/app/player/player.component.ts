@@ -11,7 +11,6 @@ declare var require: any
 })
 export class PlayerComponent implements OnInit {
 	@Input() private film_data: any;
-	// private play = require('./assets/play.png');
 
 	private preload:string = 'auto';
     private api: VgAPI;
@@ -21,8 +20,6 @@ export class PlayerComponent implements OnInit {
     private time_updates: number = 0;
     private ended_times: number = 0;
 
-
-
 	constructor(private film_service: FilmService) { }
 
 	ngOnInit() {
@@ -30,14 +27,6 @@ export class PlayerComponent implements OnInit {
 
 	onPlayerReady(api:VgAPI, test: boolean = false) {
 		this.api = api;
-		// if (test) {
-  //   		this.api.pause();
-  //   		this.wait_media();
-  //   	}
-  //   	else {
-		// this.api.getDefaultMedia().currentTime = this.pos / 1000;
-		// this.api.play();
-    	// }
 	    this.api.getDefaultMedia().subscriptions.seeking.subscribe(
 	        (event) => {
 	        	let time = this.api.getDefaultMedia().time;

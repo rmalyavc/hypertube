@@ -14,7 +14,7 @@ export class UserService {
 	constructor(private http: HttpClient) { }
 
 	get_base_url() {
-		return 'https://9587c19d.ngrok.io/';
+		return 'http://1c69dcd0.ngrok.io/';
 	}
 
 	get_current_user(logged_out = false): Observable<IUser> {
@@ -24,6 +24,7 @@ export class UserService {
 
 	register_user(form_data) {
 		this._url = this.get_base_url() + 'register';
+		console.log(form_data);
 		return this.http.post<IResult>(this._url, form_data);
 	}
 

@@ -8,28 +8,33 @@
 		    <vg-overlay-play></vg-overlay-play>
 		    <vg-buffering [class.visible]="display_buffering || (film_data.has_torrents && !film_data.sources)"></vg-buffering>
 
-		    <vg-scrub-bar>
-		        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-		        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-		    </vg-scrub-bar>
+		    <div class="player_controls">
+			    <vg-scrub-bar>
+			        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+			        <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+			    </vg-scrub-bar>
 
-		    <vg-controls>
-		        <vg-play-pause></vg-play-pause>
+			    <vg-controls>
+			        <vg-play-pause></vg-play-pause>
 
-		        <vg-time-display vgProperty="current" vgFormat="hh:mm:ss"></vg-time-display>
+			        <vg-time-display vgProperty="current" vgFormat="hh:mm:ss"></vg-time-display>
 
-		        <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-		        <vg-time-display vgProperty="total" vgFormat="hh:mm:ss"></vg-time-display>
+			        <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+			        <vg-time-display vgProperty="total" vgFormat="hh:mm:ss"></vg-time-display>
 
-		        <vg-track-selector></vg-track-selector>
-		        <vg-mute></vg-mute>
-		        <vg-volume></vg-volume>
+			        <div *ngFor="let subtitle of film_data.subtitles;">
+			        	<vg-track-selector *ngIf="subtitle.name == 'RU'" label="RU"></vg-track-selector>
+			        	<vg-track-selector *ngIf="subtitle.name == 'EN'" label="EN"></vg-track-selector>
+			        </div>
+			        <vg-mute></vg-mute>
+			        <vg-volume></vg-volume>
 
-		        <vg-fullscreen></vg-fullscreen>
-		    </vg-controls>
+			        <vg-fullscreen></vg-fullscreen>
+			    </vg-controls>
+			</div>
 			<video crossorigin="anonymous" [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay>
 		        <source *ngFor="let video of film_data.sources" [src]="video.src" [type]="video.type">
-		        <track *ngFor="let subtitle of film_data.subtitles" kind="subtitles" label="subtitle.lang" [src]="subtitle.src" srclang="ru" default>
+		        <track *ngFor="let subtitle of film_data.subtitles" kind="subtitles" label="RU" srclang="RU" [src]="subtitle.src" default>
 		    </video>
 		 </vg-player>
     </div>

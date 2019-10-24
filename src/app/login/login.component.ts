@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 
+declare var require: any;
 
 @Component({
   selector: '.app-login',
@@ -8,6 +9,8 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
+	public logo_42: string = require('./assets/logo42.png');
+	public intra_link: string = '';
 	public form_data: any = {
 		login: '',
 		password: ''
@@ -15,7 +18,21 @@ export class LoginComponent extends BaseComponent implements OnInit {
 	// private success: boolean;
 
 	ngOnInit() {
-		this.get_mod_strings('application');
+		this.intra_link = 'https://api.intra.42.fr/oauth/authorize?client_id=b7b682799d4496b76ffcd54b3f4c49dafc34fce08f98f8f30fe496681f0c254a&redirect_uri=http%3A%2F%2F1c69dcd0.ngrok.io%2Fuser%2F42%2Fauth&response_type=code';
+		this.get_mod_strings('application', this.page_lang, () => {
+			this.route.queryParams.subscribe(params => {
+				if (params['uid'] && params['token']) {
+					this.user_service.get_user_profile(params['uid'], {token: params['token']}).subscribe(res => {
+						if (res.status) {
+							res.data['token'] = params['token'];
+							res.data['id'] = params['uid'];
+							localStorage.setItem('current_user', JSON.stringify(res.data));
+							this.redirect_to_home(true);
+						}
+					});
+				}
+			});
+		});
 	}
 
 	protected login() {
@@ -29,7 +46,6 @@ export class LoginComponent extends BaseComponent implements OnInit {
 					this.redirect_to_home(true);
 				}
 				else {
-					console.log(res);
 					this.form_data = {
 						login: '',
 						password: ''

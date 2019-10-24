@@ -19,4 +19,11 @@
 		<p class="text_header"><a routerLink="/register">{{ app_strings.LBL_JOIN_US }}</a></p>
 	</div>
 	<button class="main_button" type="button" (click)="login()" [disabled]="password.invalid || name.invalid" [class.button_disabled]="name.invalid || password.invalid"><strong class="button_text white">{{ app_strings.LBL_LOGIN }}</strong></button>
+	<h3 class="text_header gray_text">Sign in with social accounts</h3>
+	<div class="field_container">
+		<div class="social_container">
+			<a href="{{intra_link}}" class="social_link"><img class="button_image" [src]="logo_42"></a>
+		</div>
+		
+	</div>
 </form>

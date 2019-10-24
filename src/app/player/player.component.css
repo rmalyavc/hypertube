@@ -58,3 +58,23 @@
 .invisible {
 	display: none;
 }
+
+.player_controls, .scrub_bar {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+vg-scrub-bar, vg-controls {
+	opacity: 0 !important;
+}
+
+.player_controls:hover vg-controls {
+	opacity: 1 !important;
+	transition: opacity 0.3s ease-out;
+}
+
+.player_controls:hover vg-scrub-bar {
+	opacity: 1 !important;
+	transition: opacity 0.2s ease-out;
+}

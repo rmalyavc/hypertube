@@ -14,6 +14,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "opensubtitles-api": "^5.0.1",
+    "torrent-stream": "^1.2.0",
     "webtorrent": "^0.107.5"
   }
 }
