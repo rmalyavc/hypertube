@@ -73,7 +73,6 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 					else
 						this.comments.unshift(res.data[i]);
 				}
-				console.log(this.comments);
 			}
 		}, error => {
 			this.handle_request_error();

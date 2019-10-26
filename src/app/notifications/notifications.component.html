@@ -7,9 +7,9 @@
 			<span class="close_button"><a (click)="remove_notification(notification.id)">X&nbsp;{{ mod_strings.LBL_CLEAR }}</a></span>
 			<span>
 				<span>{{ mod_strings.LBL_USER }}&nbsp;</span>
-				<a routerLink="/profile/{{notification.from.id}}" (click)="remove_notification(notification.id)">{{ notification.from.login }}&nbsp;</a>
+				<a href="/profile/{{notification.from.id}}" target="_blank" (click)="remove_notification(notification.id)">{{ notification.from.login }}&nbsp;</a>
 				<span>{{ mod_strings.LBL_MENTIONED_YOU }}&nbsp;</span>
-				<a routerLink="/watch/{{notification.movie.id}}" (click)="remove_notification(notification.id)">{{ notification.movie.name }}&nbsp;</a>
+				<a href="/watch/{{notification.movie.id}}" target="_blank" (click)="remove_notification(notification.id)">{{ notification.movie.name }}&nbsp;</a>
 			</span>
 		</div>
 	</div>

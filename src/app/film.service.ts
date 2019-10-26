@@ -20,15 +20,14 @@ export class FilmService extends BaseService {
         super();
         this._url = `${this.movie_db_url}configuration?api_key=${this.api_key}`;
         this.http.get(this._url).subscribe(res => {
-            console.log('CONFIG RES', res);
             this.config = res;
             var lang = localStorage.getItem('page_lang');
             this.lang = lang || this.lang;
             this._url = `${this.movie_db_url}genre/movie/list?api_key=${this.api_key}&language=${this.lang}`;
-            this.http.get(this._url).subscribe(res => {
-                if (res['genres'] && res['genres'].length > 0) {
-                    for (var i = 0; i < res['genres'].length; i++) {
-                        var genre = res['genres'][i];
+            this.http.get(this._url).subscribe(g_res => {
+                if (g_res['genres'] && g_res['genres'].length > 0) {
+                    for (var i = 0; i < g_res['genres'].length; i++) {
+                        var genre = g_res['genres'][i];
                         this.genre_list[genre.id] = genre.name;
                     }
                 }
@@ -81,34 +80,33 @@ export class FilmService extends BaseService {
         this._url = this.movie_db_url;
         var query_part = `?api_key=${this.api_key}`;
         var method = 'discover';
-        if (search_data) {
+        if (search_data.keys || search_data.search_string) {
             query_part += `&query=${search_data.search_string}`;
             if (search_data.search_string != '')
                 method = 'search';
-            for (var i = 0; i < search_data.keys.length; i++) {
-                var key = search_data.keys[i];
-                if (key == 'sort_by' && search_data.filters.sort_by &&
-                    search_data.filters.sort_by != '' && search_data.filters.order_by &&
-                    search_data.filters.order_by != '') {
-                    search_data.filters.sort_by = search_data.filters.sort_by.replace('.asc', '').replace('.desc', '') + '.' + search_data.filters.order_by;
-                }
-                else if (key != 'order_by' && search_data.filters[key] && search_data.filters[key] != '') {
-                    query_part += `&${key}=`;
-                    if (key != 'with_genres') {
-                        query_part += search_data.filters[key];
+            if (search_data.keys) {
+                for (var i = 0; i < search_data.keys.length; i++) {
+                    var key = search_data.keys[i];
+                    if (key == 'sort_by' && search_data.filters.sort_by && search_data.filters.order_by) {
+                        search_data.filters.sort_by = search_data.filters.sort_by.replace('.asc', '').replace('.desc', '') + '.' + search_data.filters.order_by;
                     }
-                    else {
-                        var genres = [];
-                        for (var j = 0; search_data.filters[key][j]; j++) {
-                            genres.push(search_data.filters[key][j].item_id);
+                    if (key != 'order_by' && search_data.filters[key]) {
+                        query_part += `&${key}=`;
+                        if (key != 'with_genres') {
+                            query_part += search_data.filters[key];
                         }
-                        query_part += genres.join();
+                        else {
+                            var genres = [];
+                            for (var j = 0; search_data.filters[key][j]; j++) {
+                                genres.push(search_data.filters[key][j].item_id);
+                            }
+                            query_part += genres.join();
+                        }
                     }
                 }
             }
         }
         query_part += `&page=${page}&language=` + this.lang.toLowerCase();
-        // query_part += '&language=' + this.lang;
         this._url += `${method}/movie${query_part}`;
         return this.http.get<ISearchResult>(this._url);
     }

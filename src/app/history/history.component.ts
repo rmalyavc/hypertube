@@ -28,7 +28,7 @@ export class HistoryComponent extends ProfileComponent implements OnInit {
 					this.route.params.subscribe(params => {
 						this.user_id = params['id'];
 						this.user_service.get_user_profile(this.user_id, this.current_user).subscribe(res => {
-							if (!res.success)
+							if (!res.status)
 								this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
 							this.page_user = res.data || false;
 							if (this.page_user)

@@ -2,73 +2,75 @@
 <div *ngIf="mod_strings">
 <h2 *ngIf="!page_user" class="text_header error_text">{{ mod_strings.LBL_USER_NOT_FOUND }}</h2>
 <h2 *ngIf="page_user" class="text_header gray_text">{{ page_user.login }}'s {{ mod_strings.LBL_PROFILE }}</h2>
-<form *ngIf="page_user" #login_form="ngForm" class="profile_form" [class.editable]="owner" [class.enable_edit]="edit">
-	<img *ngIf="owner" class="edit_button" [src]="edit_icon" (click)="change_editable()" [class.enable_edit]="edit">
-	<img class="avatar" [src]="avatar">
-	<div *ngIf="owner && edit">
-		<div class="field_container">
-			<div class="file_upload_cstm form_field" >
-				<span class="file_name"><small>{{ input_text }}</small></span>
-				<input type="file" (change)="file_selected($event)" class="hidden" id="avatar_input">
-				<div class="file_buttons">
-					<img [src]="browse_icon" class="browse_icon" (click)="trigger_file()">
-					<button class="main_button" [class.hidden]="file == null || file == ''" (click)="upload_file()">
-						<strong class="button_text white">{{ mod_strings.LBL_UPLOAD }}</strong>
-					</button>
+<div class="profile_form_wrapper">
+	<form *ngIf="page_user" #login_form="ngForm" class="profile_form" [class.editable]="owner" [class.enable_edit]="edit">
+		<img *ngIf="owner" class="edit_button" [src]="edit_icon" (click)="change_editable()" [class.enable_edit]="edit">
+		<img class="avatar" [src]="avatar">
+		<div *ngIf="owner && edit">
+			<div class="field_container">
+				<div class="file_upload_cstm form_field" >
+					<span class="file_name"><small>{{ input_text }}</small></span>
+					<input type="file" (change)="file_selected($event)" class="hidden" id="avatar_input">
+					<div class="file_buttons">
+						<img [src]="browse_icon" class="browse_icon" (click)="trigger_file()">
+						<button class="main_button" [class.hidden]="file == null || file == ''" (click)="upload_file()">
+							<strong class="button_text white">{{ mod_strings.LBL_UPLOAD }}</strong>
+						</button>
+					</div>
 				</div>
+				<p *ngIf="fikle_error != ''"><small class="error_text text_header">{{ file_error }}</small></p>
+				
 			</div>
-			<p *ngIf="fikle_error != ''"><small class="error_text text_header">{{ file_error }}</small></p>
-			
 		</div>
-	</div>
-	<div class="field_container" [class.align_center]="!owner || !edit">
-		<small><strong>{{ mod_strings.LBL_LOGIN }}:</strong></small>
-		<input type="text" #login="ngModel" [class.invalid_field]="login.invalid && login.touched" name="login" class="form_field" [(ngModel)]="form_data.login" required [disabled]="!edit" readonly>
-		<span class="error_text" *ngIf="login.invalid && login.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
-	</div>
-	<div class="field_container" [class.align_center]="!owner || !edit">
-		<small><strong>{{ mod_strings.LBL_FIRST_NAME }}:</strong></small>
-		<input type="text" #first_name="ngModel" [class.invalid_field]="first_name.invalid && first_name.touched" name="first_name" class="form_field" [(ngModel)]="form_data.first_name" [disabled]="!edit">
-	</div>
-	<div class="field_container" [class.align_center]="!owner || !edit">
-		<small><strong>{{ mod_strings.LBL_LAST_NAME }}:</strong></small>
-		<input type="text" #last_name="ngModel" [class.invalid_field]="last_name.invalid && last_name.touched" name="last_name" class="form_field" [(ngModel)]="form_data.last_name" [disabled]="!owner || !edit">
-	</div>
-	<div class="field_container" [class.align_center]="!owner || !edit">
-		<small><strong>{{ mod_strings.LBL_EMAIL }}:</strong></small>
-		<input type="text" #email="ngModel" [class.invalid_field]="email.invalid && email.touched" name="email" class="form_field" [(ngModel)]="form_data.email" [disabled]="!owner || !edit">
-	</div>
-	<div class="field_container" [class.align_center]="!owner || !edit">
-		<small><strong>{{ mod_strings.LBL_LANGUAGE }}:</strong></small>
-		<select *ngIf="owner && edit" #lang="ngModel" [class.invalid_field]="lang.invalid && lang.touched" name="lang" class="form_field" [(ngModel)]="form_data.lang">
-			<option [selected]="page_user.lang == 'EN'" value="EN">{{ mod_strings.LBL_EN }}</option>
-			<option [selected]="page_user.lang == 'RU'" value="RU">{{ mod_strings.LBL_RU }}</option>
-		</select>
-		<input type="text" *ngIf="!owner || !edit" #lang="ngModel" name="lang" class="form_field" [(ngModel)]="form_data.lang" disabled>
-	</div>
-	<div *ngIf="owner">
 		<div class="field_container" [class.align_center]="!owner || !edit">
-			<p><small><strong>{{ mod_strings.LBL_SEND_NOTIFICATIONS }}:</strong>&nbsp;</small></p>
-			<label class="switch">
-				<input type="checkbox" #notify="ngModel" [(ngModel)]="form_data.notify" name="notify" [checked]="page_user.notify" [disabled]="!owner || !edit">
-				<span class="slider round"></span>
-			</label>
+			<small><strong>{{ mod_strings.LBL_LOGIN }}:</strong></small>
+			<input type="text" #login="ngModel" [class.invalid_field]="login.invalid && login.touched" name="login" class="form_field" [(ngModel)]="form_data.login" required [disabled]="!edit" readonly>
+			<span class="error_text" *ngIf="login.invalid && login.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
 		</div>
-		<div class="field_container" *ngIf="!update_status">
-			<strong class="error_text text_header">{{ mod_strings.LBL_ERR_UPDATE_FAILED }}:</strong><br>
-			<p *ngFor="let error of errors;">
-				<small>
-					<strong class="error_text text_header">{{ error }}</strong>
-				</small>
-			</p>
+		<div class="field_container" [class.align_center]="!owner || !edit">
+			<small><strong>{{ mod_strings.LBL_FIRST_NAME }}:</strong></small>
+			<input type="text" #first_name="ngModel" [class.invalid_field]="first_name.invalid && first_name.touched" name="first_name" class="form_field" [(ngModel)]="form_data.first_name" [disabled]="!edit">
 		</div>
-		<div class="field_container" *ngIf="edit">
-			<p class="text_header"><a routerLink="/restore/change">{{ mod_strings.LBL_CHANGE_PASSWORD }}</a></p>
+		<div class="field_container" [class.align_center]="!owner || !edit">
+			<small><strong>{{ mod_strings.LBL_LAST_NAME }}:</strong></small>
+			<input type="text" #last_name="ngModel" [class.invalid_field]="last_name.invalid && last_name.touched" name="last_name" class="form_field" [(ngModel)]="form_data.last_name" [disabled]="!owner || !edit">
 		</div>
-		<button *ngIf="edit" class="main_button" type="button" (click)="update()"><strong class="button_text white">{{ mod_strings.LBL_UPDATE }}</strong></button>
-	</div>
-	
-</form>
+		<div class="field_container" [class.align_center]="!owner || !edit">
+			<small><strong>{{ mod_strings.LBL_EMAIL }}:</strong></small>
+			<input type="text" #email="ngModel" [class.invalid_field]="email.invalid && email.touched" name="email" class="form_field" [(ngModel)]="form_data.email" [disabled]="!owner || !edit">
+		</div>
+		<div class="field_container" [class.align_center]="!owner || !edit">
+			<small><strong>{{ mod_strings.LBL_LANGUAGE }}:</strong></small>
+			<select *ngIf="owner && edit" #lang="ngModel" [class.invalid_field]="lang.invalid && lang.touched" name="lang" class="form_field" [(ngModel)]="form_data.lang">
+				<option [selected]="page_user.lang == 'EN'" value="EN">{{ mod_strings.LBL_EN }}</option>
+				<option [selected]="page_user.lang == 'RU'" value="RU">{{ mod_strings.LBL_RU }}</option>
+			</select>
+			<input type="text" *ngIf="!owner || !edit" #lang="ngModel" name="lang" class="form_field" [(ngModel)]="form_data.lang" disabled>
+		</div>
+		<div *ngIf="owner">
+			<div class="field_container" [class.align_center]="!owner || !edit">
+				<p><small><strong>{{ mod_strings.LBL_SEND_NOTIFICATIONS }}:</strong>&nbsp;</small></p>
+				<label class="switch">
+					<input type="checkbox" #notify="ngModel" [(ngModel)]="form_data.notify" name="notify" [checked]="page_user.notify" [disabled]="!owner || !edit">
+					<span class="slider round"></span>
+				</label>
+			</div>
+			<div class="field_container" *ngIf="!update_status">
+				<strong class="error_text text_header">{{ mod_strings.LBL_ERR_UPDATE_FAILED }}:</strong><br>
+				<p *ngFor="let error of errors;">
+					<small>
+						<strong class="error_text text_header">{{ error }}</strong>
+					</small>
+				</p>
+			</div>
+			<div class="field_container" *ngIf="edit">
+				<p class="text_header"><a routerLink="/restore/change">{{ mod_strings.LBL_CHANGE_PASSWORD }}</a></p>
+			</div>
+			<button *ngIf="edit" class="main_button" type="button" (click)="update()"><strong class="button_text white">{{ mod_strings.LBL_UPDATE }}</strong></button>
+		</div>
+		
+	</form>
+</div>
 <div *ngIf="history.length > 0" class="field_container history_cont">
 	<h3 class="text_header gray_text">{{ mod_strings.LBL_BRAWSING_HISTORY }}</h3>
 	<div class="history_preview">

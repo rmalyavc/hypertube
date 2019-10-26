@@ -29,7 +29,7 @@
 				<small *ngIf="mod_strings.labels[key]">
 					<strong>{{ mod_strings.labels.with_genres }}:&nbsp;</strong>
 				</small><br>
-				<ng-multiselect-dropdown [data]="genre_list" [(ngModel)]="filters.with_genres" [settings]="dropdown_settings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" name="with_genres" placeholder="{{ app_strings.LBL_SELECT }}">
+				<ng-multiselect-dropdown *ngIf="genre_list.length" [data]="genre_list" [(ngModel)]="filters.with_genres" [settings]="dropdown_settings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" name="with_genres" placeholder="{{ app_strings.LBL_SELECT }}">
 				</ng-multiselect-dropdown>
 			</div>
 		</div>

@@ -68,7 +68,7 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 					}
 				});
 				this.route.queryParams.subscribe(params => {
-					if (params != {}) {
+					if (Object.keys(params).length > 0) {
 						this.search_data.advanced = params.advanced == "true" ? true : false;
 						this.search_data.filters = params.filters ? JSON.parse(params.filters) : {};
 						this.search_data.groups = params.groups ? JSON.parse(params.groups) : {};
