@@ -4,7 +4,9 @@ var fs = require('fs-extra');
 var file = 'public/scroll.mp4';
 var http = require('http');
 
-var cors = require('cors')
+var cors = require('cors');
+var request = require('request');
+var rimraf = require("rimraf");
 
 var app = express()
 app.use(cors());
@@ -25,6 +27,29 @@ let downloadedChunksTracker = [];
 let lastDownloadedPartLength = 0;
 let newDownloadedPartLength = 0;
 let downloadedBytes = 0;
+
+/*|*************************************************************************|*\
+|*|                                                                         |*|
+|*|           Remove movies that haven't been watched for a month           |*|
+|*|                                                                         |*|
+\*|*************************************************************************|*/
+
+let url = 'https://768b1cb6.ngrok.io/movie/get/expired';
+request.get({ url:url }, (err, resp, body) => {
+	if (err) {
+		console.log('Whoops! Fuck up. Here are some details:');
+		console.log(err);
+		return;
+	}
+	
+	let responseObj = JSON.parse(body);
+	Object.values(responseObj).forEach(movie => {
+		rimraf(`public/${movie.movie_id}`, () => {
+			console.log(`Removed the movie #${movie.movie_id}`)
+		});
+	})
+})
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
