@@ -11,9 +11,9 @@
 	<div *ngIf="advanced && mod_strings.labels" class="field_container flex">
 		<div *ngFor="let key of keys;" class="advaced_cont flex">
 			
-			<div style="position:relative;width:100%" *ngIf="key != 'with_genres'">
+			<div style="position:relative;width:100%" *ngIf="key != 'with_genres' && mod_strings.lists[key]">
 				<small *ngIf="mod_strings.labels[key]"><strong>{{ mod_strings.labels[key] }}:&nbsp;</strong></small>
-				<small *ngIf="!mod_strings.labels[key]"><strong>{{ key }}:&nbsp;</strong></small>
+				<small *ngIf="!mod_strings.labels[key]"><strong>{{ key }}:&nbsp;</strong></small><br>
 				<select [name]="key" class="form_field" [(ngModel)]="filters[key]" (change)=do_search()>
 					<option *ngFor="let option of groups[key]" value="{{ option }}" [selected]="filters[key] == option">
 						<span *ngIf="mod_strings.lists[key][option]">
@@ -26,11 +26,9 @@
 				</select>
 			</div>
 			<div style="position:relative;width:100%" *ngIf="key == 'with_genres'">
-				<!-- <p> -->
-					<small *ngIf="mod_strings.labels[key]">
-						<strong>{{ mod_strings.labels.with_genres }}:&nbsp;</strong>
-					</small><br>
-				<!-- </p> -->
+				<small *ngIf="mod_strings.labels[key]">
+					<strong>{{ mod_strings.labels.with_genres }}:&nbsp;</strong>
+				</small><br>
 				<ng-multiselect-dropdown [data]="genre_list" [(ngModel)]="filters.with_genres" [settings]="dropdown_settings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" name="with_genres" placeholder="{{ app_strings.LBL_SELECT }}">
 				</ng-multiselect-dropdown>
 			</div>

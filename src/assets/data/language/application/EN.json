@@ -24,6 +24,7 @@
 	"LBL_USER_NOT_FOUND": "User is not found",
 	"LBL_PROFILE": "profile",
 	"LBL_INVALID_LOGIN_PASSWORD": "Invalid login or password",
+	"LBL_2_MIN_LENGTH": "Should be at least 2 characters length",
 	"LBL_4_MIN_LENGTH": "Should be at least 4 characters length",
 	"LBL_8_MIN_LENGTH": "Should be at least 8 characters length",
 	"LBL_SEARCH": "Search",

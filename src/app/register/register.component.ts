@@ -9,6 +9,8 @@ import { BaseComponent } from '../base/base.component';
 export class RegisterComponent extends BaseComponent implements OnInit {
 	private form_data = {
 		login: '',
+		first_name: '',
+		last_name: '',
 		password: '',
 		password_confirmation: '',
 		email: '',

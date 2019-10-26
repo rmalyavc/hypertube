@@ -6,6 +6,16 @@
 		<span class="error_text" *ngIf="name.errors && name.errors.minlength && name.touched">{{ app_strings.LBL_4_MIN_LENGTH }}</span>
 	</div>
 	<div class="field_container">
+		<input type="text" #first_name="ngModel" [class.invalid_field]="first_name.invalid && first_name.touched" name="first_name" class="form_field" placeholder="{{ app_strings.LBL_FIRST_NAME }}" [(ngModel)]="form_data.first_name" minlength="2" required>
+		<span class="error_text" *ngIf="first_name.errors && first_name.errors.required && first_name.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
+		<span class="error_text" *ngIf="first_name.errors && first_name.errors.minlength && first_name.touched">{{ app_strings.LBL_2_MIN_LENGTH }}</span>
+	</div>
+	<div class="field_container">
+		<input type="text" #last_name="ngModel" [class.invalid_field]="last_name.invalid && last_name.touched" name="last_name" class="form_field" placeholder="{{ app_strings.LBL_LAST_NAME }}" [(ngModel)]="form_data.last_name" minlength="2" required>
+		<span class="error_text" *ngIf="last_name.errors && last_name.errors.required && last_name.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
+		<span class="error_text" *ngIf="last_name.errors && last_name.errors.minlength && last_name.touched">{{ app_strings.LBL_2_MIN_LENGTH }}</span>
+	</div>
+	<div class="field_container">
 		<input type="password" #password="ngModel" name="password" class="form_field" placeholder="{{ app_strings.LBL_PASSWORD }}" [class.invalid_field]="password.invalid && password.touched" [(ngModel)]="form_data.password" minlength="8" required>
 		<span class="error_text" *ngIf="password.errors && password.errors.required && password.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
 		<span class="error_text" *ngIf="password.errors && password.errors.minlength && password.touched">{{ app_strings.LBL_8_MIN_LENGTH }}</span>
