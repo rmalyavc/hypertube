@@ -1,12 +1,4 @@
 {
-	"quality": [
-		"",
-		"360p",
-		"480p",
-		"720p",
-		"1080p",
-		"3D"
-	],
 	"sort_by": [
 		"popularity",
 		"release_date",
