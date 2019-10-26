@@ -55,12 +55,10 @@ export class WatchComponent extends BaseComponent implements OnInit {
 						this.film_data.has_trailer = true;
 					}
 					this.film_service.get_torrent(res['imdb_id']).subscribe(t_res => {
-						console.log(t_res);
 						if (t_res['status'] == 'ok' && t_res['data']['movies'] && t_res['data']['movies'][0]) {
 							let movie = t_res['data']['movies'][0];
 							this.film_data.has_torrents = true;
 							if (movie.torrents && movie.torrents[0]) {
-								console.log(movie.torrents);
 								this.film_service.get_video(res['id'], movie.torrents[0]['hash']).subscribe(video => {
 									var d = new Date();
   									var n = d.getTime();
@@ -70,7 +68,6 @@ export class WatchComponent extends BaseComponent implements OnInit {
 										this.film_data.percentage = video.data.percentage;
 										this.film_data.player_header = `${this.app_strings.LBL_WATCH} ${this.film_data.name}`;
 										this.film_service.get_subtitles(this.page_lang.toLowerCase(), video.data.path, res['imdb_id'], res['id']).subscribe(result => {
-											console.log(result);
 											this.film_data.sources = [{src: `${this.film_data.video_link}?v=${n}`, type: "video/mp4"}];
 											if (result.status) {
 												this.film_data.subtitles = [{
@@ -92,36 +89,15 @@ export class WatchComponent extends BaseComponent implements OnInit {
 						else
 							this.film_data.player_header = this.app_strings.LBL_VIDEO_NOT_AVAILABLE;
 					});
-						// }
-					// });
 
-					// this.film_service.get_torrent(res['imdb_id']).subscribe(t_res => {
-					// 	console.log(t_res);
-					// 	if (t_res['status'] == 'ok' && t_res['data']['movies'] && t_res['data']['movies'][0]) {
-					// 		let movie = t_res['data']['movies'][0];
-					// 		console.log(movie);
-					// 		if (movie.torrents && movie.torrents[0]) {
-					// 			this.film_service.get_video(movie.torrents[0]['hash']).subscribe(video => {
-					// 				console.log(video);
-					// 				// console.log(res);
-					// 				this.film_data.is_trailer = false;
-					// 				this.film_data.video_link = video.data;
-									
-					// 			});
-					// 		}
-					// 	}
-					// });
-
-					// if (this.current_user) {
-					// 	this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
-					// 		if (!res.status)
-					// 			this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
-					// 	}, error => {
-					// 		this.handle_request_error();
-					// 	});
-					// }
-					console.log(this.film_data.video_link);
-					
+					if (this.current_user) {
+						this.film_service.save_visit(this.film_data, this.current_user).subscribe(res => {
+							if (!res.status)
+								this.handle_request_error(false, this.app_strings['LBL_ERR_' + res.error] || this.app_strings.LBL_ERR_500);
+						}, error => {
+							this.handle_request_error();
+						});
+					}
 				}, error => {
 					this.handle_request_error();
 				});

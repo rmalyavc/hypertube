@@ -58,7 +58,6 @@ export class BaseComponent implements OnInit {
 			this.redirect_to_home(true);
 		else {
 			this.user_service.is_logged_in(this.current_user).subscribe(data => {
-				// console.log(data);
 				if (!data.status)
 					this.logout();
 			});
