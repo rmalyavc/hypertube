@@ -32,22 +32,24 @@ let downloadedBytes = 0;
 \*|*************************************************************************|*/
 
 let url = 'https://768b1cb6.ngrok.io/movie/get/expired';
-request.get({ url:url }, (err, resp, body) => {
-	if (err) {
-		console.log('Whoops! Fuck up. Here are some details:');
-		console.log(err);
-		return;
-	}
-	
-	let responseObj = JSON.parse(body);
-	Object.values(responseObj).forEach(movie => {
-		let file_name = `public/${movie.movie_id}`;
-		if (fs.existsSync(file_name)) {
-			fs.removeSync(file_name);
-			console.log(`Removed the movie #${movie.movie_id}`)
+setInterval(() => {
+	request.get({ url:url }, (err, resp, body) => {
+		if (err) {
+			console.log('Whoops! Fuck up. Here are some details:');
+			console.log(err);
+			return;
 		}
-	})
-})
+		
+		let responseObj = JSON.parse(body);
+		Object.values(responseObj).forEach(movie => {
+			let file_name = `public/${movie.movie_id}`;
+			if (fs.existsSync(file_name)) {
+				fs.removeSync(file_name);
+				console.log(`Removed the movie #${movie.movie_id}`)
+			}
+		})
+	});
+}, 86400);
 
 
 /* GET home page. */
