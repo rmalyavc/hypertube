@@ -35,7 +35,6 @@ export class ProfileComponent extends BaseComponent implements OnInit {
 	public history: string[] = [];
 	private file: any = null;
 	private update_status: boolean = true;
-	// private errors: string[] = [];
 	private file_error: string = '';
 	private tmp: string = '';
 	private edit: boolean = false;

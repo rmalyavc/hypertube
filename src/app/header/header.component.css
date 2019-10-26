@@ -1,7 +1,6 @@
 .header	{
 	position: absolute;
 	width: 100vw;
-	/*height: 6vh;*/
 	height: 60px;
 	top: 0;
 	left: 0%;
@@ -15,10 +14,8 @@
 }
 .logo:hover {
 	height: 70%;
-	/*background: rgba(0,0,0,0.2);*/
 	transition: height 0.3s ease-in-out;
 	cursor: pointer;
-	/*transition: background 0.5s ease-in-out;*/
 }
 
 .app-tools {

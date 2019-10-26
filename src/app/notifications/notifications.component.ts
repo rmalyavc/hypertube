@@ -40,7 +40,6 @@ export class NotificationsComponent extends BaseComponent implements OnInit {
 	}
 	get_notifications() {
 		this.user_service.get_notifications(this.current_user).subscribe(res => {
-			console.log(res);
 			if (res.status) {
 				this.notifications = res.data
 				this.qty = this.notifications.length;
@@ -63,7 +62,7 @@ export class NotificationsComponent extends BaseComponent implements OnInit {
 			}, 0);
 		}
 		this.user_service.clear_notification(this.current_user, id).subscribe(res => {
-			console.log(res);
+			
 		});
 	}
 }

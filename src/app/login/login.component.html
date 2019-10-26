@@ -9,7 +9,6 @@
 		<span class="error_text" *ngIf="password.invalid && password.touched">{{ app_strings.LBL_ERROR_EMPTY }}</span>
 	</div>
 	<div *ngIf="success === false" class="field_container">
-		<!-- <span class="error_text" >{{ app_strings.LBL_INVALID_LOGIN_PASSWORD }}</span> -->
 		<p *ngFor="let error of errors;" class="error_text">{{ error }}</p>
 	</div>
 	<div class="field_container">
@@ -23,7 +22,8 @@
 	<div class="field_container">
 		<div class="social_container">
 			<a href="{{intra_link}}" class="social_link"><img class="button_image" [src]="logo_42"></a>
-			<a href="{{git_link}}" style="height:55px;" class="social_link"><img class="button_image" [src]="logo_git"></a>
+			<a href="{{google_link}}" style="height:70px;" class="social_link"><img class="button_image" [src]="logo_google"></a>
+			<a href="{{git_link}}"  class="social_link"><img class="button_image" [src]="logo_git"></a>
 		</div>
 		
 	</div>

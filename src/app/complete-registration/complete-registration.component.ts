@@ -7,7 +7,6 @@ import { BaseComponent } from '../base/base.component';
   styleUrls: ['./complete-registration.component.css']
 })
 export class CompleteRegistrationComponent extends BaseComponent implements OnInit {
-	// private error: string = '';
 	ngOnInit() {
 		this.get_mod_strings('application', this.page_lang, () => {
 			this.route.params.subscribe(params => {

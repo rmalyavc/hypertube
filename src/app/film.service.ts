@@ -3,12 +3,12 @@ import { ISearchResult } from './SearchResult';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IResult } from './Result';
+import { BaseService } from './base.service';
 
 @Injectable({
   	providedIn: 'root'
 })
-export class FilmService {
-	private _url: string = '';
+export class FilmService extends BaseService {
     public movie_db_url = 'https://api.themoviedb.org/3/';
     public api_key = '412d472aa9ed6eec7376bf00249e3b0a';
     public config: any = {};
@@ -17,13 +17,14 @@ export class FilmService {
     public lang: string = 'EN';
 
   	constructor(private http: HttpClient) {
-        this._url = this.movie_db_url + 'configuration?api_key=' + this.api_key;
+        super();
+        this._url = `${this.movie_db_url}configuration?api_key=${this.api_key}`;
         this.http.get(this._url).subscribe(res => {
             console.log('CONFIG RES', res);
             this.config = res;
             var lang = localStorage.getItem('page_lang');
             this.lang = lang || this.lang;
-            this._url = this.movie_db_url + 'genre/movie/list?api_key=' + this.api_key + '&language=' + this.lang;
+            this._url = `${this.movie_db_url}genre/movie/list?api_key=${this.api_key}&language=${this.lang}`;
             this.http.get(this._url).subscribe(res => {
                 if (res['genres'] && res['genres'].length > 0) {
                     for (var i = 0; i < res['genres'].length; i++) {
@@ -35,13 +36,8 @@ export class FilmService {
         });
     }
 
-    get_base_url() {
-        return 'https://768b1cb6.ngrok.io/';
-    }
-
   	get_film(film_id) {
-  		// this._url = 'https://yts.lt/api/v2/movie_details.json?movie_id=' + film_id;
-        this._url = this.movie_db_url + 'movie/' + film_id + '?api_key=' + this.api_key + '&language=' + this.lang + '&append_to_response=videos';
+        this._url = `${this.movie_db_url}movie/${film_id}?api_key=${this.api_key}&language=${this.lang}&append_to_response=videos`;
   		return this.http.get(this._url);
   	}
 
@@ -61,14 +57,9 @@ export class FilmService {
         this._url = `http://localhost:3000/check_percentage?movie_id=${movie_id}`;
         return this.http.get<IResult>(this._url);
     }
-  	// get_comments(current_user, movie_id: string, limit: number = 10, skip: number = 0) {
-  	// 	this._url = this.get_base_url() + '/movie/get/comments';
-   //      this._url += '?token=' + current_user.token + '&record_id=' + movie_id + '&limit=' + limit + '&skip=' + skip;
-  	// 	return this.http.get<IResult>(this._url);
-  	// }
 
     save_visit(movie, current_user) {
-        this._url = this.get_base_url() + 'user/history/addMovie';
+        this._url = `${this.base_url}user/history/addMovie`;
 
         var query_part = {
             movie_id: movie.id,
@@ -82,48 +73,16 @@ export class FilmService {
 
     get_history(page_user, current_user, limit: number = 20, skip: number = 0, order_by: string = 'updated_at', sort_order: string = 'DESC') {
        
-        this._url = this.get_base_url() + '/user/history/movies?limit=' + limit + '&uid=' + page_user.uid + '&token=' + current_user.token + '&skip=' + skip + '&order_by=' + order_by + '&sort_order=' + sort_order;
+        this._url = `${this.base_url}user/history/movies?limit=${limit}&uid=${page_user.uid}&token=${current_user.token}&skip=${skip}&order_by=${order_by}&sort_order=${sort_order}`;
         return this.http.get<IResult>(this._url);
     }
 
-    // post_comment(current_user, movie_id, value) {
-    //     this._url = this.get_base_url() + '/movie/set/comment';
-    //     var params = {
-    //         uid: current_user.uid,
-    //         token: current_user.token,
-    //         record_id: movie_id,
-    //         comment: value,
-    //     };
-    //     return this.http.post<IResult>(this._url, params);
-    // }
-
-    // update_comment(current_user, current_comment) {
-    //     this._url = this.get_base_url() + '/movie/edit/comment';
-    //     var params = {
-    //         uid: current_user.uid,
-    //         token: current_user.token,
-    //         id: current_comment.id,
-    //         comment: current_comment.comment
-    //     };
-    //     return this.http.post<IResult>(this._url, params);
-    // }
-
-    // delete_comment(current_user, current_comment) {
-    //     this._url = this.get_base_url() + '/movie/delete/comment';
-    //     var params = {
-    //         uid: current_user.uid,
-    //         token: current_user.token,
-    //         id: current_comment.id
-    //     };
-    //     return this.http.post<IResult>(this._url, params);
-    // }
-
     search_movies(search_data: any = false, page = 1) {
         this._url = this.movie_db_url;
-        var query_part = '?api_key=' + this.api_key;
+        var query_part = `?api_key=${this.api_key}`;
         var method = 'discover';
         if (search_data) {
-            query_part += '&query=' + search_data.search_string;
+            query_part += `&query=${search_data.search_string}`;
             if (search_data.search_string != '')
                 method = 'search';
             for (var i = 0; i < search_data.keys.length; i++) {
@@ -134,7 +93,7 @@ export class FilmService {
                     search_data.filters.sort_by = search_data.filters.sort_by.replace('.asc', '').replace('.desc', '') + '.' + search_data.filters.order_by;
                 }
                 else if (key != 'order_by' && search_data.filters[key] && search_data.filters[key] != '') {
-                    query_part += '&' + key + '=';
+                    query_part += `&${key}=`;
                     if (key != 'with_genres') {
                         query_part += search_data.filters[key];
                     }
@@ -148,9 +107,9 @@ export class FilmService {
                 }
             }
         }
-        query_part += '&page=' + page + '&language=' + this.lang.toLowerCase();
+        query_part += `&page=${page}&language=` + this.lang.toLowerCase();
         // query_part += '&language=' + this.lang;
-        this._url += method + '/movie' + query_part;
+        this._url += `${method}/movie${query_part}`;
         return this.http.get<ISearchResult>(this._url);
     }
 }

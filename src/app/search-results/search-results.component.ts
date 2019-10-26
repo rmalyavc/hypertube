@@ -28,7 +28,15 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 	public no_img: string = require('./assets/no_image.png');
 	private end_of_results: boolean = false;
 
-	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public search_service: SearchService, public film_service: FilmService) {
+	constructor(
+		private http: HttpClient,
+		public user_service: UserService,
+		public router: Router,
+		public route: ActivatedRoute,
+		public lang_service: LangService,
+		public search_service: SearchService,
+		public film_service: FilmService
+	) {
 		super(user_service, router, route, lang_service);
 	}
 
@@ -70,7 +78,6 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 					this.show_loader = true;
 					this.page = 1;
 					this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
-						console.log(results);
 						this.results = results.results;
 						for (var i = 0; i < this.results.length; i++) {
 							if (this.results[i].poster_path)
@@ -102,4 +109,3 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 		this.ngOnInit();
 	}
 }
-// https://yts.lt/api/v2/list_movies.json?query_term=terminator&genre=All&quality=All&sort_by=date_added&order_by=desc&page=1

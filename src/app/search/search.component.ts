@@ -21,7 +21,6 @@ export class SearchComponent extends BaseComponent implements OnInit {
 	public advanced: boolean = false;
 	public filters = {};
 	public groups = {};
-	// public groups_visible = {};
 	public keys: string[];
 	public _url: string;
 	public search_string: string;
@@ -30,8 +29,6 @@ export class SearchComponent extends BaseComponent implements OnInit {
 
 	constructor(private http: HttpClient, public user_service: UserService, public router: Router, public route: ActivatedRoute, public lang_service: LangService, public film_service: FilmService) {
 		super(user_service, router, route, lang_service);
-		
-		
 	}
 
 	ngOnInit() {
@@ -101,8 +98,6 @@ export class SearchComponent extends BaseComponent implements OnInit {
 		}, 300);
 	}
 	collect_genres() {
-		// console.log(this.groups);
-		// return ;
 		var genre_keys = Object.keys(this.film_service.genre_list);
 		for (var i = 0; i < genre_keys.length; i++) {
 			var key = genre_keys[i];
@@ -111,11 +106,5 @@ export class SearchComponent extends BaseComponent implements OnInit {
 			this.genre_list.push({item_id: key, item_text: this.film_service.genre_list[key]});
 		}
 		return true;
-	}
-	onItemSelect(item: any) {
-	    // console.log(item);
-	}
-	onSelectAll(items: any) {
-	    // console.log(items);
 	}
 }

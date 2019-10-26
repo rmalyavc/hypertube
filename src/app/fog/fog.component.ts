@@ -9,8 +9,6 @@ import { BaseComponent } from '../base/base.component';
 export class FogComponent extends BaseComponent implements OnInit {
 	@Input() question:string;
 	@Output() answer: EventEmitter<boolean> = new EventEmitter<boolean>();
-	
-	// constructor() { }
 
 	ngOnInit() {
 		this.get_mod_strings('application');

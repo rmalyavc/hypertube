@@ -10,8 +10,6 @@ declare var require: any;
 })
 export class NotFoundComponent extends BaseComponent implements OnInit {
 	private img = require('./assets/404.png');
-	
-	// constructor() { }
 
 	ngOnInit() {
 		this.get_mod_strings('application');

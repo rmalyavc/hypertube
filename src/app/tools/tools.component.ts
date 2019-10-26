@@ -10,7 +10,6 @@ export class ToolsComponent implements OnInit {
 	@Input() tool_ids : string[];
 	@Input() current_user : any;
 
-	public name = 'test';
 	constructor() {}
 
 	ngOnInit() {

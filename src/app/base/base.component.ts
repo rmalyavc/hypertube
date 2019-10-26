@@ -13,7 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class BaseComponent implements OnInit {
 	public component_name: string = 'BaseComponent';
 	public project_name = 'Hypertube';
-	public creators = ['rmalyavc,', 'dkliukin'];
+	public creators = ['rmalyavc', 'dkliukin', 'oshyiata', 'amakaren'];
 	public current_user: any;
 	public app_strings: any = {};
 	public mod_strings: any = {};

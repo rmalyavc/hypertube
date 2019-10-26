@@ -8,8 +8,6 @@ import { BaseComponent } from '../base/base.component';
 })
 export class FilmDetailsComponent extends BaseComponent implements OnInit {
 	@Input() private film_data: any;
-	
-	// constructor() { }
 
 	ngOnInit() {
 		this.get_mod_strings();

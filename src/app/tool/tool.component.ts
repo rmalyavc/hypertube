@@ -34,8 +34,6 @@ export class ToolComponent extends BaseComponent implements OnInit {
 			is_icon: false,
 		}
 	}
-	// constructor() {
-	// }
 
 	ngOnInit() {
 		this.get_mod_strings('application');

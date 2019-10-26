@@ -49,7 +49,7 @@ export class PlayerComponent implements OnInit {
 	    );
 	    this.api.getDefaultMedia().subscriptions.ended.subscribe(
 	        (event) => {
-	        	console.log('ended', event);
+	        	// console.log('ended', event);
 	        	let time = this.api.getDefaultMedia().time;
 	        	this.time_updates = 0;
 	        	if (this.pos < time.total - 1000) {
@@ -66,12 +66,6 @@ export class PlayerComponent implements OnInit {
 	    		this.api.play();
 	        }
 	    );
-	    // this.api.getDefaultMedia().subscriptions.canPlayThrough.subscribe(event => {
-	    // 		let time = this.api.getDefaultMedia().time;
-	    //     	if (this.pos < time.total - 1000)
-	    //     		this.wait_media();
-	    //     }
-	    // );
 	}
 
 	wait_media() {

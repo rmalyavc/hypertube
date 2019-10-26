@@ -2,30 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IResult } from './Result';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommentService {
-	private _url: string = '';
+export class CommentService extends BaseService {
 
 	constructor(private http: HttpClient) {
-
-	}
-
-	get_base_url() {
-		return 'https://768b1cb6.ngrok.io/';
-		// return '/assets/data/user_suggests/users.json';
+        super();
 	}
 
 	get_suggests(current_user, search) {
 		this._url = this.get_base_url() + 'user/suggest_login?token=' + current_user.token + '&login=' + search;
-		// this._url = '/assets/data/user_suggests/users.json';
 		return this.http.get<IResult>(this._url);
 	}
 
 	post_comment(current_user, movie_id, value) {
-        this._url = this.get_base_url() + '/movie/set/comment';
+        this._url = `${this.base_url}movie/set/comment`;
         var params = {
             uid: current_user.uid,
             token: current_user.token,
@@ -37,7 +31,7 @@ export class CommentService {
     }
 
     update_comment(current_user, current_comment) {
-        this._url = this.get_base_url() + '/movie/edit/comment';
+        this._url = `${this.base_url}movie/edit/comment`;
         var params = {
             uid: current_user.uid,
             token: current_user.token,
@@ -48,7 +42,7 @@ export class CommentService {
     }
 
     delete_comment(current_user, current_comment) {
-        this._url = this.get_base_url() + '/movie/delete/comment';
+        this._url = `${this.base_url}movie/delete/comment`;
         var params = {
             uid: current_user.uid,
             token: current_user.token,
@@ -58,8 +52,7 @@ export class CommentService {
     }
 
     get_comments(current_user, movie_id: string, limit: number = 10, skip: number = 0) {
-  		this._url = this.get_base_url() + '/movie/get/comments';
-        this._url += '?token=' + current_user.token + '&record_id=' + movie_id + '&limit=' + limit + '&skip=' + skip;
+  		this._url = `${this.base_url}movie/get/comments?token=${current_user.token}&record_id=${movie_id}&limit=${limit}&skip=${skip}`;
   		return this.http.get<IResult>(this._url);
   	}
 }

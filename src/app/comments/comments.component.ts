@@ -159,9 +159,6 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 					}
 					return el;
 				});
-				// this.suggests = res['users'].filter(function(el) {
-				// 	return el.login.toLowerCase().indexOf(word) == 0 && el.login.toLowerCase() != word;
-				// });
 			});
 		}
 		else
