@@ -35,7 +35,7 @@
 			<small><strong>{{ mod_strings.LBL_LAST_NAME }}:</strong></small>
 			<input type="text" #last_name="ngModel" [class.invalid_field]="last_name.invalid && last_name.touched" name="last_name" class="form_field" [(ngModel)]="form_data.last_name" [disabled]="!owner || !edit">
 		</div>
-		<div class="field_container" [class.align_center]="!owner || !edit">
+		<div *ngIf="owner" class="field_container" [class.align_center]="!owner || !edit">
 			<small><strong>{{ mod_strings.LBL_EMAIL }}:</strong></small>
 			<input type="text" #email="ngModel" [class.invalid_field]="email.invalid && email.touched" name="email" class="form_field" [(ngModel)]="form_data.email" [disabled]="!owner || !edit">
 		</div>

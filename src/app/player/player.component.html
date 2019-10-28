@@ -34,7 +34,7 @@
 			</div>
 			<video crossorigin="anonymous" [vgMedia]="media" #media id="singleVideo" preload="auto" autoplay>
 		        <source *ngFor="let video of film_data.sources" [src]="video.src" [type]="video.type">
-		        <track *ngFor="let subtitle of film_data.subtitles" kind="subtitles" label="RU" srclang="RU" [src]="subtitle.src" default>
+		        <track *ngFor="let subtitle of film_data.subtitles" kind="subtitles" [label]="RU" srclang="RU" [src]="subtitle.src" default>
 		    </video>
 		 </vg-player>
     </div>

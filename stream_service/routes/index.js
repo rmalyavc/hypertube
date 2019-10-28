@@ -35,7 +35,6 @@ let url = 'https://d8414b5f.ngrok.io/movie/get/expired';
 setInterval(() => {
 	request.get({ url:url }, (err, resp, body) => {
 		if (err) {
-			console.log('Whoops! Fuck up. Here are some details:');
 			console.log(err);
 			return;
 		}
@@ -45,7 +44,7 @@ setInterval(() => {
 			let file_name = `public/${movie.movie_id}`;
 			if (fs.existsSync(file_name)) {
 				fs.removeSync(file_name);
-				console.log(`Removed the movie #${movie.movie_id}`)
+				console.log(`Removed the movie #${movie.movie_id}`);
 			}
 		})
 	});
@@ -69,52 +68,9 @@ router.get('/get_video', function(req, res, next) {
 			}
 		});
 	}
-	// else {
-	// 	var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
-	// 	console.log(link);
-	//     client.add(link, function (torrent) {
-	//     	let sent = false;
-	//     	torrent.on('download', function() {
-	//     		downloaded[req.query.movie_id] = torrent.downloaded / torrent.length * 100;
-	//     		console.log(`Length = ${torrent.length}`, `Downloaded = ${torrent.downloaded}`, `Pecentage = ${downloaded[req.query.movie_id]}%`);
-	//     		if (!sent && fs.existsSync(file_name) && downloaded[req.query.movie_id] > 3) {
-	//     			sent = true;
-	//     			send_link(req, res, file_name);
-	// 		    }
-	//     	});
-	//     	torrent.on('done', function () {
-	// 		    console.log('torrent download finished');
-	// 		    if (!sent && fs.existsSync(file_name)) {
-	// 		    	downloaded[req.query.movie_id] = 100;
-	//     			sent = true;
-	//     			send_link(req, res, file_name);
-	// 		    }
-	// 		    client.remove(link);
-	// 		    let tmp_folder = '/tmp/webtorrent/' + req.query.hash.toLowerCase();
-	// 		    if (fs.existsSync(tmp_folder)) {
-	// 		    	fs.removeSync(tmp_folder);
-	// 		    }
-	// 		});
- //   	    	for (let i = 0; i < torrent.files.length; i++) {
-	//     		file = torrent.files[i];
-	// 			console.log(file.name);
-	// 			if (file.name.endsWith('.mp4')) {
-	// 				if (typeof source == 'undefined') {
-	// 					if (!fs.existsSync(`public/${req.query.movie_id}`))
-	// 						fs.mkdirSync(`public/${req.query.movie_id}`);
-	// 					const source = file.createReadStream(file);
-	// 					const destination = fs.createWriteStream(file_name);
-	// 					source.pipe(destination);
-	// 				}
-	// 				// break ;
-	// 			}   	
- //    		}
-
-	//     });
-	// }
 	else {
 		var link = `magnet:?xt=urn:btih:${req.query.hash}&tr=http://track.one:1234/announce&tr=udp://track.two:80`;
-		console.log(link);
+		// console.log(link);
 		var engine = torrentStream(link);
 		let sent = false;
 		
@@ -125,15 +81,10 @@ router.get('/get_video', function(req, res, next) {
 			chunkSize = engine.store.store.chunkLength;
 			lastChunkSize = engine.store.store.lastChunkLength;
 			Array.from(Array(lastChunk + 1).keys()).forEach(idx => {downloadedChunksTracker[idx] = false});
-			// console.log('torrentLength', torrentLength);
-			// console.log('lastChunk', lastChunk);
-			// console.log('chunkSize', chunkSize);
-			// console.log('lastChunkSize', lastChunkSize);
-			// console.log('downloadedChunksTracker', downloadedChunksTracker);
 
 			for (let i = 0; i < engine.files.length; i++) {
 				file = engine.files[i];
-				if (file.name.endsWith('.mp4')) {
+				if (file.name.endsWith('.mp4') || file.name.endsWith('.mkv')) {
 					if (typeof src == 'undefined') {
 						if (!fs.existsSync(`public/${req.query.movie_id}`))
 							fs.mkdirSync(`public/${req.query.movie_id}`);
@@ -145,11 +96,10 @@ router.get('/get_video', function(req, res, next) {
 			}
 		});
 		engine.on('download', pieceIdx => {
-			// console.log('Downloaded piece #', pieceIdx);
 			downloadedChunksTracker[pieceIdx] = true;
 			newDownloadedPartLength = getFullyDownloadedLength(downloadedChunksTracker);
-			if (newDownloadedPartLength == lastDownloadedPartLength) // Only proceed if fully downloaded part grew, 
-				return; // i.e. all the chunks [0:pieceIdx] are downloaded, none are skipped.
+			if (newDownloadedPartLength == lastDownloadedPartLength)
+				return;
 			lastDownloadedPartLength = newDownloadedPartLength; // Both these variables are measured in chunks.
 			downloadedBytes = newDownloadedPartLength * chunkSize;
 			downloaded[req.query.movie_id] = downloadedBytes / torrentLength * 100;

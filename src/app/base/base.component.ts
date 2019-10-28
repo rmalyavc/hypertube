@@ -43,6 +43,13 @@ export class BaseComponent implements OnInit {
 	ngOnInit() {
 	}
 
+	public redirect_to(path, reload = false) {
+		if (reload)
+			window.location.href = `/${path}`;
+		else
+			this.router.navigate([`/${path}`]);
+	}
+
 	public redirect_to_login() {
 		this.router.navigate(['login']);
 	}
@@ -55,7 +62,7 @@ export class BaseComponent implements OnInit {
 
 	public check_login() {
 		if (!this.current_user)
-			this.redirect_to_home(true);
+			this.redirect_to('login', true);
 		else {
 			this.user_service.is_logged_in(this.current_user).subscribe(data => {
 				if (!data.status)

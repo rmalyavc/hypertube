@@ -150,7 +150,7 @@ export class CommentsComponent extends WatchComponent implements OnInit {
 				this.suggests = res['data'].map(el => {
 					if ((el.first_name || el.last_name) && (el.first_name != '' || el.last_name != '')) {
 						el['initials'] = (el.first_name.toUpperCase().substr(0, 1) || '') + (el.last_name.toUpperCase().substr(0, 1) || '');
-						el['full_name'] = (el.first_name.toUpperCase() || '') + ' ' + (el.last_name.toUpperCase() || '');
+						el['full_name'] = (el.first_name.toUpperCase() || '') + ' ' + (el.last_name.toUpperCase() || '') + ` (${el.login})`;
 					}
 					else {
 						el['initials'] = el.login.substr(0, 1).toUpperCase();

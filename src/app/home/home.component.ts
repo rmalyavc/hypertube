@@ -10,6 +10,10 @@ import { Subject } from 'rxjs';
 export class HomeComponent extends BaseComponent implements OnInit {
 	load_more: Subject<boolean> = new Subject();
 	ngOnInit() {
+		if (!this.current_user)
+			this.redirect_to('login', true);
+		else
+			this.check_login();
 		this.get_mod_strings('application');
 	}
 

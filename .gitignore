@@ -1,0 +1,8 @@
+# dependencies
+/node_modules
+/stream_service/node_modules
+
+#System Files
+.DS_Store
+Thumbs.db
+!.gitkeep

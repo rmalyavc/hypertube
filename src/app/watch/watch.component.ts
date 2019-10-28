@@ -30,6 +30,10 @@ export class WatchComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		if (!this.current_user)
+			this.redirect_to('login', true);
+		else
+			this.check_login();
 		this.get_mod_strings('application', this.page_lang, () => {
 			this.route.params.subscribe(params => {
 				this.page_id = params['id'];

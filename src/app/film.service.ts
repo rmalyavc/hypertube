@@ -71,7 +71,6 @@ export class FilmService extends BaseService {
     }
 
     get_history(page_user, current_user, limit: number = 20, skip: number = 0, order_by: string = 'updated_at', sort_order: string = 'DESC') {
-       
         this._url = `${this.base_url}user/history/movies?limit=${limit}&uid=${page_user.uid}&token=${current_user.token}&skip=${skip}&order_by=${order_by}&sort_order=${sort_order}`;
         return this.http.get<IResult>(this._url);
     }
