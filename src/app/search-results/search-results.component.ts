@@ -42,60 +42,65 @@ export class SearchResultsComponent extends BaseComponent implements OnInit {
 
 	ngOnInit() {
 		this.film_service.lang = this.page_lang;
-		this.get_mod_strings('application', this.page_lang, () => {
-			this.get_mod_strings('SearchComponent', this.page_lang, () => {
-				this.end_of_results = false;
-				this.load_more.subscribe(v => {
-					if (!this.end_of_results) {
-						this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
-							if (results.results) {
-								for (var i = 0; i < results.results.length; i++) {
-									if (results.results[i].poster_path)
-										results.results[i].img = this.film_service.config.images.base_url + 'original' + results.results[i].poster_path;
+		var interval_id = setInterval(() => {
+			if (this.film_service.config.images) {
+				clearInterval(interval_id);
+				this.get_mod_strings('application', this.page_lang, () => {
+					this.get_mod_strings('SearchComponent', this.page_lang, () => {
+						this.end_of_results = false;
+						this.load_more.subscribe(v => {
+							if (!this.end_of_results) {
+								this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
+									if (results.results) {
+										for (var i = 0; i < results.results.length; i++) {
+											if (results.results[i].poster_path)
+												results.results[i].img = this.film_service.config.images.base_url + 'original' + results.results[i].poster_path;
+											else
+												results.results[i].img = this.no_img;
+											if (this.results)
+												this.results.push(results.results[i]);
+										}
+										if (results.results.length > 0)
+											this.page++;
+										else
+											this.end_of_results = true;
+									}
+								}, error => {
+									this.handle_request_error();
+								});
+							}
+						});
+						this.route.queryParams.subscribe(params => {
+							if (Object.keys(params).length > 0) {
+								this.search_data.advanced = params.advanced == "true" ? true : false;
+								this.search_data.filters = params.filters ? JSON.parse(params.filters) : {};
+								this.search_data.groups = params.groups ? JSON.parse(params.groups) : {};
+								this.search_data.search_string = params.search_string ? params.search_string : '';
+								this.search_data.keys = Object.keys(this.search_data.groups);
+							}
+							this.show_loader = true;
+							this.page = 1;
+							this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
+								this.results = results.results;
+								for (var i = 0; i < this.results.length; i++) {
+									if (this.results[i].poster_path)
+										this.results[i].img = this.film_service.config.images.base_url + 'original' + this.results[i].poster_path;
 									else
-										results.results[i].img = this.no_img;
-									if (this.results)
-										this.results.push(results.results[i]);
+										this.results[i].img = this.no_img;
 								}
-								if (results.results.length > 0)
+								if (this.results.length > 0)
 									this.page++;
 								else
 									this.end_of_results = true;
-							}
-						}, error => {
-							this.handle_request_error();
+								this.show_loader = false;
+							}, error => {
+								this.handle_request_error();
+							});
 						});
-					}
-				});
-				this.route.queryParams.subscribe(params => {
-					if (Object.keys(params).length > 0) {
-						this.search_data.advanced = params.advanced == "true" ? true : false;
-						this.search_data.filters = params.filters ? JSON.parse(params.filters) : {};
-						this.search_data.groups = params.groups ? JSON.parse(params.groups) : {};
-						this.search_data.search_string = params.search_string ? params.search_string : '';
-						this.search_data.keys = Object.keys(this.search_data.groups);
-					}
-					this.show_loader = true;
-					this.page = 1;
-					this.film_service.search_movies(this.search_data, this.page).subscribe(results => {
-						this.results = results.results;
-						for (var i = 0; i < this.results.length; i++) {
-							if (this.results[i].poster_path)
-								this.results[i].img = this.film_service.config.images.base_url + 'original' + this.results[i].poster_path;
-							else
-								this.results[i].img = this.no_img;
-						}
-						if (this.results.length > 0)
-							this.page++;
-						else
-							this.end_of_results = true;
-						this.show_loader = false;
-					}, error => {
-						this.handle_request_error();
 					});
 				});
-			});
-		});
+			}
+		}, 100);
 	}
 
 	watch_movie(id) {

@@ -34,20 +34,25 @@ export class SliderComponent extends SearchResultsComponent implements OnInit {
 
 	ngOnInit() {
 		this.film_service.lang = this.page_lang;
-		this.get_mod_strings('application', this.page_lang, () => {
-			this.film_service.search_movies().subscribe(res => {
-				for (var i = 0; i < res.results.length; i++) {
-					if (res.results[i].poster_path)
-						res.results[i].img = this.film_service.config.images.base_url + 'original' + res.results[i].poster_path;
-					else
-						res.results[i].img = this.no_img;
-				}
-				this.results = res.results.slice(0, 20);
-				this.start_slider();
-			}, error => {
-				this.handle_request_error();
-			});
-		});
+		var interval_id = setInterval(() => {
+			if (this.film_service.config.images) {
+				clearInterval(interval_id);
+				this.get_mod_strings('application', this.page_lang, () => {
+					this.film_service.search_movies().subscribe(res => {
+						for (var i = 0; i < res.results.length; i++) {
+							if (res.results[i].poster_path)
+								res.results[i].img = this.film_service.config.images.base_url + 'original' + res.results[i].poster_path;
+							else
+								res.results[i].img = this.no_img;
+						}
+						this.results = res.results.slice(0, 20);
+						this.start_slider();
+					}, error => {
+						this.handle_request_error();
+					});
+				});
+			}
+		}, 100);
 	}
 
 	start_slider() {

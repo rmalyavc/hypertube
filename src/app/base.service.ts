@@ -8,7 +8,7 @@ export class BaseService {
 	protected _url: string = '';
 
 	constructor() {
-		this.base_url = 'https://768b1cb6.ngrok.io/';
+		this.base_url = 'https://d8414b5f.ngrok.io/';
 	}
 
 	get_base_url() {

@@ -41,7 +41,6 @@ export class NotificationsComponent extends BaseComponent implements OnInit {
 	get_notifications() {
 		this.user_service.get_notifications(this.current_user).subscribe(res => {
 			if (res.status) {
-				console.log(res);
 				this.notifications = res.data
 				this.qty = this.notifications.length;
 			}

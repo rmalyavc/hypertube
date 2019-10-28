@@ -26,7 +26,6 @@ export class CommentService extends BaseService {
             record_id: movie_id,
             comment: value,
         };
-        console.log(params);
         return this.http.post<IResult>(this._url, params);
     }
 

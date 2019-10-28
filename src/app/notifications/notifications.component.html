@@ -2,7 +2,7 @@
 	<div class="notification_button" (click)="show_hide()">
 		<strong>{{ qty }}</strong>
 	</div>
-	<div class="notification_cont"  [@notification_container]="current_state">
+	<div class="notification_cont" [class.low_index]="!show_notifications" [@notification_container]="current_state">
 		<div *ngFor="let notification of notifications;" class="single_notification" [@single_notification]>
 			<span class="close_button"><a (click)="remove_notification(notification.id)">X&nbsp;{{ mod_strings.LBL_CLEAR }}</a></span>
 			<span>

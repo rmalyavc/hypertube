@@ -31,7 +31,7 @@ let downloadedBytes = 0;
 |*|                                                                         |*|
 \*|*************************************************************************|*/
 
-let url = 'https://768b1cb6.ngrok.io/movie/get/expired';
+let url = 'https://d8414b5f.ngrok.io/movie/get/expired';
 setInterval(() => {
 	request.get({ url:url }, (err, resp, body) => {
 		if (err) {
