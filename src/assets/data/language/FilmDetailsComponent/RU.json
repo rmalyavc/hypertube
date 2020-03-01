@@ -1,0 +1,13 @@
+{
+	"LBL_NAME": "Название",
+	"LBL_YEAR": "Год",
+	"LBL_LANGUAGE": "Язык",
+	"LBL_DESCRIPTION": "Описание",
+	"LBL_RELEASE_DATE": "Дата Релиза",
+	"LBL_BUDGET": "Бюджет",
+	"LBL_GENRES": "Жанры",
+	"LBL_PRODUCTION_COMPANIES": "Кинокомпании",
+	"LBL_PRODUCTION_COUNTRIES": "Страны",
+	"LBL_RELEASE_DATE": "Дата релиза",
+	"LBL_VOTE_AVERAGE": "Рейтинг"
+}

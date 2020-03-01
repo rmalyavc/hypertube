@@ -1,0 +1,51 @@
+.header	{
+	position: absolute;
+	width: 100vw;
+	height: 60px;
+	top: 0;
+	left: 0%;
+	background: linear-gradient(#222222, #666666);
+}
+.logo {
+	position: relative;
+	height: 60%;
+	left: 1.5%;
+	border-radius: 50%;
+}
+.logo:hover {
+	height: 70%;
+	transition: height 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+.app-tools {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 0px 10px 0px 10px;
+}
+
+.tool_container {
+	position: absolute;
+	height: 100%;
+	width: 10%;
+	display: flex;
+	align-items: center;
+	padding: 0px 10px 0px 10px;	
+}
+
+.header .app-tools{
+	height:	80%;
+	top: 10%;
+	float: right;
+	right: 1%;
+	justify-content: flex-end; 
+}
+
+.app-tool {
+	margin: 5px;
+}
+
+.app-tool:hover {
+	background: rgba(0,0,0,0.2);
+}

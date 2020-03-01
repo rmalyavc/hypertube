@@ -1,0 +1,21 @@
+.app-tool, .app-notifications {
+	position: relative;
+	margin-left: 5px;
+	height: 100%;
+	border-radius: 50%;
+}
+#logout, #login {
+	height: 80%;
+} 
+#logout:hover, #login:hover {
+	height: 90%;
+	transition: height 0.3s ease-in-out;
+	cursor: pointer;
+	/*background: rgba(0,0,0,0.2);*/
+}
+
+#profile {
+	border-radius: unset;
+	display: flex;
+	align-items: center;
+}

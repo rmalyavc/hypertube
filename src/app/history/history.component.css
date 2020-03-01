@@ -1,0 +1,20 @@
+.history_scroll_container {
+	position: absolute;
+	width: 100%;
+	height:95%;
+	overflow-y: auto;
+}
+
+.filters_cont {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form_field {
+	display: inline;
+	width: 15%;
+	margin-right: 20px;
+	margin-left: 10px;
+}

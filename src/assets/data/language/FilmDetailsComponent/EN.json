@@ -1,0 +1,13 @@
+{
+	"LBL_NAME": "Name",
+	"LBL_YEAR": "Year",
+	"LBL_LANGUAGE": "Language",
+	"LBL_DESCRIPTION": "Description",
+	"LBL_RELEASE_DATE": "Release Date",
+	"LBL_BUDGET": "Budget",
+	"LBL_GENRES": "Genres",
+	"LBL_PRODUCTION_COMPANIES": "Production Companies",
+	"LBL_PRODUCTION_COUNTRIES": "Production Countries",
+	"LBL_RELEASE_DATE": "Release Date",
+	"LBL_VOTE_AVERAGE": "Rating"
+}

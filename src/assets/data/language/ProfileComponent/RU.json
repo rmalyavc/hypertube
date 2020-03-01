@@ -1,0 +1,19 @@
+{
+	"LBL_LOGIN": "Логин",
+	"LBL_FIRST_NAME": "Имя",
+	"LBL_LAST_NAME": "Фамилия",
+	"LBL_EMAIL": "Электронная почта",
+	"LBL_LANGUAGE": "Язык",
+	"LBL_SEND_NOTIFICATIONS": "Отправлять уведомления",
+	"LBL_UPLOAD": "Загрузить",
+	"LBL_USER_NOT_FOUND": "Пользователь не найден",
+	"LBL_PROFILE": "Профиль",
+	"LBL_EN": "EN",
+	"LBL_RU": "RU",
+	"LBL_ERR_UPDATE_FAILED": "Не удалось сохранить изменения",
+	"LBL_UPDATE": "Обновить",
+	"LBL_BRAWSING_HISTORY": "История просмотров",
+	"LBL_VIEW_ALL_HISTORY": "Смотреть всю историю",
+	"LBL_CHOOSE_AVATAR": "Выберите аватар",
+	"LBL_CHANGE_PASSWORD": "Смена пароля"
+}

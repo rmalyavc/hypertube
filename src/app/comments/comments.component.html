@@ -1,0 +1,39 @@
+<div *ngIf="show_fog" class="app-fog" [question]="confirmation_info.question" (answer)="on_confirm($event)"></div>
+<div *ngIf="show_loader" class="app-loader"></div>
+<div class="comments_cont">
+	<h3 class="gray_text">{{ mod_strings.LBL_COMMENTS }}({{ comments.length }})</h3>
+	<p *ngFor="let error of errors;" class="error_text">{{ error }}</p>
+	<form #edit_comment_form="ngForm">
+		<div *ngIf="comments.length > 0">
+			<div *ngFor="let item of comments; let i = index;" class="single_comment" [class.editable]="current_user.uid == item.uid">
+				<div class="comment_avatar_cont">
+					<img *ngIf="item.avatar && item.avatar != ''" [src]="base_url + item.avatar" class="comment_avatar">
+					<img *ngIf="!item.avatar" [src]="avatar" class="comment_avatar">
+				</div>
+				<div class="comment_wrapper">
+					<a routerLink="/profile/{{item.uid}}"><strong>{{ comments[i].login }}</strong></a><br>
+					<span *ngIf="!comments[i].editable" class="gray_text" [innerHTML]="comments[i].parsed_comment"></span>
+					<textarea *ngIf="comments[i].editable" name="single_comment_value_{{i}}" [(ngModel)]="comments[i].comment" class="form_field comment_value" [class.non-editable]="!comments[i].editable" (keyup.enter)="get_confirmation('update_comment', i)"></textarea>
+					<div *ngIf="current_user.uid == item.uid" class="comment_tools" [class.visible]="comments[i].editable">
+						<img class="comment_tool edit_comment_button" [src]="edit_icon" (click)="enable_edit(i)">
+						<img class="comment_tool round" [src]="delete_icon" (click)="get_confirmation('delete_comment', i)">
+						<button *ngIf="comments[i].editable" class="main_button" (click)="get_confirmation('update_comment', i)"><strong class="button_text white">{{ mod_strings.LBL_UPDATE }}</strong></button>
+					</div>
+				</div>
+				
+			</div>		
+		</div>
+	</form>
+	<form class="add_comment_form" #comment_form="ngForm">
+		<div class="field_container">
+			<textarea class="form_field" name="comment_text" #comment_text1 #comment_text="ngModel" [(ngModel)]="comment_value" placeholder="{{ placeholder }}" required [readonly]="!current_user" (keyup)="get_suggests($event, this)" (click)="get_suggests($event, this)"></textarea>
+			<div class="form_field suggest_area" [class.transparent]="suggests.length == 0">
+				<div *ngFor="let suggest of suggests;" class="single_suggest" (click)="complete(suggest); comment_text1.focus()">
+					<div class="suggest_avatar"><strong class="button_text white">{{ suggest.initials }}</strong></div>
+					<span class="suggest_text">{{ (suggest.full_name ) }}</span>
+				</div>
+			</div>
+			<button *ngIf="comment_text.valid" type="button" class="main_button" (click)="send_comment()"><strong class="button_text white">{{ mod_strings.LBL_SEND }}</strong></button>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,16 @@
+.app-film-details {
+	position: relative;
+	width: 98%;
+	left: 1%;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #cccccc;
+}
+
+.app-player {
+	margin-top: 15px;
+	border-bottom: 1px solid #bbbbbb;
+}
+
+.app-comments {
+	margin-bottom: 70px;
+}

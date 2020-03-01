@@ -1,0 +1,8 @@
+{
+	"LBL_ERR_NO_TOKEN": "No token provided",
+	"LBL_FORGOT": "Forgot Password",
+	"LBL_RECOVER": "Recover Password",
+	"LBL_CHANGE": "Change Pasword",
+	"LBL_LINK_SENT": "We've sent a link to your email. Please follow it to reset your password.",
+	"LBL_PASSWORD_CHANGED": "Password has been successfully changed"
+}

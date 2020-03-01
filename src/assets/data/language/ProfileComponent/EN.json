@@ -1,0 +1,19 @@
+{
+	"LBL_LOGIN": "Login",
+	"LBL_FIRST_NAME": "First Name",
+	"LBL_LAST_NAME": "Last Name",
+	"LBL_EMAIL": "Email",
+	"LBL_LANGUAGE": "Language",
+	"LBL_SEND_NOTIFICATIONS": "Send Notifications",
+	"LBL_UPLOAD": "Upload",
+	"LBL_USER_NOT_FOUND": "User not found",
+	"LBL_PROFILE": "Profile",
+	"LBL_EN": "EN",
+	"LBL_RU": "RU",
+	"LBL_ERR_UPDATE_FAILED": "Update is failed",
+	"LBL_UPDATE": "Update",
+	"LBL_BRAWSING_HISTORY": "Brawsing History",
+	"LBL_VIEW_ALL_HISTORY": "View all history",
+	"LBL_CHOOSE_AVATAR": "Choose your avatar",
+	"LBL_CHANGE_PASSWORD": "Change Password"
+}

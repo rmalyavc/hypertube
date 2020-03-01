@@ -1,0 +1,12 @@
+<div class="copyright_cont gray_text">
+	<img class="footer_icon" [src]="wolf">
+	<div>
+		<span>{{ app_strings.LBL_CREATED_BY }}:&nbsp;</span>
+		<span *ngFor="let item of creators; let i = index;">
+			<span>{{item}}</span>
+			<span *ngIf="i < creators.length - 1">,&nbsp;</span>
+		</span>
+		<br>
+		<span>&#9400;&nbsp;{{ app_strings.LBL_ALL_RIGHTS_RESERVED }}<br><strong>Zlye Wolki corp. LLC</strong></span>
+	</div>
+</div>

@@ -1,0 +1,31 @@
+.details_container {
+	position: relative;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.label_cont {
+	position: relative;
+	width: 14%;
+	display: inline-block;
+	text-align: right;
+}
+
+.info_cont {
+	position: relative;
+	width: 30%;
+	margin-left: 5px;
+	display: inline-block;
+}
+
+.details_container > div {
+	display: flex;
+	align-items: baseline;
+	margin-top: 5px;
+}
+
+.info_cont > img {
+	width: 100%;
+	box-shadow: 2px rgba(0,0,0,0.2);
+}

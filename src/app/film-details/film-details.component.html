@@ -1,0 +1,85 @@
+<div class="details_container">
+	<div>
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_NAME }}:&nbsp;&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span>{{ film_data.name }}</span>
+		</div>
+	</div>
+	<div>
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_RELEASE_DATE }}:&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span>{{ film_data.year }}</span>
+		</div>
+	</div>
+	<div>
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_DESCRIPTION }}:&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span>{{ film_data.description }}</span>
+		</div>
+	</div>
+
+	<div *ngIf="film_data.budget">
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_BUDGET }}:&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span>$&nbsp;{{ film_data.budget }}</span>
+		</div>
+	</div>
+	<div *ngIf="film_data.genres && film_data.genres.length">
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_GENRES }}:&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span *ngFor="let genre of film_data.genres; let i = index;">
+				<span *ngIf="i != 0">,&nbsp;</span>
+				<span *ngIf="genre.name">{{ genre.name }}</span>
+			</span>
+		</div>
+	</div>
+	<div *ngIf="film_data.production_companies && film_data.production_companies.length">
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_PRODUCTION_COMPANIES }}:&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span *ngFor="let company of film_data.production_companies; let i = index;">
+				<span *ngIf="i != 0">,&nbsp;</span>
+				<span *ngIf="company.name">{{ company.name }}</span>
+			</span>
+		</div>
+	</div>
+	<div *ngIf="film_data.production_countries && film_data.production_countries.length">
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_PRODUCTION_COUNTRIES }}:&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span *ngFor="let country of film_data.production_countries; let i = index;">
+				<span *ngIf="i != 0">,&nbsp;</span>
+				<span *ngIf="country.name">{{ country.name }}</span>
+			</span>
+		</div>
+	</div>
+	<div *ngIf="film_data.vote_average">
+		<div class="label_cont">
+			<strong class="label">{{ mod_strings.LBL_VOTE_AVERAGE }}:&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<span>{{ film_data.vote_average }}</span>
+		</div>
+	</div>
+
+	<div>
+		<div class="label_cont">
+			<strong class="label">&nbsp;</strong>	
+		</div>
+		<div class="info_cont">
+			<img src="{{ film_data.img }}">
+		</div>
+	</div>
+</div>
