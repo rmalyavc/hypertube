@@ -1,6 +1,0 @@
-<img *ngIf="tool_map[id].is_icon" src={{tool_map[id].icon}} class="tool_icon" [id]="id" (click)="action()">
-<a *ngIf="!tool_map[id].is_icon && id != 'lang'" routerLink="/profile/{{current_user.id}}" class="profile_link">{{current_user.login}}</a>
-<select *ngIf="id == 'lang'" class="tool_icon lang_dropdown" (change)="change_lang()" [(ngModel)]="page_lang">
-	<option value="EN">EN</option>
-	<option value="RU">RU</option>
-</select>
