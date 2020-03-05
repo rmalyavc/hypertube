@@ -22,6 +22,7 @@ export class UserService extends BaseService {
 
 	register_user(form_data) {
 		this._url = `${this.base_url}register`;
+		console.log(form_data);
 		return this.http.post<IResult>(this._url, form_data);
 	}
 

@@ -69,9 +69,9 @@ export class WatchComponent extends BaseComponent implements OnInit {
 								this.film_data.trailer_id = video_res.key;
 								this.film_data.has_trailer = true;
 							}
-							setTimeout(() => {
-								console.clear();
-							}, 2000);
+							// setTimeout(() => {
+							// 	console.clear();
+							// }, 2000);
 							this.film_service.get_torrent(res['imdb_id']).subscribe(t_res => {
 								if (t_res['status'] == 'ok' && t_res['data']['movies'] && t_res['data']['movies'][0]) {
 									let movie = t_res['data']['movies'][0];

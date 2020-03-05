@@ -41,7 +41,7 @@ export class FilmService extends BaseService {
   	}
 
     get_torrent(imdb) {
-        this._url = `https://yts.lt/api/v2/list_movies.json?query_term=${imdb}`;
+        this._url = `https://yts.mx/api/v2/list_movies.json?query_term=${imdb}`;
         return this.http.get(this._url);
     }
     get_video(movie_id, hash = '') {
